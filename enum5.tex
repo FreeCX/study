@@ -3,6 +3,7 @@
 \input{../university/.preambles/20-math}
 \input{../university/.preambles/30-physics}
 \begin{document}
+	\textbf{WARNING}: я не даю гарантию, что задачи решены на 100\% верно!!! \\\\
 	\textbf{5.1: }
 		Найти магнитный момент \( \mu \) и возможные проекции \( \mu_z \)
 		атома в состоянии:
@@ -159,6 +160,41 @@
 			\item[а)] \( ^2D_{3/2} \rightarrow ^2P_{3/2} \)
 			\item[б)] \( ^2D_{5/2} \rightarrow ^2P_{3/2} \)
 		\end{itemize}
+		Используемые формулы: 
+		\[ 
+			\Delta\omega = \frac{\mu_\text{Б}B}{\hbar}(m_{J2}g_2 - m_{J1}g_1)
+			= \Delta\omega_0 (m_{J2}g_2 - m_{J1}g_1)
+		\]
+		\[ g = 1 + \cfrac{J(J+1)+S(S+1)-L(L+1)}{2J(J+1)} \]
+		Рассмотрим пункт решение для пункта а:
+		\[ ^2D_{3/2}: L=2, S=\frac{1}{2}, J=\frac{3}{2} \]
+		\[ m_{J2} = -\frac{3}{2}, -\frac{1}{2}, \frac{1}{2}, \frac{3}{2} \]
+		\[ 
+			g_2 = 1 + \frac{\cfrac{3}{2}\cdot\cfrac{5}{2} 
+			+ \cfrac{1}{2}\cdot\cfrac{3}{2} - 2\cdot3}{\cfrac{15}{2}} 
+			= \frac{24}{30}
+		\]
+		\[ ^2P_{3/2}: L=1, S=\frac{1}{2}, J=\frac{3}{2} \]
+		\[ m_{J1} = -\frac{3}{2}, -\frac{1}{2}, \frac{1}{2}, \frac{3}{2} \]
+		\[ g_1 = 1 + \frac{\cfrac{18}{4} - 2}{\cfrac{15}{2}} = \frac{2}{3} \]
+		Правило отбора: \( \Delta m_J = 0, \pm1 \).
+		\[ -\frac{3}{2} \rightarrow -\frac{3}{2}: 
+			\Delta\omega = \Delta\omega_0 (-\frac{3}{2}\cdot\frac{24}{30} 
+			+ \frac{3}{2}\cdot\frac{2}{3}) = -\frac{1}{5}\Delta\omega_0 
+		\]
+		Считаем \( \Delta\omega \) для чисел:
+		\[ 
+			-\frac{3}{2} \rightarrow -\frac{1}{2};\quad
+			-\frac{1}{2} \rightarrow -\frac{1}{2};\quad
+			-\frac{1}{2} \rightarrow \frac{1}{2};\quad
+		\]
+		\[ 
+			\frac{1}{2} \rightarrow \frac{1}{2};\quad
+			\frac{1}{2} \rightarrow \frac{3}{2};\quad
+			\frac{3}{2} \rightarrow \frac{3}{2};\quad
+		\]
+		И находим разность между двумя \( \Delta\omega \). \\
+		Пункт б считается по аналогии.
 
 	\textbf{5.11 }
 		Найти значения температуры, при которых средняя кинетическая энергия
