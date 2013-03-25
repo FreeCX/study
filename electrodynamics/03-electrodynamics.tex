@@ -47,15 +47,15 @@
 
 Поле вне шара (\( r > r, q = Q \)):
 \[
-	D = \frac{Q}{r^2}
+	D = \frac{Q}{4\pi r^2}
 \]
 
-C учётом \( D = \eps E \), получим:
+C учётом \( D = \eps_0\eps E \), получим:
 \[
-	E = \frac{Q}{\eps(r) r^2}
+	E = \frac{Q}{4\pi\eps_0\eps(r) r^2}
 \]
 
-\emph{Ответ:} \( D = \cfrac{Q}{r^2},\quad E = \cfrac{Q}{\eps(r) r^2}\)
+\emph{Ответ:} \( D = \cfrac{Q}{4\pi r^2},\quad E = \cfrac{Q}{4\pi\eps_0\eps(r) r^2}\)
  
 \newpage
 
@@ -67,7 +67,50 @@ C учётом \( D = \eps E \), получим:
 
 \emph{Решение:}
 
-\emph{Ответ:}
+Вычислим поле между обкладками конденсатора с проницаемостью \( \eps \), 
+высотой \( l \) и зарядов \( q \). 
+
+Начнём поиск поля в точке \( r \) находящегося между обкладками. Используя 
+теорему Гаусса, с учётом соноправленности векторов \( S \) и 
+\( dS \), получим:
+\[ 
+	\oint\limits_S \vec{E}\vec{dS} = \oint\limits_S EdS = 
+	E \oint dS = E \cdot 2\pi r l = \frac{q}{\eps\eps_0}
+\]
+\[
+	E(r) = \frac{q}{2\pi\eps\eps_0 rl}
+\]
+
+Тогда напряженность поля между обкладками будет:
+\[
+	E(R) = \frac{q}{2\pi\eps\eps_o Rl}
+\]
+
+Отсюда находим разность потенциалов:
+\[
+	\phi_1 - \phi_2 = \int\limits^{R_2}_{R_1} E(R) dR = 
+	\frac{q}{\eps_0 l} \left( 
+		\int \limits^{R_0}_{R_1} \frac{1}{\eps_1 R} + 
+		\int \limits^{R_2}_{R_0} \frac{1}{\eps_2 R} 
+	\right) = 
+	\frac{q}{\eps_0 l} \left(
+		\frac{1}{\eps_1}\ln\frac{R_0}{R_1} + 
+		\frac{1}{\eps_2}\ln\frac{R_2}{R_0}
+	\right) 
+\]
+
+Тогда ёмкость:
+\[
+	C = \frac{q}{\phi_1 - \phi_2} = 
+	\frac{l}{ \cfrac{1}{\eps_1}\ln\cfrac{R_0}{R_1} + 
+	\cfrac{1}{\eps_2}\ln\cfrac{R_2}{R_0}}
+\]
+
+\emph{Ответ:} \(
+	C = \cfrac{q}{\phi_1 - \phi_2} = 
+	\cfrac{l}{ \cfrac{1}{\eps_1}\ln\cfrac{R_0}{R_1} + 
+	\cfrac{1}{\eps_2}\ln\cfrac{R_2}{R_0}}
+\)
 
 \newpage
 
@@ -77,7 +120,63 @@ C учётом \( D = \eps E \), получим:
 
 \emph{Решение:}
 
-\emph{Ответ:}
+Выберем положение полуплоскостей как показано на рисунке. Первая в 
+плоскости \( xy \), а вторая в \( yz \). Начало отсчёта в точке 
+пересечения полуплоскостей. Воспользуемся методом изображений построим 
+изображение заряда. Найдём потенциал в произвольной точке системы:
+\[ 
+	\phi = \frac{q}{4\pi\eps_0}\left( \frac{1}{r_0} - \frac{1}{r_1} + 
+	\frac{1}{r_2} - \frac{1}{r_3} \right) 
+\] 
+где \( r_0 \) -- расстояние рассматриваемой точки поля от заряда \( q \), а 
+\( r_1, r_2, r_3 \) -- от его изображений.
+\[
+	r_0 = \sqrt{(x-a)^2 + (y-a)^2 + z^2};\quad
+	r_1 = \sqrt{(x-a)^2 + (y+a)^2 + z^2}
+\]
+\[
+	r_2 = \sqrt{(x+a)^2 + (y+a)^2 + z^2};\quad
+	r_3 = \sqrt{(x+a)^2 + (y-a)^2 + z^2}
+\]
+
+Подставляя в потенциал получаем:
+\begin{equation*}
+\begin{split}
+	\phi = \frac{q}{4\pi\eps_0}\Big(
+		\frac{1}{\sqrt{(x-a)^2 + (y-a)^2 + z^2}} - 
+		\frac{1}{\sqrt{(x-a)^2 + (y+a)^2 + z^2}} + \\ +
+		\frac{1}{\sqrt{(x+a)^2 + (y+a)^2 + z^2}} -
+		\frac{1}{\sqrt{(x+a)^2 + (y-a)^2 + z^2}}
+	\Big)
+\end{split}
+\end{equation*}
+
+Поле создаваемое зарядом:
+\[ E = -\grad\phi \]
+Подставляя значение потенциала получаем:
+\[
+	E = -\frac{q}{4\pi\eps_0}\left\{
+		\frac{d\phi}{dx}, 
+		\frac{d\phi}{dy}, 
+		\frac{d\phi}{dz}
+	\right\} \text{, где}
+\]
+\begin{equation*}
+\begin{split}
+	\frac{d\phi}{dx} = \frac{x-a}{\left( (x-a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} -
+	\frac{x-a}{\left( (x-a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} + \\ + 
+	\frac{x+a}{\left( (x+a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} -
+	\frac{x+a}{\left( (x+a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} \\
+	\frac{d\phi}{dy} = \frac{y-a}{\left( (x-a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} -
+	\frac{y+a}{\left( (x-a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} + \\ + 
+	\frac{y+a}{\left( (x+a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} -
+	\frac{y-a}{\left( (x+a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} \\
+	\frac{d\phi}{dz} = \frac{2z}{\left( (x-a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} -
+	\frac{2z}{\left( (x-a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} + \\ + 
+	\frac{2z}{\left( (x+a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} -
+	\frac{2z}{\left( (x+a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} \\
+\end{split}
+\end{equation*}
 
 \newpage
 
