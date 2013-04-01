@@ -2,6 +2,9 @@
 \input{../../.preambles/10-russian}
 \input{../../.preambles/20-math}
 \input{../../.preambles/30-physics}
+
+\usepackage{wrapfig}
+
 \begin{document}
 \maketitlepage{Факультет электроники и вычислительной техники}{физики}
 {Электродинамика}{студент группы Ф-369\\Голубев~А.~В.}{доцент Грецов~М.~В.}{№3}
@@ -16,6 +19,11 @@
 среды \( \eps = \eps(r) \), где \( r \) -- расстояние от центра шара.
 
 \emph{Решение:} 
+
+\begin{wrapfigure}[10]{l}{0.4\textwidth}
+	\vspace{-2ex}
+	\includegraphics[width=0.4\textwidth]{pdf/image_1_15}
+\end{wrapfigure}
 
 Для решения задачи воспользуемся сферической системой координат. Учтём, что 
 задача имеет сферическую симметрию и запишем следующие соотношения:
@@ -66,6 +74,11 @@ C учётом \( D = \eps_0\eps E \), получим:
 радиуса \( R_0 \). Краевыми эффектами пренебречь.
 
 \emph{Решение:}
+
+\begin{wrapfigure}[10]{l}{0.4\textwidth}
+	\vspace{-2ex}
+	\includegraphics[width=0.4\textwidth]{pdf/image_1_58}
+\end{wrapfigure}
 
 Вычислим поле между обкладками конденсатора с проницаемостью \( \eps \), 
 высотой \( l \) и зарядов \( q \). 
@@ -119,6 +132,11 @@ C учётом \( D = \eps_0\eps E \), получим:
 полуплоскостей. Определить создаваемое поле.
 
 \emph{Решение:}
+
+\begin{wrapfigure}[10]{l}{0.4\textwidth}
+	\vspace{-5ex}
+	\includegraphics[width=0.4\textwidth]{pdf/image_1_99}
+\end{wrapfigure}
 
 Выберем положение полуплоскостей как показано на рисунке. Первая в 
 плоскости \( xy \), а вторая в \( yz \). Начало отсчёта в точке 
@@ -188,6 +206,67 @@ C учётом \( D = \eps_0\eps E \), получим:
 током магнитное поле.
 
 \emph{Решение:}
+
+\begin{wrapfigure}[10]{l}{0.4\textwidth}
+	\vspace{-2ex}
+	\includegraphics[width=0.4\textwidth]{pdf/image_2_35}
+\end{wrapfigure}
+
+Выберем плоскость раздела двух среда за координатную (\( z = 0 \)) и направим в 
+сторону первой среды.
+
+Вектор-потенциал искомого поля будем искать в виде:
+\[
+	\vec{A}_1 = \frac{\mu_1 I}{c} \oint \frac{d\vec{l}}{r} + 
+		\frac{\mu_1 k_1 I}{c} \oint \frac{d\vec{r'}}{r'}
+\]
+\[
+	\vec{A}_2 = \frac{\mu_2 k_2 I}{c} \oint \frac{d\vec{l}}{r}
+\]
+где \( l' \) -- изображение контура \( l \), \( r \) и \( r' \) -- 
+расстояние рассматриваемой точки поля от элемента длины \( dl \) и \( dl' \).
+
+\begin{wrapfigure}[8]{l}{0.4\textwidth}
+	\vspace{-5ex}
+	\includegraphics[width=0.4\textwidth]{pdf/image_2_35_2}
+\end{wrapfigure}
+
+Рассмотрим условие непрерывности векторного потенциала на границе 
+\( A_1 = A_2 \), тогда:
+\[
+	r = hcos\theta;\quad r' = hcos\theta
+\]
+
+Подставляя в уравнение получаем:
+\[
+	\frac{\mu_1 I}{ch\cos\theta} \oint dl + 
+	\frac{\mu_1 k_1 I}{ch\cos\theta} \oint dl' = 
+	\frac{\mu_2 I}{ch\cos\theta} \oint dl
+\]
+
+В силу произвольности элемента \( dl \) и \( dl' \):
+\[ 
+	\left( 1 + k_2 \right) \mu_1 + \mu_2 k_1 = 0
+\]
+
+Теперь рассмотрим непрерывность производной на границе:
+\[
+	\frac{1}{\mu_1}\pder{A_1}{n} + \frac{1}{\mu_2}\pder{A_2}{n} = \frac{I}{c}
+\]
+
+\pagebreak
+
+Подставляя уравнения для потенциалов и учитывая произвольность элементов 
+\( dl \) и \( dl' \) получаем:
+\[
+	k_1 + k_2 = 1
+\]
+
+С учётом предыдущей формулы связывающие \( k_1 \) и \( k_2 \) получаем:
+\[
+	k_1 = \frac{\mu_2 - \mu_1}{\mu_2 + \mu_1};\quad
+	k_2 = \frac{2\mu_1}{\mu_1 + \mu_2}
+\]
 
 \emph{Ответ:}
 \end{document}
