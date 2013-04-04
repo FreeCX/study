@@ -1,4 +1,4 @@
-\documentclass[a4paper, 14pt]{extarticle}
+\documentclass[a4paper]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[paper=a4paper, top=1cm, right=1cm, bottom=1.5cm, left=2cm]{geometry}
 \usepackage{setspace}
@@ -7,53 +7,54 @@
 \usepackage{indentfirst}
 \usepackage{pscyr}
 \usepackage{color}
-\onehalfspacing
-
-\usepackage{graphicx}
-
-\parindent=1.25cm
-
 \usepackage{titlesec}
-
 \usepackage{caption}
+\usepackage[square, numbers, sort&compress]{natbib}
+
+\onehalfspacing
+\parindent=1.25cm
 \captionsetup{labelsep=period}
-
-
 \titleformat{\section}
     {\normalsize\bfseries}
     {\thesection}
     {1em}{}
-
 \titleformat{\subsection}
     {\normalsize\bfseries}
     {\thesubsection}
     {1em}{}
-
-% Настройка вертикальных и горизонтальных отступов
 \titlespacing*{\chapter}{0pt}{-30pt}{8pt}
 \titlespacing*{\section}{\parindent}{*4}{*4}
 \titlespacing*{\subsection}{\parindent}{*4}{*4}
 
-\usepackage[square, numbers, sort&compress]{natbib}
+\renewcommand{\normalsize}{\fontsize{14pt}{16pt}}
+
+\renewcommand{\normalfont}{\fontencoding{T2A}%
+\fontseries{m}\fontshape{n}\normalsize%
+\selectfont
+}
+
+\newcommand{\largesize}{\fontsize{16pt}{18pt}}
+
+\renewcommand{\large}{\fontencoding{T2A}%
+\fontseries{m}\fontshape{n}\largesize%
+\selectfont
+}
+
+\renewcommand{\thechapter}{\arabic{chapter}}
+\titleformat{\chapter}{\large\bfseries}{\thechapter\hspace{1em}}{0pt}
+{\large\bfseries}
+
 \makeatletter
 \bibliographystyle{unsrt}
 \renewcommand{\@biblabel}[1]{#1.} 
-\renewcommand{\theenumi}{\arabic{enumi}}
-\renewcommand{\labelenumi}{\arabic{enumi}.}
-\renewcommand{\theenumii}{.\arabic{enumii}}
-\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}.}
-\renewcommand{\theenumiii}{.\arabic{enumiii}}
-\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}
 \renewcommand{\baselinestretch}{1.5}
-\definecolor{blue}{rgb}{0,0,0.5}
-\usepackage[colorlinks,linkcolor=black,filecolor=blue,citecolor=blue]{hyperref}
-\renewcommand{\baselinestretch}{1.5}
+\usepackage[colorlinks,linkcolor=black,filecolor=black,citecolor=black]{hyperref}
 \makeatother
-
 
 \newcommand{\maketitlepage}[6]{
     \begin{titlepage}
         \singlespacing
+        \normalfont
         \newpage
         \begin{center}
             Министерство образования и науки Российской Федерации \\
@@ -99,7 +100,6 @@
     {<<Идеальное государство>> Платона}
     {студент группы Ф-369\\Голубев~А.~В.}{к.ф.н., доцент\\Леонтьев~А.~Н.}
     {по политологии}
-        
     \tableofcontents
     \thispagestyle{empty}
     \newpage
