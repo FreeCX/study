@@ -178,22 +178,22 @@ C учётом \( D = \eps_0\eps E \), получим:
 Подставляя значение потенциала получаем:
 \[
 	E = -\frac{q}{4\pi\eps_0}\left\{
-		\frac{d\phi}{dx}, 
-		\frac{d\phi}{dy}, 
-		\frac{d\phi}{dz}
+		\frac{d\Phi}{dx}, 
+		\frac{d\Phi}{dy}, 
+		\frac{d\Phi}{dz}
 	\right\} \text{, где}
 \]
 \begin{equation*}
 \begin{split}
-	\frac{d\phi}{dx} = \frac{x-a}{\left( (x-a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} -
+	\frac{d\Phi}{dx} = \frac{x-a}{\left( (x-a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} -
 	\frac{x-a}{\left( (x-a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} + \\ + 
 	\frac{x+a}{\left( (x+a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} -
 	\frac{x+a}{\left( (x+a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} \\
-	\frac{d\phi}{dy} = \frac{y-a}{\left( (x-a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} -
+	\frac{d\Phi}{dy} = \frac{y-a}{\left( (x-a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} -
 	\frac{y+a}{\left( (x-a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} + \\ + 
 	\frac{y+a}{\left( (x+a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} -
 	\frac{y-a}{\left( (x+a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} \\
-	\frac{d\phi}{dz} = \frac{2z}{\left( (x-a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} -
+	\frac{d\Phi}{dz} = \frac{2z}{\left( (x-a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} -
 	\frac{2z}{\left( (x-a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} + \\ + 
 	\frac{2z}{\left( (x+a)^2 + (y+a)^2 + z^2\right)^{\frac{3}{2}}} -
 	\frac{2z}{\left( (x+a)^2 + (y-a)^2 + z^2\right)^{\frac{3}{2}}} \\
@@ -222,10 +222,10 @@ C учётом \( D = \eps_0\eps E \), получим:
 Вектор-потенциал искомого поля будем искать в виде:
 \[
 	\vec{A}_1 = \frac{\mu_1 I}{c} \oint \frac{d\vec{l}}{r} + 
-		\frac{\mu_1 k_1 I}{c} \oint \frac{d\vec{r'}}{r'}
+		\frac{\mu_1 k_1 I}{c} \oint \frac{d\vec{l'}}{r'} \eqno{1}
 \]
 \[
-	\vec{A}_2 = \frac{\mu_2 k_2 I}{c} \oint \frac{d\vec{l}}{r}
+	\vec{A}_2 = \frac{\mu_2 k_2 I}{c} \oint \frac{d\vec{l}}{r} \eqno{2}
 \]
 
 где \( l' \) -- изображение контура \( l \), \( r \) и \( r' \) -- 
@@ -237,12 +237,14 @@ C учётом \( D = \eps_0\eps E \), получим:
 \end{wrapfigure}
 
 Рассмотрим условие непрерывности векторного потенциала на границе
-двух сред, где \( A_1 = A_2 \), тогда:
+двух сред, где 
+\[ A_1 = A_2 \eqno{3}\]
+тогда:
 \[
 	r = hcos\theta;\quad r' = hcos\theta
 \]
 
-Подставляя в уравнение получаем:
+Подставляя \( (1) \) и \( (2) \) в уравнение \( (3) \) получаем:
 \[
 	\frac{\mu_1 I}{ch\cos\theta} \oint dl + 
 	\frac{\mu_1 k_1 I}{ch\cos\theta} \oint dl' = 
@@ -277,7 +279,7 @@ C учётом \( D = \eps_0\eps E \), получим:
 \[
 	\vec{A}_1 = \frac{\mu_1 I}{c} \oint \frac{d\vec{l}}{r} + 
 		\left(\frac{\mu_2 - \mu_1}{\mu_2 + \mu_1}\right)
-		\frac{\mu_1 I}{c} \oint \frac{d\vec{r'}}{r'}
+		\frac{\mu_1 I}{c} \oint \frac{d\vec{l'}}{r'}
 \]
 \[
 	\vec{A}_2 = \left(\frac{2\mu_1}{\mu_1 + \mu_2}\right)
