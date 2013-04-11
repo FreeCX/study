@@ -1,4 +1,4 @@
 all:
 	pdflatex chemistry.tex
 clean:
-	$(RM) *.aux *.log
+	$(RM) *.aux *.log *.pdf
