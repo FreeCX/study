@@ -1,4 +1,4 @@
 all:
 	pdflatex info.tex
 clean:
-	$(RM) *.aux *.log
+	$(RM) *.aux *.log *.pdf
