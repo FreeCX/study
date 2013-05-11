@@ -194,6 +194,46 @@
 	\end{array} \right.
 \]
 
+Подставляя уравнения получим:
+\[
+	\left\{ \begin{array}{ll}
+		A_1 + B_1 = A_2 + B_2 \\
+		A_2 e^{\beta l} + B_2 e^{-\beta l} = A_3 e^{ikl} \\
+		\left( A_1 - B_1 \right) \cdot ik = 
+			\left( A_2 - B_2 \right) \cdot \beta \\
+		\left( A_2 e^{\beta l} - B_2 e^{-\beta l} \right) \cdot \beta = 
+			A_3 ik e^{ikl}
+	\end{array} \right. \quad
+	\left\{ \begin{array}{ll}
+		1 + b_1 = a_2 + b_2 \\
+		a_2 e^{\beta l} + b_2 e^{-\beta l} = a_3 e^{ikl} \\
+		\left( 1 - b_1 \right) \cdot ik = 
+			\left( a_2 - b_2 \right) \cdot \beta \\
+		\left( a_2 e^{\beta l} - b_2 e^{-\beta l} \right) \cdot \beta = 
+			a_3 ik e^{ikl}
+	\end{array} \right.
+\]
+
+где 
+\( 
+	a_2 = \cfrac{A_2}{A_1}, b_1 = \cfrac{B_1}{A_1}, b_2 = \cfrac{B_2}{A_1} 
+\). \\
+
+Решая систему уравнений находим:
+\[
+	a_2 = \frac{2n}{n+1+(n-1)\cfrac{\beta}{ik}};\quad
+	b_1 = \frac{2\beta}{ik(n+1)+(n-1)\beta}
+\]
+\[
+	b_2 = \frac{2}{n+1+(n-1)\cfrac{\beta}{ik}};\quad
+	n = \left( \frac{ik+1}{ik-1}\right)e^{-2\beta l}
+\]
+
+Коэффициент отражения и прозрачности будут определятся равенствами:
+\[
+	R = \vert b_1 \vert ^2;\quad
+	D = \vert a_3 \vert ^2
+\]
 
 \pagebreak
 %-------------------------------------------------------------------------------
