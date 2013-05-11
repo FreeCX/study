@@ -1,7 +1,9 @@
-\input{../.preambles/01-semester_work}
-\input{../.preambles/10-russian}
-\input{../.preambles/20-math}
-\input{../.preambles/30-physics}
+\input{../../.preambles/01-semester_work}
+\input{../../.preambles/10-russian}
+\input{../../.preambles/20-math}
+\input{../../.preambles/30-physics}
+\usepackage{wrapfig}
+
 \begin{document}
 \maketitlepage{Факультет электроники и вычислительной техники}{физики}
 {Вакуумная и газоразрядная электроника}{}{18}{студент группы Ф-369\\Голубев~А.~В.}
@@ -14,6 +16,11 @@
 расстоянии \( L \) от плоскости влёта, и координаты точки на экране.
 
 \emph{Решение:}
+
+\begin{wrapfigure}[8]{l}{0.5\textwidth}
+    \vspace{-2ex}
+    \includegraphics[width=0.5\textwidth]{images/im_01}
+\end{wrapfigure}
 
 Запишем силу действующую на электрон со стороны полей:
 \[
@@ -42,7 +49,7 @@
 		\ddot{z} = \cfrac{q}{m}E
 	\end{array} \right.
 \]
-где обозначим за \( \omega_c = \frac{q}{m}B \)
+где обозначим за \( \omega_c = \cfrac{q}{m}B \)
 
 Найдём время за которое электрон достигнет экрана. Из уравнения 
 \[ \ddot{z} = \cfrac{q}{m}E \]
@@ -142,6 +149,11 @@
 	\Rightarrow R = \cfrac{v_{x0}}{\omega_c} = 
 	\cfrac{v\sin\alpha}{\omega_c}
 \]
+
+\begin{wrapfigure}[10]{l}{0.5\textwidth}
+    \vspace{-2ex}
+    \includegraphics[width=0.5\textwidth]{images/im_02}
+\end{wrapfigure}
 
 Электрон совершает движение по окружности в плоскости \( xy \). 
 В пространстве электрон перемещается по спирали.
