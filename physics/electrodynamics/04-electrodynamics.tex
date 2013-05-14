@@ -2,6 +2,7 @@
 \input{../../.preambles/10-russian}
 \input{../../.preambles/20-math}
 \input{../../.preambles/30-physics}
+
 \begin{document}
 \maketitlepage{Факультет электроники и вычислительной техники}{физики}
 {Электродинамика}{4}{}{студент группы Ф-369\\Голубев~А.~В.}
@@ -54,5 +55,63 @@
 
 \emph{Решение:}
 
-\emph{Ответ:}
+Воспользуемся волновым уравнение:
+\[
+	\nabla E + \frac{\omega^2}{c^2} E = 0 \eqno{1}
+\]
+
+где \( \nabla^2 = \ppder{}{x} + \ppder{}{y} + \ppder{}{z} \)
+
+Граничные условия: \( E = 0 \) при 
+\(
+	x = 0, a_1; y = 0, a_2; z = 0, a_3 
+\)
+
+Представим решение уравнения \( [1] \) в виде:
+\[
+	E = A\sin\left( k_x x + \alpha_x \right)
+		\sin\left( k_y y + \alpha_y \right)
+		\sin\left( k_z z + \alpha_z \right) \eqno{2}
+\]
+
+Подставляя его в уравнение \( [1] \), получаем:
+\[
+	\frac{\omega^2}{c^2} = k^2_x + k^2_y + k^2_z \eqno{3}
+\]
+
+Подставляя граничные условия в уравнение \( [2] \), получаем:
+\[
+	\left\{ \begin{array}{ll}
+		\sin\alpha_x = 0 \quad\Rightarrow\quad 
+			\alpha_x = 0 \\
+		\sin\alpha_y = 0 \quad\Rightarrow\quad 
+			\alpha_y = 0 \\
+		\sin\alpha_z = 0 \quad\Rightarrow\quad 
+			\alpha_z = 0 \\
+	\end{array} \right. \quad
+	\left\{ \begin{array}{ll}
+		\sin k_x a_1 = 0 \quad\Rightarrow\quad 
+			k_x = \cfrac{n_1\pi}{a_1} \\
+		\sin k_y a_2 = 0 \quad\Rightarrow\quad 
+			k_y = \cfrac{n_2\pi}{a_2} \\
+		\sin k_z a_3 = 0 \quad\Rightarrow\quad 
+			k_z = \cfrac{n_3\pi}{a_3} \\
+	\end{array} \right.
+\]
+
+Подставляя значения \( k_x, k_y, k_z \) в уравнение \( [3] \) 
+найдём собственную частоту:
+\[
+	\omega^2_{n_1 n_2 n_3} = c^2 \pi^2 \left[ 
+		\left( \cfrac{n_1}{a_1} \right)^2 + 
+		\left( \cfrac{n_2}{a_2} \right)^2 + 
+		\left( \cfrac{n_3}{a_3} \right)^2 \right]
+\]
+
+Наименьшая частоту будет при условии \( n_1 = n_2 = n_3 = 1 \)
+\[
+	\omega_{111} = \pm c\pi
+		\frac{\sqrt{a^2_1 + a^2_2 + a^2_3}}{a_1 a_2 a_3}
+\]
+
 \end{document}
