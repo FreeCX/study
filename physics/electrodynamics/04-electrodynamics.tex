@@ -2,6 +2,7 @@
 \input{../../.preambles/10-russian}
 \input{../../.preambles/20-math}
 \input{../../.preambles/30-physics}
+\usepackage{wrapfig}
 
 \begin{document}
 \maketitlepage{Факультет электроники и вычислительной техники}{физики}
@@ -54,10 +55,13 @@
 \( a_1, a_2 \) и \( a_3 \). Найти наименьшую собственную частоту.
 
 \emph{Решение:}
-
+\begin{wrapfigure}[10]{l}{0.5\textwidth}
+	\vspace{-2ex}
+	\includegraphics[width=0.5\textwidth]{pdf/image4_4}
+\end{wrapfigure}
 Воспользуемся волновым уравнение:
 \[
-	\nabla E + \frac{\omega^2}{c^2} E = 0 \eqno{1}
+	\nabla^2 E + \frac{\omega^2}{c^2} E = 0 \eqno{1}
 \]
 
 где \( \nabla^2 = \ppder{}{x} + \ppder{}{y} + \ppder{}{z} \)
@@ -108,7 +112,7 @@
 		\left( \cfrac{n_3}{a_3} \right)^2 \right]
 \]
 
-Наименьшая частоту будет при условии \( n_1 = n_2 = n_3 = 1 \)
+Наименьшая частота будет при условии \( n_1 = n_2 = n_3 = 1 \)
 \[
 	\omega_{111} = \pm c\pi
 		\frac{\sqrt{a^2_1 + a^2_2 + a^2_3}}{a_1 a_2 a_3}
