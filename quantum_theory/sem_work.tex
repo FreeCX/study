@@ -216,7 +216,8 @@
 
 где 
 \( 
-	a_2 = \cfrac{A_2}{A_1}, b_1 = \cfrac{B_1}{A_1}, b_2 = \cfrac{B_2}{A_1} 
+	a_2 = \cfrac{A_2}{A_1}, b_1 = \cfrac{B_1}{A_1}, b_2 = \cfrac{B_2}{A_1}, 
+	a_3 = \cfrac{A_3}{A_1}
 \). \\
 
 Решая систему уравнений находим:
@@ -226,6 +227,8 @@
 \]
 \[
 	b_2 = \frac{2}{n+1+(n-1)\cfrac{\beta}{ik}};\quad
+	a_3 = e^{-ikl}\left( \frac{2ne^{\beta l} + 2e^{-\beta l}}
+		{n+1+(n-1)\cfrac{\beta}{ik}}\right);\quad
 	n = \left( \frac{ik+1}{ik-1}\right)e^{-2\beta l}
 \]
 
@@ -247,6 +250,35 @@
 в ноль.
 
 \emph{Решение:}
+Пункт а:
+\[
+\begin{array}{ll}
+	\hat{p}_x = \int\limits_{-\infty}^{+\infty} \psi_{1}^{*} \psi_2 dx =
+		\int\limits_{-\infty}^{+\infty} \psi_{1}^{*} 
+		\left( -i\hbar\cfrac{\partial\psi_2}{\partial x} \right) dx = 
+		\left[ u = \psi_{1}^{*}, v = \psi_{2} \right] = \\ =
+		\left( \psi_{1}^{*}\psi_{2} \Big\vert\limits_{-\infty}^{+\infty} -
+		\int\limits_{-\infty}^{+\infty} \psi_{2} 
+		\left[ i\hbar \cfrac{\partial\psi_{1}^{*}}{\partial x} \right] dx \right) =
+		\int\limits_{-\infty}^{+\infty} \psi_{2} 
+		\left[ -i\hbar \cfrac{\partial\psi_{1}^{*}}{\partial x} \right] dx \right) 
+\end{array}
+\]
+
+Пункт б:
+\[
+	\hat{H}x\hat{p}_x
+\]
+
+Пункт в:
+\[
+	\hat{p}^2_x
+\]
+
+Пункт д:
+\[
+	\hat{H}
+\]
 
 \pagebreak
 %-------------------------------------------------------------------------------
@@ -255,6 +287,17 @@
 оператора \( \hat{A} = \cfrac{1}{x^n}\cfrac{d}{dx} \).
 
 \emph{Решение:}
+
+Найдём собственную функцию оператора \( \hat{A} \):
+\[
+	\hat{A}\psi(x) = A\psi(x); \quad
+	\cfrac{1}{x^n}\cfrac{d\psi}{dx} = A\psi; \quad
+	\cfrac{d\psi}{dx} = A x^n \psi
+\]
+\[
+	\cfrac{d\psi}{\psi} = A x^n dx \quad \Rightarrow \quad
+	\psi = C_1 exp\left[ A \frac{x^{n+1}}{n+1} \right]
+\]
 
 %-------------------------------------------------------------------------------
 
