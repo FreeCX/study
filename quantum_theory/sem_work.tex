@@ -250,35 +250,75 @@
 в ноль.
 
 \emph{Решение:}
-Пункт а:
+
+\emph{Пункт а:}
 \[
 \begin{array}{ll}
 	\hat{p}_x = \int\limits_{-\infty}^{+\infty} \psi_{1}^{*} \psi_2 dx =
 		\int\limits_{-\infty}^{+\infty} \psi_{1}^{*} 
 		\left( -i\hbar\cfrac{\partial\psi_2}{\partial x} \right) dx = 
-		\left[ u = \psi_{1}^{*}, v = \psi_{2} \right] = \\ =
-		\left( \psi_{1}^{*}\psi_{2} \Big\vert\limits_{-\infty}^{+\infty} -
+		\Big[ u = \psi_{1}^{*}, v = \psi_{2} \Big] = \\ =
+		\left( \psi_{1}^{*}\psi_{2} \Big\vert_{-\infty}^{+\infty} -
 		\int\limits_{-\infty}^{+\infty} \psi_{2} 
 		\left[ i\hbar \cfrac{\partial\psi_{1}^{*}}{\partial x} \right] dx \right) =
 		\int\limits_{-\infty}^{+\infty} \psi_{2} 
-		\left[ -i\hbar \cfrac{\partial\psi_{1}^{*}}{\partial x} \right] dx \right) 
+		\left[ -i\hbar \cfrac{\partial\psi_{1}^{*}}{\partial x} \right] dx =
+		\int\limits_{-\infty}^{+\infty} \psi_{2} \hat{p}_x \psi_{1}^{*}
 \end{array}
 \]
 
-Пункт б:
+\emph{Пункт б:}
 \[
-	\hat{H}x\hat{p}_x
+\begin{array}{ll}
+	x\hat{p}_{x} = \int\limits_{-\infty}^{+\infty} \psi_{1}^{*} x\hat{p}_{x}
+		\psi_{2} dx = -i\hbar \int\limits_{-\infty}^{+\infty} \psi_{1}^{*}
+		x\cfrac{\partial\psi_2}{\partial x} dx =
+		\Big[ u = -i\hbar\psi_{1}^{*}, v = \psi_{2} \Big] = \\ =
+		-i\hbar\left( \psi_{1}^{*} x \psi_{2} 
+		\Big\vert_{-\infty}^{+\infty} - 
+		\int\limits_{-\infty}^{+\infty} \psi_{2} 
+		\cfrac{\partial \psi_{1}^{*} x}{\partial x} dx \right) =
+		i\hbar\int\limits_{-\infty}^{+\infty} \psi_{2} 
+		\left( x\cfrac{\partial\psi_{1}^{*}}{\partial x} + \psi_{1}^{*} \right) =
+		i\hbar\int\limits_{-\infty}^{+\infty} \psi_{2} 
+		\hat{p}_x \left( \psi_{1}^{*} x \right)
+\end{array}
 \]
 
-Пункт в:
+\emph{Пункт в:}
 \[
-	\hat{p}^2_x
+\begin{array}{ll}
+	\hat{p}^2_x = \int\limits_{-\infty}^{+\infty} \psi_{1}^{*} \Big( \hat{p}_{x} 
+		\hat{p}_{x} \psi_{2} \Big) = 
+		\int\limits_{-\infty}^{+\infty} \psi_{1}^{*} \left( 
+		-\hbar^{2} \cfrac{\partial^{2} \psi_{2}}{\partial x^2} \right) =
+		\Big[ u = -\hbar^2 \psi_{1}^{*}, 
+		v = \cfrac{\partial \psi_{2}}{\partial x} \Big] = \\
+		-\hbar^{2} \psi_{1}^{*} \cfrac{\partial^{2} \psi_{2}}{\partial x^2} 
+		\Big\vert_{-\infty}^{+\infty} + \hbar^{2} \int\limits_{-\infty}^{+\infty}
+		\cfrac{\partial\psi_{2}}{\partial x}
+		\cfrac{\partial\psi_{1}^{*}}{\partial x} dx =
+		\hbar^{2}\left( 
+		\cfrac{\partial\psi_{1}^{*}}{\partial x} \psi_{2}\right)
+		\Big\vert_{-\infty}^{+\infty} -\hbar^{2} \int\limits_{-\infty}^{+\infty} 
+		\psi_{2} \cfrac{\partial^{2}\psi_{1}^{*}}{\partial x^2} dx = \\
+		\int\limits_{-\infty}^{+\infty} \psi_{2} 
+		\left( -\hbar^{2} \cfrac{\partial^{2}\psi_{1}^{*}}{\partial x^2} \right)dx =
+		\int\limits_{-\infty}^{+\infty} \psi_{2} 
+		\Big( \hat{p}_{x} \hat{p}_{x} \psi_{1}^{*} \Big) dx 
+\end{array}
 \]
 
-Пункт д:
+Отталкиваясь от пункта \emph{в}, можно интерполировать решение пункта \emph{д} по 
+трём координатам, так как \( \hat{H} \) можно выразить в виде:
 \[
-	\hat{H}
+	\hat{H} = \hat{T} + \hat{U} = \Big[ \text{ при условии }U = 0 \Big] = 
+	-\frac{\hbar^2}{2m}\nabla^{2} = -\frac{\hbar^2}{2m}\left( 
+	\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + 
+	\frac{\partial^2}{\partial z^2}\right)
 \]
+
+Действуя аналогично пункту \emph{в} можно доказать эрмитовость \( \hat{H} \).
 
 \pagebreak
 %-------------------------------------------------------------------------------
