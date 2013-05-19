@@ -127,8 +127,8 @@
 модель в виде:
 \[
     \left\{ \begin{array}{ll}
-        \cfrac{dP_1}{dt} = \cfrac{A_1}{B_1 + P_2^m} - q_1 P_1 \\
-        \cfrac{dP_2}{dt} = \cfrac{A_2}{B_2 + P_1^m} - q_2 P_2
+        \cfrac{dP_1}{dt} = \cfrac{A_1}{B_1 + P_2^m} - q P_1 \\
+        \cfrac{dP_2}{dt} = \cfrac{A_2}{B_2 + P_1^m} - q P_2
     \end{array} \right. \eqno{6}
 \]
 
@@ -143,28 +143,26 @@
 \[
     x_1 = \frac{P_1}{B^{1/m}_1};\quad
     x_2 = \frac{P_2}{B^{1/m}_2};\quad
-    L_1 = \frac{A_1}{q_1 B_1};\quad
-    L_2 = \frac{A_2}{q_2 B_2};\quad
+    L_1 = \frac{A_1}{q B_1};\quad
+    L_2 = \frac{A_2}{q B_2};\quad
     t' = qt
 \]
 
 опустив штрих у времени, перепишем систему \( [6] \) в виде:
 \[
     \left\{ \begin{array}{ll}
-        \cfrac{dx_1}{dt} = \left[ \cfrac{q}{B_1^{1/m}} \right]
-        \cdot\cfrac{L_1}{1+x_2^m\left( B_2/B_1\right)} - qq_1 x_1 \\
-        \cfrac{dx_2}{dt} = \left[ \cfrac{q}{B_2^{1/m}} \right]
-        \cdot\cfrac{L_2}{1+x_1^m\left( B_1/B_2\right)} - qq_2 x_2
+        \cfrac{dx_1}{dt} = \left[ \cfrac{1}{B_1^{1/m}} \right]
+        \cdot\cfrac{L_1}{1+\gamma x_2^m} - x_1 \\
+        \cfrac{dx_2}{dt} = \left[ \cfrac{1}{B_2^{1/m}} \right]
+        \cdot\cfrac{L_2}{1+\gamma^{-1} x_1^m} - x_2
     \end{array} \right. \eqno{7}
 \]
 
-Пологая, что \( B_1/B_2 \), \( qq_1 \), \( qq_2 \) и 
-\( \cfrac{q}{B^{1/m}} \) мало влияет на систему, тогда система уравнений 
-принимает вид:
+где \( \gamma = B_2 / B_1 \).
 \[
     \left\{ \begin{array}{ll}
-        \cfrac{dx_1}{dt} = \cfrac{L_1}{1+x_2^m} - x_1 \\
-        \cfrac{dx_2}{dt} = \cfrac{L_2}{1+x_1^m} - x_2  
+        \cfrac{dx_1}{dt} = \cfrac{L_1}{1+\gamma x_2^m} - x_1 \\
+        \cfrac{dx_2}{dt} = \cfrac{L_2}{1+\gamma^{-1} x_1^m} - x_2  
     \end{array} \right. \eqno{8}
 \]
 
@@ -174,26 +172,26 @@
 перепишем в виде
 \[
     \left\{ \begin{array}{ll}
-        \cfrac{dx_1}{dt} = \cfrac{L_1}{1+x_2^2} - x_1 \\
-        \cfrac{dx_2}{dt} = \cfrac{L_2}{1+x_1^2} - x_2  
+        \cfrac{dx_1}{dt} = \cfrac{L_1}{1+\gamma x_2^2} - x_1 \\
+        \cfrac{dx_2}{dt} = \cfrac{L_2}{1+\gamma^{-1} x_1^2} - x_2  
     \end{array} \right. \eqno{9}
 \]
 
-Решая систему приближенными методами и варьируя начальные концентрации 
-\( x_1 \) и \( x_2 \), а также \( L_1 \) и \( L_2 \) найдём графическое 
-отображение триггерного переключения системы. 
+Решая систему приближенным методом. Для начальных условий возьмём 
+\( x_{10} = 5 \), \( x_{20} = 1 \) и будём варьировать параметры 
+\( L_1, L_2 \) и \( \gamma \) системы. 
 
-\begin{figure}[!]
-    \center
-    \includegraphics[width=0.8\textwidth]{images/graph1}
-    \parbox{\textwidth}{\caption{Изменение концентрации продукта с течением времени}}
-    \includegraphics[width=0.8\textwidth]{images/graph2}
-    \parbox{\textwidth}{\caption{Зависимость \( x_1 \) от \( x_2 \)}}
-\end{figure}
+%\begin{figure}[!]
+%    \center
+%    \includegraphics[width=0.8\textwidth]{images/graph1}
+%    \parbox{\textwidth}{\caption{Изменение концентрации продукта с течением времени}}
+%    \includegraphics[width=0.8\textwidth]{images/graph2}
+%    \parbox{\textwidth}{\caption{Зависимость \( x_1 \) от \( x_2 \)}}
+%\end{figure}
 
-Полученные графики построены при значения \( x_{10} = 5 \), \( x_{20} = 1 \), 
-\( L_1 = 3 \) и \( L_2 = 5 \). При большых разницах в начальных значениях
-концентраций -- система быстро переходит из одного состояния в другое. 
+%Полученные графики построены при значения \( x_{10} = 5 \), \( x_{20} = 1 \), 
+%\( L_1 = 3 \) и \( L_2 = 5 \). При большых разницах в начальных значениях
+%концентраций -- система быстро переходит из одного состояния в другое. 
 
 \newpage
 
