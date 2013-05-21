@@ -4,6 +4,8 @@
 \input{../../.preambles/30-physics}
 \usepackage{wrapfig}
 
+\newcommand{\rot}{\mathrm{rot}\,}
+
 \begin{document}
 \maketitlepage{Факультет электроники и вычислительной техники}{физики}
 {Электродинамика}{4}{}{студент группы Ф-369\\Голубев~А.~В.}
@@ -45,7 +47,95 @@
 
 \emph{Решение:}
 
-\emph{Ответ:}
+Распространяющееся \( H \)--волны в волноводе с поглощением:
+\[
+	H = H_0 e^{-\alpha}
+\]
+
+Используя уравнения Максвелла
+\[
+	\rot\vec{E} = -\frac{\mu}{c}\pder{\vec{H}}{t};\quad
+	\rot\vec{H} = \frac{\eps}{c}\pder{\vec{E}}{t}
+\]
+
+положим \( E_z = 0 \) и выразим \( E_x, E_y, H_x, H_y \) через
+компоненту \( H_z \):
+\[
+	\left\{ \begin{array}{ll}
+		E_x = i\cfrac{\mu\omega}{c\kappa^2}\cfrac{\partial H_z}{\partial y} \\
+		E_y = -i\cfrac{\mu\omega}{c\kappa^2}\cfrac{\partial H_z}{\partial x}
+	\end{array} \right. \quad
+	\left\{ \begin{array}{ll}
+		H_x = \cfrac{ik}{\kappa^2}\cfrac{\partial H_z}{\partial x} \\
+		H_y = \cfrac{ik}{\kappa^2}\cfrac{\partial H_z}{\partial y}
+	\end{array} \right. \eqno{1}
+\]
+\[
+	\Delta_2 H_z + \kappa^2 H_z = 0 \eqno{2}
+\]
+
+где
+\(
+	\kappa^2 = \cfrac{\omega^2}{v^2} - k^2, 
+	v^2 = \cfrac{c^2}{\eps\mu}, 
+	\Delta_2 = \cfrac{\partial^2}{\partial x^2} + 
+		\cfrac{\partial^2}{\partial y^2} 
+\)
+
+Запишем модуль вектора \( \vec{H} \) через его компоненты:
+\[
+	\vert \vec{H}_t \vert^2 = \vert \vec{H} \vert^2 = 
+		H^*_x H_x + H^*_y H_y + H^*_z H_z
+\]
+
+с учётом уравнения \( [1] \) получим:
+\[
+	\vert \vec{H} \vert^2 = \vert H_z \vert^2 + 
+		\frac{k^2}{\kappa^2} \vert \nabla_2 H_z \vert^2
+\]
+
+Полный поток через сечение волновода можно записать в виде:
+\[
+	J = \int S^+_z dx dy = \frac{c}{8\pi} \int 
+		\left( E_x H^*_y - E_y H^*_x \right) dS
+\]
+
+подставляя значения из формулы \( [1] \), получим
+\[
+	J = \frac{\mu k \omega}{8\pi\kappa^4} \int \vert 
+		\nabla_2 H_z \vert^2 dS 
+\]
+
+Интегрируя по частям с учётом того, что на контуре сечения 
+\( H_z = 0 \)
+\[
+	J = -\frac{\mu k \omega}{8\pi\kappa^4} \int 
+		E^*_z \delta_2 H_z dS
+\]
+
+и принимая во внимание уравнение \( [2] \), получим:
+\[
+	J = \frac{\mu k \omega}{8\pi\kappa^2} \int 
+		\vert H_z \vert^2 dS
+\]
+
+Энергия поглощаемая стенками волновода не единице его длины за 
+единицу времени выражается формулой:
+\[
+	-\frac{dJ}{dz} = \frac{c\theta'}{8\pi} \oint
+		\vert \vec{H}_t \vert^2 dl = \frac{c\theta'}{8\pi} \oint 
+		\vert H_z \vert^2 +  \frac{k^2}{\kappa^2} 
+		\vert \nabla_2 H_z \vert^2
+\]
+
+Деля последнее условие на полный поток найдём коэффициент поглощения:
+\[
+	2\alpha = \frac{c\kappa^2\theta'}{k\omega\mu}
+	\frac{\oint\limits_{l} 
+		\left\{ |H_z|^2 + \frac{k^2}{\kappa^4}|\nabla_2 H_z|^2 \right\}dl
+	}{\oint\limits_{S} |H_z|^2 dS}
+\]
+
 
 \newpage
 
