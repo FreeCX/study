@@ -20,7 +20,7 @@
 
 Рассмотрим нерелятивистский случай \( v_\text{тепл.} \ll c \).
 
-Длина волны де Бройля выражается формулой: \( \lambda = \cfrac{h}{p} \)
+Длина волны де Бройля выражается формулой: \( \lambda = h/p\)
 
 Импульс теплового нейтрона можно выразить из формулы: 
 \[	
@@ -341,14 +341,16 @@
 
 Найдём собственную функцию оператора \( \hat{A} \):
 \[
-	\hat{A}\psi(x) = A\psi(x); \quad
-	\cfrac{1}{x^n}\cfrac{d\psi}{dx} = A\psi; \quad
-	\cfrac{d\psi}{dx} = A x^n \psi
+	\hat{A}\psi(x) = A_n \psi(x); \quad
+	\cfrac{1}{x^n}\cfrac{d\psi}{dx} = A_n\psi; \quad
+	\cfrac{d\psi}{dx} = A_n x^n \psi
 \]
 \[
-	\cfrac{d\psi}{\psi} = A x^n dx \quad \Rightarrow \quad
-	\psi = C_1 exp\left[ A \frac{x^{n+1}}{n+1} \right]
+	\cfrac{d\psi}{\psi} = A_n x^n dx \quad \Rightarrow \quad
+	\psi = C exp\left[ A_n \frac{x^{n+1}}{n+1} \right]
 \]
+
+где \( A_n \) -- собственное значение оператора.
 
 %-------------------------------------------------------------------------------
 
