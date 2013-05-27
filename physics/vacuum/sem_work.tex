@@ -1,6 +1,7 @@
 \input{../../.preambles/01-semester_work}
 \input{../../.preambles/10-russian}
 \input{../../.preambles/20-math}
+\input{../../.preambles/22-vectors}
 \input{../../.preambles/30-physics}
 \usepackage{wrapfig}
 
@@ -193,6 +194,126 @@
 эквивалентно распределению поля между двумя параллельными плоскостями.
 
 \emph{Решение:}
-\emph{Ответ:}
+
+\begin{wrapfigure}[14]{l}{0.5\textwidth}
+    \vspace{-4ex}
+    \includegraphics[width=0.5\textwidth]{images/im_03}
+    \includegraphics[width=0.5\textwidth]{images/im_04}
+\end{wrapfigure}
+
+Найдём радиус отверстия при котором пройдёт весь электронный поток. 
+Из рисунка:
+\[
+	\tan\theta = \frac{R_k}{6a} = \frac{R_\text{п}}{5a} \quad\Rightarrow\quad 
+	R_\text{п} \ge \frac{5}{6}R_k
+\]
+
+то есть при радиусе отверстия \( 5/6 R_k \) и более весь электронный поток 
+пройдёт через диафрагму. 
+
+Рассмотрим движение потока электронов после диафрагмы. Скорость электронов 
+\( v_{0z} = u + v_0 \), где \( v_0 \) -- скорость сообщаемая электронам 
+диафрагмой. Компонентам электрического потя только \( E_r \) создаваемая 
+пространственными зарядами.
+\[
+	E_r = \frac{\tau}{2\pi\eps_0 r}
+\]
+
+где \( \tau \) -- линейная плотность заряда. Выражим её через ток катода и 
+скорость электронного потока. 
+\[
+	\tau = 2\pi r^2 \rho = -\frac{j}{v_{0z}}\cdot 2\pi r^2 = 
+	-\frac{I_k}{v_{0z}}
+\]
+\[
+	E_r = - \frac{I_k}{2\pi\eps_0 v_{0z} r}
+\]
+\[
+	\vec{v}\times\vec{B} = \left|\begin{array}{ccc}
+		\vec{e}_r & \vec{e}_\phi & \vec{e}_z \\
+		\dot{r}   & r\dot{\phi}  & \dot{z}   \\
+		B_r       & 0            & B_z
+ 	\end{array}\right|
+\]
+
+Запишем уравнение движения в цилиндрической системе координат:
+\[
+	\left\{ \begin{array}{ll}
+		\ddot{r} - r(\dot{\phi})^2 = -\left|\cfrac{e}{m}\right|
+			\left( E_r + B_z r\dot{\phi} \right) \\
+		\cfrac{1}{r}\cfrac{d}{dt}(r^2 \dot{\phi}) = 
+			-\left|\cfrac{e}{m}\right| 
+			\left( B_r \dot{z} - B_z \dot{r} \right)
+	\end{array} \right. \eqno{1}
+\]
+
+Пусть \( r(z) \) -- траектория электрона в потоке. Вращая данную траекторию 
+вокруг оси \( z \) получим поверхность поперечного сечение которой круг 
+радиуса \( r \) -- текущая координата крайнего электрона. Рассмотрим поток 
+магнитного поля через него.
+\[
+	\Phi_{(r,z)} = 2\pi \int\limits_{0}^{r} B_z r dr \eqno{2}
+\]
+
+Запишем производную потока по времени через частные производные:
+\[
+	\der{\Phi}{t} = \pder{\Phi}{r}\cdot\der{r}{t} + 
+		\pder{\Phi}{z}\cdot\der{z}{t} = 2\pi\left[ B_z r\dot{r} + 
+		\dot{r} \int\limits_{0}^{r} \pder{B_z}{z} rdr \right]
+\]
+
+Подставляя в неё 
+\[
+	\div\vec{B} = \frac{1}{r}\pder{}{r}(rB_r) + \pder{B_z}{z} = 0
+\]
+
+получаем
+\[
+	\der{\Phi}{t} = 2\pi r\left[ B_z \dot{r} - \dot{z} B_r \right]
+\]
+
+Получаем уравнение левая часть которого совпадает с \( [1.2] \). Подставляя в 
+\( [1.2] \) предыдущее уравнение
+\[
+	\frac{1}{r}\pder{}{t}(r^2\dot{\phi}) = \left|\cfrac{e}{m}\right|
+		\frac{1}{2\pi r}\pder{\Phi}{t} \Rightarrow
+	\Phi - \Phi_0 = 2\pi\left( r^2 \dot{\phi} - r_0^2 \dot{\phi}_0 \right)
+\]
+
+Положим, что начальная плоскость находится в плоскости диафрагмы 
+\( \dot{\phi}_0 \) и магнитное поле отсутствует \( \Phi_0 = 0 \), тогда
+\[
+	\Phi = 2\pi\left|\cfrac{m}{e}\right| r^2 \dot{\phi}
+\]
+
+Так как поле имеет только компоненту \( B_z = B_0 \), тогда
+\[
+	\Phi = 2\pi\int B_0 rdr = \pi r^2 B_0
+\]
+\[
+	\pi r^2 B_0 = 2\pi\left|\cfrac{m}{e}\right| r^2 \dot{\phi} 
+		\quad\Rightarrow\quad \dot{\phi} = \frac{1}{2} B_0
+		\left|\cfrac{e}{m}\right|
+\]
+
+Подставляя полученную \( \dot{\phi} \) в уравнение \( [1.1] \) получаем 
+\[
+	\ddot{r} - r\left( \frac{1}{2}\left|\frac{e}{m}\right| B_0 \right)^2 = 
+		-\left|\frac{e}{m}\right| \left( E_r + \frac{1}{2}B_0^2 r 
+		\left|\frac{e}{m}\right| \right)
+\]
+
+Преобразуя и подставяя значение для \( E_r \) получим
+\[
+	\ddot{r} + r\left|\cfrac{e}{m}\right|^2 \frac{B_0^2}{4} - 
+		\left|\cfrac{e}{m}\right|\frac{I_k}{2\pi\eps_0 r v_{0z}} = 0
+\]
+
+Делая замену вида \( \ddot{r} = v_{0z}^2 \cfrac{d^2 r}{dz^2} \) перейдём к 
+уравнению вида:
+\[
+	\dder{r}{z} + \left|\cfrac{e}{m}\right| \frac{B_0^2}{4v_{0z}^2} r - 
+		\left|\cfrac{e}{m}\right| \frac{I_k}{2\pi\eps_0 r v_{0z}^3} = 0
+\]
 
 \end{document}
