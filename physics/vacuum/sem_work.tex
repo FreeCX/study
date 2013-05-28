@@ -50,6 +50,7 @@
 		\ddot{z} = \cfrac{q}{m}E
 	\end{array} \right.
 \]
+
 где обозначим за \( \omega_c = \cfrac{q}{m}B \)
 
 Найдём время за которое электрон достигнет экрана. Из уравнения 
@@ -86,6 +87,7 @@
 		\ddot{y} = -\omega_c\dot{x}
 	\end{array}\right.
 \]
+
 Положим решение в виде \( \Phi = x + iy \). Домножая второе уравнение на 
 мнимую единицу и складывая получим:
 \[
@@ -315,5 +317,63 @@
 	\dder{r}{z} + \left|\cfrac{e}{m}\right| \frac{B_0^2}{4v_{0z}^2} r - 
 		\left|\cfrac{e}{m}\right| \frac{I_k}{2\pi\eps_0 r v_{0z}^3} = 0
 \]
+
+Так как поле \( B(z) = B_0 = const \) и считая, что слева от диафрагмы 
+магнитное поле отсутствует. Тогда из предыдущего уравнения следует, что 
+при радиуса крайнего электрона 
+\[
+	r^2_0 = \frac{2I_k}{\pi\eps_0 B^2_0 v_{0z}} \eqno{3}
+\]
+
+\( \cfrac{d^2 r}{dz^2} = 0 \) означает отсутствие ускорения по радиусу 
+вдоль траектории электрона. Электронный поток, удовлетворяющий условию 
+\( [3] \) носит название бриллюэновского потока.
+
+Рассмотрим условие, когда поток незначительно удаляется от равновесного 
+радиуса. Введём \( r = r_0 ( 1 + \delta ) \), где \( \delta \ll 1 \) -- 
+смещение крайнего электрона в потоке от положения равновесия. Используя 
+разложение 
+\[ 
+	\frac{1}{r} = \frac{1}{r_0(1+\delta)} = \frac{1}{r_0}(1-\delta)
+\] 
+
+перейдём к уравнению
+\[
+	\dder{\delta}{z} + \alpha^2 \delta = 0
+\]
+
+где \( \alpha = \left|\cfrac{e}{m}\right|\cfrac{B^2_0}{2v^2_{0z}} \). \\
+
+Решение уравнения можно представить в виде:
+\[
+	\delta = R_p \cos\left( \alpha z + \beta_0 \right)
+\]
+
+где длина волны пульсации потока:
+\[
+	\alpha = \cfrac{2\pi}{\lambda_p} \quad\Rightarrow\quad
+		\lambda_p = \left|\cfrac{m}{e}\right|\cfrac{4\pi v^2_{0z}}{B^2_0}
+\] 
+
+Период пульсации 
+\[ T_p = \frac{\lambda_p}{c} \]
+
+Радиус пульсации можно найти используя начальные условия:
+\[
+	R_p = \sqrt{ [\delta(0)]^2 + 
+		\left[ \frac{\delta'(0)}{\alpha} \right]^2 }
+\]
+
+где \( \delta(0) = \cfrac{R_0}{r_0} - 1 \), 
+\( \delta'(0) = \cfrac{r'(0)}{r_0} = -\cfrac{1}{r_0}\tan\theta \)
+
+\begin{figure}[h]
+	\begin{minipage}[h]{0.5\linewidth}
+		\center{\includegraphics[width=1.0\linewidth]{images/im_05}}
+	\end{minipage}
+	\begin{minipage}[h]{0.5\linewidth}
+		\center{\includegraphics[width=1.0\linewidth]{images/im_06}}
+	\end{minipage}
+\end{figure}
 
 \end{document}
