@@ -18,6 +18,52 @@
 
 \emph{Решение:}
 
+\[
+	\begin{array}{ll}
+	\left[\cfrac{v^2}{c^2}\right]^2 \eps_{zz}\left( e^2_{xx} - 
+		\vert \eps_{xy} \vert^2 \right) - \cfrac{v^2}{c^2}
+		\Big[ \left( 1 + \cos^2\theta \right) \eps_{xx}\eps_{zz} + \\
+		\left( 1 - \cos^2\theta \right) \left( \eps^2_{xx} - 
+		\vert\eps_{xy}\vert^2 \right)\Big] + \left( \eps_{xx}\sin^2\theta + 
+		\eps_{zz}\cos^2\theta \right) = 0
+	\end{array}
+\]
+где \( \theta \) -- угол между направлением волнового вектора \( k_0 \) 
+и направлением поля \( H_0 \)
+
+Рассмотрим первый случай, когда волна распространяется вдоля поля 
+\( \vec{H_0} \). В этом случае угол \( \theta = 0 \) и уравнение преобразуется 
+к виду (сокртив на общий множитель \( \eps_{zz} \)):
+\[
+	\Big[ \frac{v^2}{c^2} \Big]^2 \Big( \eps^2_{xx} - 
+		\vert\eps_{xy}\vert^2 \Big) - 2\frac{v^2}{c^2}\eps_{xx} + 1 = 0
+\] 
+
+Решая систему относительно \( v^2 / c^2 \):
+\[
+	\frac{v^2}{c^2} = \frac{\eps_{xx} \pm \vert \eps_{xy} \vert}
+		{\eps^2_{xx} - \vert\eps_{xy}\vert^2} = 
+		\frac{1}{\eps_{xx} \pm \vert\eps_{xy}\vert}
+\]
+
+Подставляя в уравнение ...
+
+Рассмотрим случай, когда волна распространяется поперёк поля. В этом случае 
+угол \( \theta = \pi / 2 \) и фазовая скорость определяется уравнением:
+\[
+	\Big[ \cfrac{v^2}{c^2} \Big]^2 \eps_{zz}\left( \eps^2_{xx} - 
+		\vert\eps_{xy}\vert^2 \right) - \cfrac{v^2}{c^2}
+		\Big[ \eps_{xx}\eps_{zz} + \eps^2_{xx} - 
+		\vert\eps_{xy}\vert^2\Big] + \eps_{xx} = 0
+\]
+
+Решая систему относительно \( v^2 / c^2 \):
+\[
+	\frac{v^2_1}{c^2} = \frac{1}{\eps_{zz}};\quad
+	\frac{v^2_2}{c^2} = \frac{\eps_{xx}}{\eps^2_{xx} - 
+		\vert\eps_{xy}\vert^2}
+\]
+
 \emph{Ответ:}
 
 \newpage
@@ -30,6 +76,53 @@
 поляризации отраженной и прошедшей волн.
 
 \emph{Решение:}
+
+Запишем формулы Френеля для случая изотропных, непроводящих и немагнитных 
+сред:
+\[
+	\begin{array}{ll}
+		R_{\Vert} = A_{\Vert}\cfrac{\tg(\alpha-\beta)}{\tg(\alpha+\beta)};
+		\hspace{13ex}
+		R_{\bot} = -A_{\bot}\cfrac{\sin(\alpha-\beta)}{\sin(\alpha+\beta)} \\
+		D_{\Vert} = A_{\Vert}\cfrac{2\cos\alpha\cos\beta}
+			{\sin(\alpha+\beta)\cos(\alpha-\beta)};\quad
+		D_{\bot} = A_{\bot}\cfrac{2\cos\alpha\sin\beta}{\sin(\alpha+\beta)}
+	\end{array}
+\]
+
+где \( A, R, D \) -- амплитуды электрических векторов падающей, отраженной 
+и преломленной волн.
+
+Из закона Снеллиуса (полагая \( n_0 = 1 \)): \( n\sin\beta = \sin\alpha \). 
+Отсюда же можно записать соотношение для \( \cos\beta \):
+\[
+	\cos\beta = \sqrt{1-\frac{\sin^2\alpha}{n^2}}
+\]
+
+Преобразуя систему уравнений получим:
+\[
+	\begin{array}{ll}
+		R_{\Vert} = \cfrac{\cos\alpha\sin\alpha - \cos\beta\sin\beta}
+			{\cos\alpha\sin\alpha + \cos\beta\sin\beta}A_{\Vert} = 
+			\cfrac{n^2\cos\alpha - \sqrt{n^2-\sin^2\alpha}}
+			{n^2\cos\alpha + \sqrt{n^2-\sin^2\alpha}} A_{\Vert} \\
+		R_{\bot} = \cfrac{\cos\alpha\sin\beta - \sin\alpha\cos\beta}
+			{\cos\alpha\sin\beta + \sin\alpha\cos\beta}A_{\bot} = 
+			\cfrac{\cos\alpha - \sqrt{n^2-\sin^2\alpha}}
+			{\cos\alpha + \sqrt{n^2-\sin^2\alpha}}A_{\bot} \\
+		D_{\Vert} = \cfrac{2\cos\alpha\sin\beta}
+			{\cos\beta\sin\beta + \cos\alpha\sin\alpha}A_{\Vert} = 
+			\cfrac{2n\cos\alpha}{n^2\cos\alpha + \sqrt{n^2-\sin^2\alpha}}
+			A_{\Vert} \\
+		D_{\bot} = \cfrac{2\cos\alpha\sin\beta}
+			{\cos\alpha\sin\beta + \sin\alpha\cos\beta}A_{\bot} =
+			\cfrac{2\cos\alpha}{\cos\alpha + \sqrt{n^2-\sin^2\alpha}}
+			A_{\bot}
+	\end{array}
+\]
+
+В текущем случая \( A = J \) и \( J_{\Vert} = J_0\cos\alpha \), 
+\( J_{\bot} = J_0\sin\alpha \).
 
 \emph{Ответ:}
 
