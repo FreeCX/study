@@ -64,16 +64,15 @@
 		\vert\eps_{xy}\vert^2}
 \]
 
-\emph{Ответ:}
-
 \newpage
 
-\emph{Задача №3.51}: В однородном, прозрачном и немагнитном диэлектрике 
-имеется постоянное магнитное поле \( H_0 \), направленное перпендикулярно 
-к его поверхности. На эту поверхность в направлении магнитного поля \( H_0 \) 
-падает в вакууме плоская монохроматическая и линейно поляризованная волна, 
-интенсивность которой \( J_0 \). Определить интенсивность и состояние 
-поляризации отраженной и прошедшей волн.
+\emph{Задача №3.51}: В вакууме распространяется плоская монохроматичная 
+волна, которая под углом \( \alpha \) падает на плоскую границу ионосферы. 
+Рассматривая ионосферу как разреженный электронный газ (наличие тяжелых 
+ионов можно не учитывать), вычислить коэффициенты отражения и прохождения. 
+Показать, что если \( \omega^2 < \cfrac{4\pi Ne^2}{m} \) (\(N\) -- число 
+электронов в единице объёма; \( \omega \) -- частота световой волны), то 
+имеет место полное отражение.
 
 \emph{Решение:}
 
@@ -105,26 +104,90 @@
 		R_{\Vert} = \cfrac{\cos\alpha\sin\alpha - \cos\beta\sin\beta}
 			{\cos\alpha\sin\alpha + \cos\beta\sin\beta}A_{\Vert} = 
 			\cfrac{n^2\cos\alpha - \sqrt{n^2-\sin^2\alpha}}
-			{n^2\cos\alpha + \sqrt{n^2-\sin^2\alpha}} A_{\Vert} \\
+			{n^2\cos\alpha + \sqrt{n^2-\sin^2\alpha}} A_{\Vert} = 
+			r_{\Vert} A_{\Vert} \\
 		R_{\bot} = \cfrac{\cos\alpha\sin\beta - \sin\alpha\cos\beta}
 			{\cos\alpha\sin\beta + \sin\alpha\cos\beta}A_{\bot} = 
 			\cfrac{\cos\alpha - \sqrt{n^2-\sin^2\alpha}}
-			{\cos\alpha + \sqrt{n^2-\sin^2\alpha}}A_{\bot} \\
+			{\cos\alpha + \sqrt{n^2-\sin^2\alpha}}A_{\bot} = 
+			r_{\bot} A_{\bot} \\
 		D_{\Vert} = \cfrac{2\cos\alpha\sin\beta}
 			{\cos\beta\sin\beta + \cos\alpha\sin\alpha}A_{\Vert} = 
 			\cfrac{2n\cos\alpha}{n^2\cos\alpha + \sqrt{n^2-\sin^2\alpha}}
-			A_{\Vert} \\
+			A_{\Vert} = d_{\Vert} A_{\Vert} \\
 		D_{\bot} = \cfrac{2\cos\alpha\sin\beta}
 			{\cos\alpha\sin\beta + \sin\alpha\cos\beta}A_{\bot} =
 			\cfrac{2\cos\alpha}{\cos\alpha + \sqrt{n^2-\sin^2\alpha}}
-			A_{\bot}
+			A_{\bot} = d_{\bot} A_{\bot}
 	\end{array}
 \]
 
-В текущем случая \( A = J \) и \( J_{\Vert} = J_0\cos\alpha \), 
-\( J_{\bot} = J_0\sin\alpha \).
+Для определения \( n \) рассмотрим распространение волны:
+\[
+	\vec{E} = \vec{E}_0 e^{i(\vec{k}\vec{r} - \omega t)}
+\]
 
-\emph{Ответ:}
+При соотношении \( \cfrac{v}{c} \gg 1 \) движение частицы можно представить:
+\[
+	m\dder{r}{t} = e\vec{E}
+\]
+
+Выберем начало координат в начальном положении частицы:
+\[
+	\vec{E} = \vec{E}_0 e^{-i\omega t} \quad \vec{k}\vec{r} \ll \omega t
+\]
+
+Полагая начальную скорость равную нулю:
+\[
+	\vec{r} = -\frac{e}{m\omega^2}\vec{E}
+\]
+
+Скорость частицы:
+\[
+	\vec{v} = \der{r}{t} = -\frac{e}{m\omega^2}\der{E}{t} = i\frac{e}{m\omega}\vec{E}
+\]
+
+Отсюда плотность тока:
+\[
+	\vec{j} = Ne\vec{v} = i\frac{Ne^2}{m\omega}\vec{E}
+\]
+
+И проводимость:
+\[
+	\sigma = i\frac{Ne^2}{m\omega}
+\]
+
+Тогда вектор электрической индукции:
+\[
+	\eps\vec{E} = \vec{D} = \vec{E} + 4\pi N e \vec{r} = 
+		E - 4\pi N \frac{e^2}{m\omega^2}\vec{E} 
+\]
+
+Отсюда получаем формулу для диэлектрической проницаемости:
+\[
+	n^2 = \eps = 1 - 4\pi N \frac{e^2}{m\omega^2}
+\]
+
+Если \( \omega^2 < \cfrac{4\pi Ne^2}{m} \), то показатель преломления 
+\( n^2 < 0 \) и величина \\ \( \sqrt{n^2 - \sin^2\alpha} \) -- чисто мнимая 
+величина для любых значений угла \( \alpha \) и тогда
+\[
+	\vert r_{\Vert} \vert = \vert r_{\bot} \vert = 1 
+\]
+
+Тогда коэффициент отражения
+\[
+	\rho = \frac{\vert r_{\Vert} A_{\Vert} \vert^2 + 
+		\vert r_{\bot} A_{\bot} \vert^2}{ \vert A_{\Vert} \vert^2 + 
+		\vert A_{\bot} \vert^2} = 1
+\]
+
+Коэффициент прохождения
+\[
+	\tau = \frac{\vert d_{\Vert} A_{\Vert} \vert^2 + 
+		\vert d_{\bot} A_{\bot} \vert^2}{ \vert A_{\Vert} \vert^2 + 
+		\vert A_{\bot} \vert^2}
+\]
 
 \newpage
 
@@ -228,7 +291,6 @@
 	}{\oint\limits_{S} |H_z|^2 dS}
 \]
 
-
 \newpage
 
 \emph{Задача №3.74}: Определить собственные электромагнитные колебания 
@@ -246,7 +308,12 @@
 	\nabla^2 E + \frac{\omega^2}{c^2} E = 0 \eqno{1}
 \]
 
-где \( \nabla^2 = \ppder{}{x} + \ppder{}{y} + \ppder{}{z} \)
+где 
+\( 
+	\nabla^2 = \cfrac{\partial^2}{\partial x^2} + 
+		\cfrac{\partial^2}{\partial y^2} + 
+		\cfrac{\partial^2}{\partial z^2} 
+\)
 
 Граничные условия: \( E = 0 \) при 
 \(
