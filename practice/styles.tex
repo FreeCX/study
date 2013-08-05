@@ -1,0 +1,75 @@
+%%% Макет страницы %%%
+\geometry{a4paper,top=2cm,bottom=2cm,left=3cm,right=1cm}
+
+%%% Кодировки и шрифты %%%
+\renewcommand{\rmdefault}{ftm}      % Включаем Times New Roman
+
+%%% Выравнивание и переносы %%%
+\sloppy					            % Избавляемся от переполнений
+\clubpenalty=10000		            % Запрещаем разрыв страницы после первой строки абзаца
+\widowpenalty=10000                 % Запрещаем разрыв страницы после последней строки абзаца
+
+%%% Изображения %%%
+\graphicspath{{images/}}            % Пути к изображениям
+
+%%% Цвета гиперссылок %%%
+\definecolor{linkcolor}{rgb}{0,0,0}
+\definecolor{citecolor}{rgb}{0,0,0}
+\definecolor{urlcolor}{rgb}{0,0,0}
+\hypersetup{
+    colorlinks, linkcolor={linkcolor},
+    citecolor={citecolor}, urlcolor={urlcolor}
+}
+
+%%% Устанавливаем полуторный интервал %%%
+\linespread{1.3} 
+
+%%% Настройка подписей к изображениям и таблицам %%%
+\DeclareCaptionLabelFormat{gostfigure}{Рисунок #2}
+\DeclareCaptionLabelFormat{gosttable}{Таблица #2}
+\DeclareCaptionLabelSeparator{gost}{~---~}
+\captionsetup{labelsep=gost}
+\captionsetup[figure]{labelformat=gostfigure}
+\captionsetup[table]{labelformat=gosttable}
+\renewcommand{\thesubfigure}{\asbuk{subfigure}}
+
+%%% Настройка формата заголовков %%%
+\titleformat{\chapter}[block]
+    {\centering\normalsize}
+    {\thechapter}
+    {1em}
+    {}{}
+ 
+\titleformat{\section}
+    {\centering\normalsize}
+    {\thesection}
+    {1em}{}
+ 
+\titleformat{\subsection}
+    {\centering\normalsize}
+    {\thesubsection}
+    {1em}{}
+ 
+%%% Настройка вертикальных и горизонтальных отступов %%%
+\titlespacing*{\chapter}{0pt}{-30pt}{8pt}
+\titlespacing*{\section}{\parindent}{*2}{*2}
+\titlespacing*{\subsection}{\parindent}{*2}{*2}
+
+%%% Оглавление %%%
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+\renewcommand{\cfttoctitlefont}{\hspace{0.38\textwidth}\MakeUppercase}
+\renewcommand{\cftchapfont}{\normalfont}
+\renewcommand{\cftbeforetoctitleskip}{-2em}
+\renewcommand{\cftaftertoctitleskip}{1em}
+\renewcommand{\cftbeforechapskip}{0.5em}
+\renewcommand{\cftparskip}{-1mm}
+
+%%% Отступ в списках %%%
+\setlist{nolistsep}
+
+%%% Нумерация формул %%%
+\numberwithin{equation}{subsection}
+\setcounter{tocdepth}{2}
+
+%%% Нумерация страниц %%%
+\setcounter{page}{3}
