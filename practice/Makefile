@@ -1,9 +1,6 @@
 PRT=practice
 
 all:
-	# latex $(PRT)
-	# bibtex $(PRT)
-	# latex $(PRT)
 	pdflatex $(PRT)
 	pdflatex $(PRT)
 clean: 
