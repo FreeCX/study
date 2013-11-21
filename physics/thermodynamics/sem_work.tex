@@ -2,7 +2,10 @@
 \usepackage[russian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[derivative]{hedmaths}
+\usepackage{graphicx}
+\usepackage{wrapfig}
 
+\graphicspath{{img/}}
 \newcommand{\sign}{\mathrm{sign\,}}
 
 \faculty{Факультет электроники и вычислительной техники}
@@ -19,6 +22,11 @@
 теплоты \( Q \), получаемое рабочим телом за один цикл. \\
 
 \emph{Решение:}
+
+\begin{wrapfigure}[9]{l}{0.5\textwidth}
+    \vspace{-2ex}
+    \includegraphics[width=0.5\textwidth]{img01}
+\end{wrapfigure}
 
 Количество теплоты получаемое телом за один цикл:
 \[
@@ -46,6 +54,33 @@
 б) Можно ли вычислить работу, совершаемую газом при расширении? \\
 
 \emph{Решение:}
+
+а) Запишем внутренюю энергию идеального газа:
+
+\[
+	U = \frac{i}{2}\nu RT, \text{ где i = 5 для } N_2
+\]
+
+Найдём приращение внутреней энергии газа:
+\begin{equation}
+	dU = \frac{i}{2}\nu RdT
+	\label{eq:dot}
+\end{equation}
+
+Воспользуемся уравнение состояния и найдём \( dT \):
+\[
+	p_1 V_1 = \nu RT_1, \quad
+	p_2 V_2 = \nu RT_2 \Rightarrow
+	dT = T_2 - T_1 = \frac{p_2 V_2 - p_1 V_1}{\nu R}
+\]
+
+Подставляя последнюю формулу в \label{eq:dot} получаем, с учётом того 
+происходит расширение газа, т.е. внутреняя энергия уменьшается:
+\[
+	dU = -\frac{5}{2}\left( p_1 V_1 - p_2 V_2 \right) = -0.125 \text{ (МДж)}
+\]
+
+б) Нет, так как в задаче не указан характер процесса расширения.
 
 \newpage
 \emph{Задача №2.78}: Гармонический осциллятор совершает колебания с 
@@ -117,8 +152,7 @@
 		\left. -\frac{1}{\pi}\sqrt{a^2-x^2}\right|_{-a}^{+a} = 0 
 \]
 
-Найдём среднее \( <|x|> \). Для этого воспользуемся следующими
-формулами:
+Найдём среднее \( <|x|> \). Воспользуемся следующими формулами:
 \[
 	|x|=x\cdot\sign(x), \quad \frac{|x|}{x} = \sign(x)
 \]
@@ -261,53 +295,24 @@
 
 \emph{Решение:}
 
-% \[
-% 	\left( \pder{S}{P} \right)_V = 
-% 		\frac{C_V}{T} \left( \pder{T}{P} \right)_V
-% \]
-
-% Воспользуемся формулами:
-% \[
-% 	C_V = \left( \pder{U}{T} \right)_V, \quad
-% 	\frac{1}{T} = \left( \pder{S}{U} \right)
-% \]
-
-% Получаем:
-% \[
-% 	\left( \pder{S}{P} \right)_V = 
-% 		\frac{C_V}{T}\left( \pder{T}{P} \right) = 
-% 		\left( \pder{U}{T} \right)_V 
-% 		\left( \pder{T}{P} \right)_V 
-% 		\left( \pder{S}{U} \right)_V = 
-% 		\left( \pder{S}{P} \right)_V
-% \]
+Используя зависимость энтропии от температуры при постоянном объёме, которое 
+выражается через изохорную темлоемкость:
 \[
-	dU = TdS - PdV
-\]
-
-Величины \( S, V, T \) связаны функциональным соотношением
-\( f(S, V, T) = 0 \)
-
-Для первого уравнения:
-\[
-	\left( \pder{U}{P} \right)_V = 
-		T\left( \pder{S}{P} \right)_P - P\left( \pder{V}{P} \right)_T
+	\frac{C_V}{T} = \left( \pder{S}{T} \right)_V
 \]
 \[
-	\left( \pder{S}{P} \right)_V = 
-		-\left( \pder{S}{T} \right)_V \left( \pder{T}{P} \right)_V = 
-		\frac{C_V}{T}\left( \pder{T}{P} \right)_V
+	\left( \pder{S}{P} \right)_V = \left( \pder{S}{T} \right)_V
+		\left( \pder{T}{P} \right)_V = \left( \pder{S}{P} \right)_V
 \]
 
-Для второго уравнения:
+Используя зависимость энтропии от температуры при постоянном давлении, которое 
+выражается через изобарную темлоемкость:
 \[
-	\left( \pder{U}{V} \right)_P = 
-		T\left( \pder{S}{V} \right)_P - P
+	\frac{C_p}{T} = \left( \pder{S}{T} \right)_p
 \]
 \[
-	\left( \pder{S}{V} \right)_P = 
-		-\left( \pder{S}{T} \right)_P \left( \pder{T}{V} \right) = 
-		\frac{C_P}{T}\left( \pder{T}{V} \right)_P
+	\left( \pder{S}{V} \right)_p = \left( \pder{S}{T} \right)_p
+		\left( \pder{T}{V} \right)_p = \left( \pder{S}{V} \right)_p
 \]
 
 \newpage
@@ -343,8 +348,14 @@
 
 Согласно уравнению \( \ref{eq:3} \) и \( U = const \):
 \[
-	\Delta U = \mu C_V \Delta T - \mu^2 a 
+	\Delta U = \nu C_V \Delta T - \nu^2 a 
 		\left( \frac{1}{V_2} - \frac{1}{V_1} \right) = 0
+\]
+
+Окончательно получаем:
+\[
+	\Delta T = \nu\frac{a}{C_V}\left( \frac{1}{V_1} - \frac{1}{V_2} \right) = 
+		0.25 \text{ } (^\circ C)
 \]
 
 \end{document}
