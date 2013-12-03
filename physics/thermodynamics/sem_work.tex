@@ -219,7 +219,7 @@
 	p(V_m) = \frac{RT}{V_m - b} - \frac{a}{V^2_m}
 \]
 
-Проинтегрируем выражение от \( V_2 \) до \( V_1 \) и получим \( A \):
+Проинтегрируем выражение от \( V_1 \) до \( V_2 \) и получим \( A \):
 \begin{equation}
 	A = \int\limits_{V_1}^{V_2} p(V_m) dV_m = 
 		\int\limits_{V_1}^{V_2} \left[ 
@@ -313,6 +313,57 @@
 \[
 	\left( \pder{S}{V} \right)_p = \left( \pder{S}{T} \right)_p
 		\left( \pder{T}{V} \right)_p = \left( \pder{S}{V} \right)_p
+\]
+
+Теперь докажем соотношение: 
+\[ \left( \pder{S}{T} \right)_V = \frac{C_V}{T} \].
+
+Имеем \( d\Phi = Pdx + Qdy \) формулу для полного дифференциала, где 
+\( d\Phi \) -- функция состояния в переменных \( x \) и \( y \), а 
+\( P \) и \( Q \) удовлетворяют следующим соотношениям:
+\[
+	P = \left( \pder{\Phi}{x} \right)_y, \quad
+	Q = \left( \pder{\Phi}{y} \right)_x, \quad
+	\left( \pder{P}{y} \right)_x = \left( \pder{Q}{x} \right)_y
+\] 
+
+Запишем термодинамическое тождество:
+\[
+	SdT = dU + PdV
+\]
+
+Можно заключить, что энтропия \( S = S(T, V) \) является функцией от 
+переменных \( T \) и \( V \), тогда её дифференциал равен:
+\[
+	dS = \frac{dU}{T} + \frac{P}{T}dV \text{ или }
+	dS = C_V\frac{dT}{T} + \left( \pder{P}{T} \right)_V dV
+\]
+
+Воспользовавщись формулой для полного дифференциала, запишем:
+\[
+	dS = \left( \pder{S}{T} \right)_V dT + 
+		\left( \pder{S}{V} \right)_T dV
+\]
+
+Сравнивая формулы заключаем, что:
+\[
+	\left( \pder{S}{T} \right)_V = \frac{C_V}{T}
+\]
+
+Аналогично выводится формула и для второго случая. Имеем формулу: 
+\[
+	dS = C_p \frac{dT}{T} - \left( \pder{V}{T} \right)_P dP
+\]
+
+Сравнивая с
+\[
+	dS = \left( \pder{S}{T} \right)_P dT + 
+		\left( \pder{S}{V} \right)_T dP
+\]
+
+Заключаем, что
+\[
+	\frac{C_P}{T} = \left( \pder{S}{T} \right)_P
 \]
 
 \newpage
