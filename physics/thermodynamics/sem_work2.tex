@@ -1,0 +1,190 @@
+\documentclass[14pt,final,titlepage,pscyr]{hedwork}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[derivative]{hedmaths}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+
+\graphicspath{{img/}}
+
+\faculty{Факультет электроники и вычислительной техники}
+\department{<<Физика>>}
+\subject{Термодинамика и статистическая физика}
+\variant{6}
+\student[m]{студент группы Ф-469\\Голубев А. В.}
+\teacher[m]{доцент Крючков С. В.}
+
+\begin{document}
+\maketitle
+\emph{Задача №37}: Вычислите работу, совершенную киломолем газа при 
+изотермическом расширении от объёма \( V_1 \) до объёма \( V_2 \), если 
+состояние газа описывается: а) уравнением Клапейрона--Менделеева; б) уравнением 
+Ван-дер-Ваальса.
+
+\emph{Решение:}
+а) имеем выражение \( pV = \mu RT = const \), тогда можно записать 
+\( pV = p_1 V_1 \) откуда выражаем \( p = p_1 V_1 / V \) и подставляем в 
+уравнение для работы \( dA = pdV \). Интегрируя выражение от \( V_1 \) до 
+\( V_2 \) получаем:
+\begin{equation}
+	A = \int\limits_{V_1}^{V_2} pdV = \int\limits_{V_1}^{V_2} p_1 V_1 
+		\frac{dV}{V} = \mu RT ln\frac{V_2}{V_1}
+	\label{eq:mendel}
+\end{equation}
+
+б) имеем уравнение Ван-дер-Ваальса
+\[
+	\left( p + \frac{a\mu^2}{V^2} \right)\left( V - b\mu \right) = \mu RT
+\]
+откуда выражаем давление и подставляем в формулу для энергии и интергируем
+\begin{equation}
+	A = \int\limits_{V_1}^{V_2} pdV = \int\limits_{V_1}^{V_2} 
+		\frac{\mu RT}{V-b\mu} dV - \int\limits_{V_1}^{V_2} 
+		\frac{a\mu^2}{V^2} dV = \mu RT ln\frac{V_2 - b\mu}{V_1 - b\mu} - 
+		a\mu^2\left( \frac{1}{V_1} - \frac{1}{V_2}\right)
+	\label{eq:van-der}
+\end{equation}
+при \( a,b \rightarrow 0 \) уравнение \eqref{eq:van-der} переходит в 
+\eqref{eq:mendel}
+\newpage
+
+\emph{Задача №71}: Стержень длиной \( l \) растягивается под действием силы 
+\( f \). Найдите разность теплоёмкостей при постоянной длине и постоянном 
+натяжении \( C_l - C_f \). Считать, что деформация является упругой и длина 
+стержня зависит от натяжения и абсолютной температуры.
+
+\emph{Решение:}
+Согласно первому началу термодинамики 
+\begin{equation}
+	\delta Q = dU + \delta A = dU - fdl
+	\label{eq:71_first}
+\end{equation}
+Используя в качестве переменных \( l \) и \( T \), запишем полный дифференциал 
+для \( dU \) и подставим в уравнение \eqref{eq:71_first}
+\[
+	\delta Q = \left( \pder{U}{T} \right)_l dT + \left[ 
+		\left( \pder{U}{l} \right)_T - f\right]dl
+\]
+Получаем, что
+\[
+	C_l = \left( \pder{U}{T} \right)_l
+\]
+Исходя из условия, что \( l \) является функцией \( l = l(T,f) \), имеем
+\[
+	dl = \left( \pder{l}{T} \right)_f dT + \left( \pder{l}{f} \right)_T df
+\]
+Подставляя полученное в \eqref{eq:71_first}:
+\[
+	\delta Q = \left[ \left( \pder{U}{T} \right)_l + 
+		\kappa\left( \pder{l}{T} \right)_f \right]dT + 
+		\kappa\left( \pder{l}{f} \right)_T 
+\]
+где \( \kappa = \left( \pder{U}{l} \right)_T - f \). Тогда 
+\begin{gather}
+	C_f = \left( \pder{U}{T} \right)_l + \kappa\left( \pder{l}{T} \right)_f
+	\nonumber \\ \text{ или } \nonumber \\ 
+	C_f - C_l = \kappa\left( \pder{l}{T} \right)_f = 
+		\left[ \left( \pder{U}{l} \right)_T - f\right]
+		\left( \pder{l}{T} \right)_f \nonumber
+\end{gather}
+
+\newpage
+
+\emph{Задача №101}: Эмпирическая формула, дающая зависимость молярной 
+теплоёмкости \( C_p \) от температуры, для углекислоты в интервале между 
+\( t_1 = -75^\circ C \) и \( t_1 = 20^\circ C \) имеет вид:
+\[
+	C_p = (8.71 + 6.6\cdot10^{-3}t - 2.2\cdot10^{-6}t^2) 
+		\text{кал/(град}\cdot\text{моль)}
+\]
+Предполагая справедливым для \( CO_2 \) соотношения:
+\[
+	C_p - C_V = R \text{ и } \left( \pder{U}{V} \right)_T = 0
+\]
+найдите увеличение внутренней энергии при нагревании углекислого газа от 
+\( t_1 \) до \( t_2 \).
+
+\emph{Решение:}
+Рассмотрим внутреннюю энергию как функцию температуры и объёма: 
+\( U = U(T,V) \). Запишем полный дифференциал 
+\[
+	dU = \left( \pder{U}{T} \right)_V dT + 
+		\left( \pder{U}{V} \right)_T dV
+\]
+По определению молярной теплоёмкости \( C_V = \left( \pder{U}{T} \right)_V \)
+получаем 
+\begin{align*}
+	\Delta U = \int\limits_{t_1}^{t_2} (C_p - R)dt = 8.71\cdot(t_2 - t_1) + 
+		6.6\cdot10^{-3}\frac{1}{2}\cdot(t^2_2-t^2_1) - \\ -
+		2.2\cdot10^{-6}\frac{1}{3}\cdot(t^3_2-t^3_1) - R\cdot(t_2-t_1) \approx 
+		621 \left( \frac{\text{кал}}{\text{моль}} \right)
+\end{align*}
+\newpage
+
+\emph{Задача №182}: Получите уравнение адиабаты газа, уравнение состояния 
+которого имеет вид:
+\[
+	p = p_0\left( 1 + \alpha T - \beta V \right), C_p = const, 
+	(p_0, \alpha, \beta \text{ -- постоянные})
+\]
+
+\emph{Решение:}
+Имеем первое начало термодинамики 
+\begin{equation}
+	\delta Q = dU + pdV
+	\label{eq:182_first}
+\end{equation}
+Запишем полный дифференциал функции \( U = U(T,V) \)
+\begin{equation}
+	dU = \left( \pder{U}{V} \right)_T dV + \left( \pder{U}{T} \right)_V dT
+	\label{eq:diff_U}
+\end{equation}
+Запишем первое слагаемое в виде и подставим значение функции \( p \)
+\[
+	\left( \pder{U}{T} \right)_V = T\left( \pder{p}{T} \right)_V - p = 
+		\alpha p_0 T - p_0 \cdot (1+\alpha T-\beta V) = p_0\cdot(1-\beta V)
+\]
+Тогда \eqref{eq:diff_U} можно записать с учётом 
+\( \left( \pder{U}{T} \right)_V = C_V \) и выше сказанного:
+\[
+	dU = p_0\cdot(1-\beta V)dV + C_V dT
+\]
+Подставляя в \eqref{eq:182_first} получаем:
+\[
+	\delta Q = p_0\cdot(1-\beta V)dV + C_V dT + 
+		p_0\cdot(1+\alpha T-\beta V)dV = C_V dT + \alpha p_0 T dV + p_0 dV
+\]
+Переходя к энтропии \( dS = \delta Q / T \) можно последнее уравнение 
+переписать в виде:
+\begin{gather}
+	TdS = C_V dT + \alpha p_0 T dV + p_0 dV \nonumber \\
+	dS = C_V \frac{dT}{T} + \alpha p_0 dV + \frac{p_0}{T} dV \Rightarrow 
+	S = C_V\ln T + \alpha p_0 V + \frac{p_0 V}{T}
+\end{gather}
+И окончательно \( C_V \ln T + \alpha p_0 V = const \)
+\newpage
+
+\emph{Задача №369}: Найти среднюю потенциальную энергию молекулы идеального 
+газа, находящегося в центрифуге радиуса \( R \), вращающейся с постоянной 
+угловой скоростью \( \omega \).
+\emph{Решение:}
+\newpage
+
+\emph{Задача №386}: Найти выражение свободной энергии \( \mathcal{F} \) и 
+энтропии \( S \) идеального газа при одномерном движении.
+\emph{Решение:}
+\newpage
+
+\emph{Задача №420}: Найти свободную энергию и энтропию для системы из \( N \) 
+независимых линейных осцилляторов.
+\emph{Решение:}
+\newpage
+
+\emph{Задача №480}: Пользуясь распределением Гиббса для системы с переменным 
+числом частиц, выразить \( \overline{(\Delta N)^2} \) через 
+\( \left( \delta N / \delta \rho \right)_{T,V} \) (где \( \eta \) -- 
+химический потенциал).
+\emph{Решение:}
+\newpage
+
+\end{document}
