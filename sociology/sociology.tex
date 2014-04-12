@@ -1,0 +1,25 @@
+\documentclass[14pt,chapters]{hedwork}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{color}
+\usepackage[colorlinks, linkcolor=black, citecolor=black]{hyperref}
+\geometry{left=2.5cm, right=1cm, top=2cm, bottom=2cm}
+
+\makeatletter
+   \renewcommand{\@evenhead}{\vbox{\hbox to \textwidth {\hfil\thepage\hfil}}}
+   \renewcommand{\@oddhead} {\vbox{\hbox to \textwidth {\hfil\thepage\hfil}}}
+   \renewcommand{\@oddfoot} {\@empty}
+   \renewcommand{\@evenfoot}{\@empty}
+\makeatother
+\renewcommand{\rmdefault}{ftm}
+\renewcommand{\bibname}{Список литературы}
+
+\begin{document}
+   \input{title}
+   \onehalfspacing
+   \setcounter{page}{1}
+   \tableofcontents
+   \input{introduction}
+   \input{literature}
+\end{document}
