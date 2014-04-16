@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T2A]{fontenc}
 \usepackage[russian]{babel}
-\usepackage[left=2.5cm,right=1cm,top=2cm,bottom=2cm]{geometry}
+\usepackage[left=2.5cm,right=1cm,top=2cm,bottom=1.8cm]{geometry}
 \usepackage{setspace}
 \usepackage{color}
 \usepackage{fancyhdr}
@@ -10,14 +10,20 @@
 \usepackage{titletoc}
 \usepackage{tocloft}
 \usepackage{indentfirst}
+\usepackage{array}
+\usepackage{graphicx}
 \usepackage[colorlinks, linkcolor=black, citecolor=black]{hyperref}
-\geometry{left=2.5cm, right=1cm, top=2cm, bottom=2cm}
+
+\graphicspath{{plots/}} 
+
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1\textwidth}}
+    \renewcommand{\arraystretch}{1.2}
 
 \fancypagestyle{plain}{
-   \fancyhf{}
-   \renewcommand{\headrulewidth}{0pt}
-   \renewcommand{\footrulewidth}{0pt}
-   \fancyhead[C]{\thepage}
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+    \fancyhead[C]{\thepage}
 }
 \pagestyle{plain}
 \renewcommand{\rmdefault}{ftm}
@@ -27,27 +33,27 @@
 \renewcommand{\cftaftertoctitleskip}{1em}
 
 \titlecontents{section}[0em]{}{\contentslabel{1.75em}}{}
-  {\titlerule*[1pc]{.}\contentspage}
+    {\titlerule*[1pc]{.}\contentspage}
 \titlecontents{subsection}[0em]{}{\contentslabel{2.1em}}{}
-  {\titlerule*[1pc]{.}\contentspage}
+    {\titlerule*[1pc]{.}\contentspage}
 
 \titleformat{\section}{\bf\normalsize\center}
-   {Глава \thesection\hspace*{-5pt}} {1em}{\vspace{-.5em}}{}
+    {Глава \thesection\hspace*{-5pt}} {1em}{\vspace{-.5em}}{}
 \titleformat{\subsection}{\bf\normalsize\center}
-   {\thesubsection\hspace*{-10pt}} {1em}{\vspace{-.5em}}{}
+    {\thesubsection\hspace*{-10pt}} {1em}{\vspace{-.5em}}{}
   
 \renewcommand{\thesection} {\arabic{section}.}
 \renewcommand{\thesubsection} {\thesection\arabic{subsection}.}
 
 \begin{document}
-   \input{title}
-   \onehalfspacing
-   \setcounter{page}{1}
-   \tableofcontents
-   \newpage
-   \input{introduction}
-   \input{main}
-   \input{research}
-   \input{literature}
-   \input{appendix}
+    \input{title}
+    \onehalfspacing
+    \setcounter{page}{1}
+    \tableofcontents
+    \newpage
+    \input{introduction}
+    \input{main}
+    \input{research}
+    \input{literature}
+    \input{appendix}
 \end{document}
