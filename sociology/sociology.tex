@@ -1,9 +1,15 @@
-\documentclass[14pt,chapters]{hedwork}
-\usepackage[russian]{babel}
+\documentclass[a4paper,14pt]{extreport}
 \usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage[left=2.5cm,right=1cm,top=2cm,bottom=2cm]{geometry}
 \usepackage{setspace}
 \usepackage{color}
 \usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{tocloft}
+\usepackage{indentfirst}
 \usepackage[colorlinks, linkcolor=black, citecolor=black]{hyperref}
 \geometry{left=2.5cm, right=1cm, top=2cm, bottom=2cm}
 
@@ -16,11 +22,29 @@
 \pagestyle{plain}
 \renewcommand{\rmdefault}{ftm}
 
+\renewcommand{\cfttoctitlefont}{\bf\hspace{0.38\textwidth}\MakeUppercase}
+\renewcommand{\cftbeforetoctitleskip}{-2em}
+\renewcommand{\cftaftertoctitleskip}{1em}
+
+\titlecontents{section}[0em]{}{\contentslabel{1.75em}}{}
+  {\titlerule*[1pc]{.}\contentspage}
+\titlecontents{subsection}[0em]{}{\contentslabel{2.1em}}{}
+  {\titlerule*[1pc]{.}\contentspage}
+
+\titleformat{\section}{\bf\normalsize\center}
+   {Глава \thesection\hspace*{-5pt}} {1em}{\vspace{-.5em}}{}
+\titleformat{\subsection}{\bf\normalsize\center}
+   {\thesubsection\hspace*{-10pt}} {1em}{\vspace{-.5em}}{}
+  
+\renewcommand{\thesection} {\arabic{section}.}
+\renewcommand{\thesubsection} {\thesection\arabic{subsection}.}
+
 \begin{document}
    \input{title}
    \onehalfspacing
    \setcounter{page}{1}
    \tableofcontents
+   \newpage
    \input{introduction}
    \input{main}
    \input{research}
