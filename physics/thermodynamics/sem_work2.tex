@@ -167,16 +167,65 @@
 \emph{Задача №369}: Найти среднюю потенциальную энергию молекулы идеального 
 газа, находящегося в центрифуге радиуса \( R \), вращающейся с постоянной 
 угловой скоростью \( \omega \).
+
 \emph{Решение:}
+
+В системе координат, связанной с центрифугой молекула газа находится в поле 
+центробежной силы инерции
+\[
+	F_\text{ин} = m\omega^2 r, \text{ где } r \text{ -- расстояние до 
+		молекулы от оси вращения}
+\]
+Вычислим потенциальную энергию молекулы в таком поле:
+\[
+	m\omega^2 r = -\frac{dU}{dr} \Rightarrow 
+	U = -\frac{m\omega^2 r^2}{2}
+\]
+Согласно распределению Больцмана вероятность обнаружить молекулы в точке с 
+цилиндрическими координатами \( r, \phi, z \):
+\[
+	dW(r,\phi,z) = B\exp\left(-\frac{U}{k_0 T}\right) dV = B
+		\exp\left(\frac{m\omega^2 r^2}{2k_0 T}\right) r dr d\phi dz
+\]
+Отсюда получаем функцию распределения по \( r \):
+\[
+	dW(r) = A\exp\left(\frac{m\omega^2 r^2}{2k_0 T}\right) r dr
+\]
+Используя условие нормировки для \( dW(r) \) найдём значение константы \( A \):
+\[
+	\int dW(r) = A\int\limits_{0}^{R} 
+		\exp\left( \frac{m\omega^2 r^2}{2k_0 T} \right) r dr = 1
+\]
+Получаем
+\[
+	A = \frac{m\omega^2}{k_0 T}\left( 
+		\exp\left[\frac{m\omega^2 R^2}{2k_0 T}\right] - 1 \right)
+\]
+Среднее значение потенциальной энергии можно определить в виде:
+\begin{gather}
+	<U> = \int U(r) w(r) dV = \int\limits_{0}^{R} U(r) dW(r) = 
+	\nonumber \\ =
+		-\frac{m^2 \omega^4}{2k_0 T}\left( 
+		\exp\left[\frac{m\omega^2 R^2}{2k_0 T}\right] - 1 \right)
+		\int\limits_{0}^{R} r^3 \exp\left[ 
+		\frac{m\omega^2 r^2}{2k_0 T} \right] dr = \nonumber \\ =
+		-k_0 T \frac{1 + 
+			\left[\frac{m\omega^2 R^2}{2k_0 T} - 1 \right]
+			\exp\left( \frac{m\omega^2 R^2}{2k_0 T} \right)}
+			{\exp\left[\frac{m\omega^2 R^2}{2k_0 T}\right] - 1}
+	\nonumber
+\end{gather}
 \newpage
 
 \emph{Задача №386}: Найти выражение свободной энергии \( \mathcal{F} \) и 
 энтропии \( S \) идеального газа при одномерном движении.
+
 \emph{Решение:}
 \newpage
 
 \emph{Задача №420}: Найти свободную энергию и энтропию для системы из \( N \) 
 независимых линейных осцилляторов.
+
 \emph{Решение:}
 \newpage
 
@@ -184,6 +233,7 @@
 числом частиц, выразить \( \overline{(\Delta N)^2} \) через 
 \( \left( \delta N / \delta \rho \right)_{T,V} \) (где \( \eta \) -- 
 химический потенциал).
+
 \emph{Решение:}
 \newpage
 
