@@ -1,0 +1,94 @@
+\documentclass[14pt,final,titlepage,pscyr]{hedwork}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hedmaths}
+\usepackage{graphicx}
+
+\graphicspath{{img/}}
+
+\faculty{Факультет электроники и вычислительной техники}
+\department{<<Физика>>}
+\subject{Статистическая радиофизика}
+\variant{6}
+\student[m]{студент группы Ф-469\\Голубев А. В.}
+\teacher[m]{доцент Поляков И. В.}
+
+\begin{document}
+\maketitle
+\emph{Задача №6:} Определить непосредственным интегрированием \\
+\( 
+    m_k(\xi) = <x^k> = \int\limits_{-\infty}^{\infty} x^k w(x) dx
+\) начальные моменты непрерывных случайных величин, имеющих закон распределения
+Накагами (\( m \)-распределения)
+\[
+    w(x) = \frac{2m^m x^{2m-1}}{m_2^m \Gamma(m)}
+        \exp\left( -\frac{m}{m_2}x^2 \right), x \geq 0, m \geq \frac{1}{2}
+\]
+
+\emph{Решение:}
+\begin{gather}
+    <x^k> = \int\limits_{0}^{+\infty} x^k 
+        \frac{2m^m}{m_2^m \Gamma(m)}
+        \exp\left( -\frac{m}{m_2}x^2 \right) dx = \nonumber \\
+    = \frac{2m^m x^{2m-1}}{m_2^m \Gamma(m)}\left.\left\{ 
+        -\frac{1}{2} x^{2m-k}\left[ 
+            \frac{mx^2}{m_2}
+        \right]^{\frac{1}{2}(k-2m)}
+        \gamma\left( m-\frac{k}{2}, \frac{mx^2}{m_2} \right)
+    \right\}\right|_{0}^{+\infty} \nonumber
+\end{gather}
+где \( \gamma \) -- неполная \( \Gamma \)-функция. Окончательно получаем:
+\[
+    <x^k> = \left( \frac{m_2}{m} \right)^{k/2} 
+        \frac{\Gamma\left(m+\frac{1}{2}\right)}{\Gamma(m)}
+\]
+
+\emph{Задача №16:} Найти плотность вероятности и начальные моменты случайной 
+величины \( \eta = e^\xi \), где \( \xi \) -- случайная гауссовская величина 
+с математическим ожиданием \( a \) и дисперсией \( \sigma^2 \).
+
+\emph{Решение:} Плотность вероятности случайной величины \( \eta = e^\xi \)
+\[
+    w(\eta) = \frac{d\eta}{d\xi} = e^{\xi} = e^{\ln\eta}
+\]
+Найдём моменты случайной величины \( \eta = e^\xi \)
+\begin{gather}
+    \mu_1 = \int e^\xi \xi d\xi = \xi e^\xi - \int e^\xi d\xi = 
+        e^\xi( \xi - 1 ) = a \nonumber \\
+    \mu_2 = \int e^\xi \xi^2 d\xi = \xi^2 e^\xi - 2\mu_1 = \sigma^2 
+        \nonumber \\
+    \mu_3 = \xi^3 e^\xi - 3\mu_2 \text{ и т.д.} \nonumber
+\end{gather}
+Обобщая формулу для любого \( n \), получим:
+\[
+    \mu_n = e^\xi \left[ 
+        \xi^n - \sum\limits_{i=1}^{n-1}(n-i+1)!\xi^i - n! 
+    \right]
+\]
+
+\newpage
+
+\emph{Задача №33:} На вход идеальной дифференцирующей цепи подан стационарный 
+гауссовский случайный сигнал \( x(t) \) с нулевым математическим ожиданием и 
+корреляционной функцией 
+\( R_x(\tau) = D_x e^{-\alpha|\tau|}(1 + \alpha|\tau|) \). Определить 
+корреляционную функцию \( R_y(\tau) \) сигнала \( y = \cfrac{dx}{dt} \) на 
+выходе.
+
+\emph{Решение:}
+\newpage
+
+\emph{Задача №43:} Случайны стационарный процесс \( \xi(t) \) с корреляционной 
+функцией 
+\( 
+    R_\xi(\tau) = \sigma_\xi^2 e^{-\alpha|\tau|} \left( 
+        \cos\omega_0\tau + \cfrac{a}{\omega_0}\sin\omega_0|\tau| 
+    \right)
+\) записан в виде \\ 
+\( \xi(t) = A_c(t)\cos\omega_0 t - A_s(t)\sin\omega_0 t \). 
+Вычислить спектральную плотность \( S_c(\omega), S_s(\omega) \), а так же 
+взаимную спектральную плотность \( S_{cs}(\omega) \).
+
+\emph{Решение:}
+
+\end{document}
