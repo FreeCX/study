@@ -220,18 +220,125 @@
 \emph{Задача №386}: Найти выражение свободной энергии \( \mathcal{F} \) и 
 энтропии \( S \) идеального газа при одномерном движении.
 
-\emph{Решение:}
+\emph{Решение:} Состояние идеального газа можно определить заданием всех точек 
+системы. Так статистическая сумма \( Z \) переходит в интегральный виде и 
+запишется в виде, с учётом одномерного движения:
+\[
+	Z = \frac{1}{N!} \int \Omega(E) \exp\left( -\frac{E}{kT} \right), 
+	\text{ где } \Omega(E) = \frac{dpdq}{(2\pi\hbar)^N} \text{ из }
+	\Delta p \Delta q = 2\pi\hbar
+\]
+Запишем энергию для \( i \)-ой частицы в виде:
+\[
+	E(p,q) = \frac{p_{ix}^2}{2m}
+\]
+С учётом всего вышеперечисленного, при условии независимости одной части от 
+другой, система преобразуется к виду
+\[
+	Z_i = \frac{1}{N!}\frac{1}{(2\pi\hbar)^2} \prod\limits_{i=1}^{N}
+		\left\{ \int dx_i \int dp_{xi} 
+			\exp\left( -\frac{p_{ix}^2}{2mkT} \right) 
+		\right\}
+\]
+В силу независимости частиц, можно статистическую сумму переписать в виде:
+\[
+	Z = \frac{1}{N!}\frac{L^N}{(2\pi\hbar)^N} 
+		\left\{ 
+			\int\limits_{-\infty}^{+\infty} 
+			\exp\left( -\frac{p_{x}^2}{2mkT} \right) dp_x
+		\right\}^N = 
+		\frac{L^N}{N!} 
+		\left\{
+			\frac{\sqrt{2\pi mkT}}{2\pi\hbar} 
+		\right\}^N
+\]
+где \( L \) -- линейные размеры области в направлении движения. Для нахождения 
+свободной энергии воспользуемся известным равенством:
+\[
+	F = -kT\ln Z
+\]
+\begin{gather}
+	\ln Z = N\ln L + \frac{N}{2}\ln T + \frac{N}{2}\ln(2\pi m k) - \ln N\! - 
+		N\ln(2\pi\hbar) \nonumber \\
+	F = -kT\ln Z = -\frac{NkT}{2}\ln T - NkT\ln L - \frac{NkT}{2}\ln(2\pi km) + 
+		kT\ln N'! + NkT\ln(2\pi\hbar) \nonumber
+\end{gather}
+Для нахождения энтропии можно воспользоваться следующим выражением
+\[
+	S = -\frac{\partial F}{\partial T}
+\]
+\[
+	S = Nk\ln L + \frac{Nk}{2}\ln T + \frac{Nk}{2}\ln(2\pi km) - k\ln N\! - 
+		Nk\ln(2\pi\hbar) + \frac{Nk}{2}
+\]
+
 \newpage
 
 \emph{Задача №420}: Найти свободную энергию и энтропию для системы из \( N \) 
 независимых линейных осцилляторов.
 
-\emph{Решение:}
+\emph{Решение:} Рассмотрим систему состоящую из \( N \) гармонических 
+осцилляторов без взаимодействия. Определим свободную энергию \( F_i \) для 
+\( i \)-го осциллятора, имеем
+\[
+	F = \sum\limits_{i=1}^{N} F_i \text{ и соответственно стат.сумма. }
+	Z_i = \sum\limits_{n} \exp\left( -\frac{E_n^i}{kT} \right)
+\]
+Здесь статистическая сумма записана без статистического веса, так как нет 
+вырождения по энергии. \( E_n^i \) согласно квантовой механике для 
+\( i \)-го осциллятора имеет вид:
+\[
+	E^i_n = \hbar\omega_i \left( n + \frac{1}{2} \right), n = 0, 1, \ldots
+\]
+Тогда
+\[
+	Z_i = \sum\limits_n \exp\left( -\frac{h\omega_i
+		\left( n + \frac{1}{2} \right)}{kT} \right)
+\]
+с учётом
+\[
+	\frac{1}{1-\exp\left( -\cfrac{\hbar\omega_i}{kT} \right)} = 1 + 
+		\exp\left( -\frac{\hbar\omega_i}{kT} \right) + 
+		\exp\left( -\frac{2\hbar\omega_i}{kT} \right) + \ldots
+\]
+сумму можно переписать в виде:
+\[
+	Z_i = \frac{\exp\left( -\cfrac{\hbar\omega_i}{2kT} \right)}
+		{1-\exp\left( -\cfrac{\hbar\omega_i}{kT} \right)}
+\]
+Для нахождения свободной энергии для \( i \)-го осциллятора воспользуемся 
+известным равенством:
+\begin{equation}
+	F_i = -kT\ln Z_i
+	\label{eq:free_energy}
+\end{equation}
+для этого найдём значение \( \ln Z_i \):
+\[
+	\ln Z_i = -\frac{\hbar\omega_i}{2kT} - \ln\left( 1-\exp\left\{ 
+		-\frac{\hbar\omega_i}{kT}\right\}\right)
+\]
+подставляя в уравнение \eqref{eq:free_energy} и собирая свободную энергию 
+по всем осцилляторам получим:
+\[
+	F = \sum\limits_{i=1}^{N} F_i = \frac{N\hbar\omega}{2} + 
+		NkT\ln\left( 1-\exp\left\{ -\frac{\hbar\omega}{kT}\right\}\right)
+\]
+Для нахождения энтропии можно воспользоваться следующим выражением
+\[
+	S = -\frac{\partial F}{\partial T}
+\]
+\[
+	S = Nk\left[ \frac{\hbar\omega}{kT}
+		\frac{1}{\exp\left\{-\cfrac{\hbar\omega}{kT}\right\}-1} - 
+		\ln\left( 1-\exp\left\{ -\frac{\hbar\omega}{kT}\right\}\right) 
+	\right]
+\]
+
 \newpage
 
 \emph{Задача №480}: Пользуясь распределением Гиббса для системы с переменным 
 числом частиц, выразить \( \overline{(\Delta N)^2} \) через 
-\( \left( \partial N / \partial \rho \right)_{T,V} \) (где \( \eta \) -- 
+\( \left( \partial N / \partial \eta \right)_{T,V} \) (где \( \eta \) -- 
 химический потенциал).
 
 \emph{Решение:}
