@@ -75,20 +75,25 @@
 корреляционную функцию \( R_y(\tau) \) сигнала \( y = \cfrac{dx}{dt} \) на 
 выходе.
 
-\emph{Решение:}
-
-Корреляционную функцию на выходе можно представить в виде:
-\[
+\emph{Решение:} Корреляционную функцию на выходе можно записать в виде:
+\begin{equation}
     R_y(\tau) = -\frac{d^2 R_x(\tau)}{d\tau^2}
-\]
-Рассмотрим два интервала: 1 при \( \tau > 0 \)
+    \label{eq:01}
+\end{equation}
+Рассмотрим один из интервалов \( \tau > 0 \)
+\begin{gather}
+    R_x(\tau) = D_x e^{-\alpha\tau}(1+\alpha\tau) \nonumber \\
+    R'_x(\tau) = -D_x e^{-\alpha\tau}(\alpha-\alpha(1+\alpha\tau)) = 
+    -\alpha^2\tau D_x e^{-\alpha\tau} \nonumber \\
+    R''_x(\tau) = -\alpha^2 D_x e^{-\alpha\tau} + \alpha^3 \tau 
+        e^{-\alpha\tau} = -\alpha^2 D_x e^{-\alpha\tau} ( 1 - \alpha\tau ) 
+    \nonumber
+\end{gather}
+Для второго интервала получается аналогичные уравнения с точность до знака 
+перед \( \tau \), поэтому можно записать ответ воспользовавшись \eqref{eq:01}
 \[
-    \quad B_x(\tau) = D_x e^{-\alpha\tau}(1+\alpha\tau), \quad
-    B'_x(\tau) = -D_x e^{-\alpha\tau}(\alpha-\alpha(1+\alpha\tau)) = 
-    -\alpha^2\tau D_x e^{-\alpha\tau}
+    R_y(\tau) = \alpha^2 D_x e^{-\alpha|\tau|} ( 1 - \alpha|\tau| )
 \]
-
-\newpage
 
 \emph{Задача №43:} Случайны стационарный процесс \( \xi(t) \) с корреляционной 
 функцией 
@@ -101,6 +106,27 @@
 Вычислить спектральную плотность \( S_c(\omega), S_s(\omega) \), а так же 
 взаимную спектральную плотность \( S_{cs}(\omega) \).
 
-\emph{Решение:}
+\emph{Решение:} Так как процесс является стационарным, то справедливы 
+следующие уравнения:
+\begin{gather}
+    R_c(\tau) = R_s(\tau) = \sigma_\xi^2 e^{-\alpha|\tau|} \nonumber \\
+    R_{cs}(\tau) = \sigma_\xi^2 e^{-\alpha|\tau|} \cdot \mathrm{sgn}(\tau)
+\end{gather}
+\begin{gather}
+    S_c(\omega) = S_s(\omega) = \cfrac{1}{2\pi} \int\limits_{-\infty}^{+\infty}
+        R_c(\tau) e^{-j\omega\tau} d\tau = \cfrac{\sigma_\xi^2}{\pi}
+        \cfrac{\alpha}{\alpha^2 + \omega^2} \nonumber \\
+    S_{cs}(\omega) = \cfrac{1}{2\pi} \int\limits_{-\infty}^{+\infty}
+        R_{cs}(\tau) e^{-j\omega\tau} d\tau = \cfrac{\sigma_\xi^2}{2\pi}
+        \cfrac{a}{\omega_0} \left\{ 
+            -\int\limits_{-\infty}^{0} e^{+(\alpha+j\omega)\tau} d\tau
+            +\int\limits_{0}^{+\infty} e^{-(\alpha-j\omega)\tau} d\tau
+        \right\} = \nonumber \\
+        \cfrac{\sigma_\xi^2}{2\pi}\cfrac{a}{\omega_0} \left[ 
+            \cfrac{1}{\alpha-j\omega} - \cfrac{1}{\alpha+j\omega}
+        \right] = \cfrac{\sigma_\xi^2}{2\pi}\cfrac{a}{\omega_0} \left[ 
+            \cfrac{2j\omega}{\alpha^2 + \omega^2}
+        \right] \nonumber
+\end{gather}
 
 \end{document}
