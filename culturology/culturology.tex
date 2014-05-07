@@ -1,0 +1,75 @@
+\documentclass[a4paper,14pt]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage[left=2.5cm,right=1cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{titletoc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{setspace}
+\usepackage{titlesec}
+\graphicspath{{images/}}
+
+\titlecontents{section}[0em]{}{\contentslabel{1.75em}}{}
+    {\titlerule*[1pc]{.}\contentspage}
+\titlecontents{subsection}[0em]{}{\contentslabel{2.1em}}{}
+    {\titlerule*[1pc]{.}\contentspage}
+  
+\renewcommand{\rmdefault}{ftm}
+
+\titleformat{\section}{\bf\normalsize\center}
+    {\thesection\hspace*{-5pt}} {1em}{\vspace{-.5em}}{}
+\titleformat{\subsection}{\bf\normalsize\center}
+    {\thesubsection\hspace*{-10pt}} {1em}{\vspace{-.5em}}{}
+
+\newcommand{\maketitlepage}{
+    \begin{titlepage}
+        \singlespacing
+        \normalfont
+        \newpage
+        \begin{center}
+            Министерство образования и науки Российской Федерации \\
+            Федеральное государственное бюджетное образовательное \\
+            учреждение высшего профессионального образования \\
+            <<Волгоградский государственный технический университет>> \\
+            Факультет экономики и управления \\
+            Кафедра истории, культуры и социологии
+        \end{center}
+
+        \vspace{14em}
+
+        \begin{center}
+            \large Реферат по культурологии на тему:
+            \\ТЕХНИКА И ЦИВИЛИЗАЦИОННЫЙ ПРОЦЕСС
+        \end{center}
+
+        \vspace{5em}
+
+        \begin{flushright}
+            \begin{minipage}{.3\textwidth}
+                Выполнил:\\студент группы Ф-469\\Голубев~А.~В.
+                \vspace{1em}\\
+                Проверил:\\старший преподаватель\\Соловьёва~А.~В.
+                \\
+                \\ Оценка \underline{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+            \end{minipage}
+        \end{flushright}
+
+        \vspace{\fill}
+
+        \begin{center}
+            Волгоград, 2014
+        \end{center}
+
+    \end{titlepage}
+    \setcounter{page}{2}
+}
+
+\begin{document}
+    \maketitlepage
+    \tableofcontents
+    \thispagestyle{empty}
+    \newpage
+    \input{main}
+    \input{references}
+\end{document}
