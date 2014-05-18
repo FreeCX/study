@@ -3,7 +3,6 @@
 \usepackage[utf8]{inputenc}
 \usepackage[derivative]{hedmaths}
 \usepackage{graphicx}
-\usepackage{wrapfig}
 
 \graphicspath{{img/}}
 
@@ -31,7 +30,6 @@
 		\frac{dV}{V} = \nu RT ln\frac{V_2}{V_1}
 	\label{eq:mendel}
 \end{equation}
-
 б) имеем уравнение Ван-дер-Ваальса
 \[
 	\left( p + \frac{a\nu^2}{V^2} \right)\left( V - b\nu \right) = \nu RT
@@ -53,8 +51,7 @@
 натяжении \( C_l - C_f \). Считать, что деформация является упругой и длина 
 стержня зависит от натяжения и абсолютной температуры.
 
-\emph{Решение:}
-Согласно первому началу термодинамики 
+\emph{Решение:} Согласно первому началу термодинамики 
 \begin{equation}
 	\delta Q = dU + \delta A = dU - fdl
 	\label{eq:71_first}
@@ -104,8 +101,7 @@
 найдите увеличение внутренней энергии при нагревании углекислого газа от 
 \( t_1 \) до \( t_2 \).
 
-\emph{Решение:}
-Рассмотрим внутреннюю энергию как функцию температуры и объёма: 
+\emph{Решение:} Рассмотрим внутреннюю энергию как функцию температуры и объёма: 
 \( U = U(T,V) \). Запишем полный дифференциал 
 \[
 	dU = \left( \pder{U}{T} \right)_V dT + 
@@ -168,10 +164,8 @@
 газа, находящегося в центрифуге радиуса \( R \), вращающейся с постоянной 
 угловой скоростью \( \omega \).
 
-\emph{Решение:}
-
-В системе координат, связанной с центрифугой молекула газа находится в поле 
-центробежной силы инерции
+\emph{Решение:} В системе координат, связанной с центрифугой молекула газа 
+находится в поле центробежной силы инерции
 \[
 	F_\text{ин} = m\omega^2 r, \text{ где } r \text{ -- расстояние до 
 		молекулы от оси вращения}
@@ -341,7 +335,52 @@
 \( \left( \partial N / \partial \eta \right)_{T,V} \) (где \( \eta \) -- 
 химический потенциал).
 
-\emph{Решение:}
-\newpage
+\emph{Решение:} Распределение Гиббса для системы с переменным числом частиц 
+имеет вид:
+\[
+	W = \exp\left( \frac{\Omega + N\eta - \eps_n N_n}{\Theta} \right)
+\]
+где \( \eps_n \) -- энергия одной частицы на \( n \)-ом уровне, \( \Omega \) 
+определяется из условия нормировки:
+\begin{equation}
+	\exp\left( \frac{\Omega}{\theta} \right) 
+		\sum\limits_N \exp\left( \frac{N\eta}{\Theta} \right)
+		\sum\limits_n \exp\left( -\frac{\eps_n N_n}{\Theta} \right) = 1 
+	\label{eq:480_2}
+\end{equation}
+Среднее значение для числа частиц определяется равенством:
+\begin{equation}
+	\overline{N} = \exp\left( \frac{\Omega}{\Theta} \right)
+		\sum\limits_N N\exp\left( \frac{N\eta}{\Theta} \right)
+		\sum\limits_n \exp\left( -\frac{\eps_n N_n}{\Theta} \right)
+	\label{eq:480_3}
+\end{equation}
+Дифференцируя \eqref{eq:480_3} по \( \eta \), с учётом зависимости 
+\( \Omega \) от \( \eta \), получим:
+\begin{gather}
+	\left( \pder{\overline{N}}{\eta} \right)_{T,V} = \frac{1}{\Theta}
+		\exp\left( \frac{\Omega}{\Theta} \right)
+		\sum\limits_N \left( N^2 + N\pder{\Omega}{\eta} \right)
+		\exp\left( \frac{N\eta}{\Theta} \right)
+		\sum\limits_n \exp\left( -\frac{\eps_n N_n}{\Theta} \right) = 
+		\nonumber \\
+		= \Big[ \text{ с учётом определения \eqref{eq:480_3} } \Big] =
+		\frac{1}{\Theta} \left( \overline{N^2} + 
+			\overline{N}\pder{\Omega}{\eta} \right)
+	\label{eq:480_4}
+\end{gather}
+Из \eqref{eq:480_2} путём дифференцирую по \( \eta \) аналогично найдём:
+\begin{equation}
+	\pder{\Omega}{\eta} = -\overline{N}
+	\label{eq:480_5}
+\end{equation}
+Тогда подставляя \eqref{eq:480_5} в \eqref{eq:480_4} получаем:
+\[
+	\left( \pder{\overline{N}}{\eta} \right)_{T,V} = 
+		\frac{1}{\Theta} \left( \overline{N^2} - \overline{N}^2 \right) = 
+		\frac{1}{\Theta} \overline{\Delta N^2} \quad \Rightarrow \quad
+	\overline{(\Delta N)^2} = \Theta 
+		\left( \pder{\overline{N}}{\eta} \right)_{T,V} 
+\]
 
 \end{document}
