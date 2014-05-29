@@ -1,7 +1,7 @@
-\documentclass[14pt,final,titlepage,pscyr]{hedwork}
+\documentclass[14pt, final, titlepage, pscyr]{hedwork}
 \usepackage[russian]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{hedmaths}
+\usepackage[derivative, shortcuts]{hedmaths}
 \usepackage{graphicx}
 
 \graphicspath{{img/}}
@@ -30,40 +30,67 @@
     <x^k> = \int\limits_{0}^{+\infty} x^k 
         \frac{2m^m}{m_2^m \Gamma(m)}
         \exp\left( -\frac{m}{m_2}x^2 \right) dx = \nonumber \\
-    = \frac{2m^m x^{2m-1}}{m_2^m \Gamma(m)}\left.\left\{ 
-        -\frac{1}{2} x^{2m-k}\left[ 
-            \frac{mx^2}{m_2}
-        \right]^{\frac{1}{2}(k-2m)}
-        \gamma\left( m-\frac{k}{2}, \frac{mx^2}{m_2} \right)
-    \right\}\right|_{0}^{+\infty} \nonumber
+        \frac{2m^m}{m_2^m \Gamma(m)} \int\limits_{0}^{+\infty} 
+        x^{2m+k-1} \exp\left( -\frac{m}{m_2}x^2 \right) dx =
+        \left[ y = \frac{m}{m_2}x^2, dy = 2\frac{m}{m_2} x dx \right] = 
+        \nonumber \\ \frac{m^{m-1}}{m_2^{m-1} \Gamma(m)} 
+        \int\limits_{0}^{+\infty} x^{2m+k-2} e^{-y} dy = 
+        \frac{1}{\Gamma(m)} \left( \frac{m_2}{m} \right)^{k/2} 
+        \int\limits_{0}^{+\infty} y^{m-1+\frac{k}{2}} e^{-y} dy = \nonumber \\
+        = \left( \frac{m_2}{m} \right)^{\frac{k}{2}} 
+        \frac{\Gamma(m+\frac{k}{2})}{\Gamma(m)} \nonumber
 \end{gather}
-где \( \gamma \) -- неполная \( \Gamma \)-функция. Окончательно получаем:
-\[
-    <x^k> = \left( \frac{m_2}{m} \right)^{k/2} 
-        \frac{\Gamma\left(m+\frac{1}{2}\right)}{\Gamma(m)}
-\]
+
+\newpage
 
 \emph{Задача №16:} Найти плотность вероятности и начальные моменты случайной 
 величины \( \eta = e^\xi \), где \( \xi \) -- случайная гауссовская величина 
 с математическим ожиданием \( a \) и дисперсией \( \sigma^2 \).
 
-\emph{Решение:} Плотность вероятности случайной величины \( \eta = e^\xi \)
+\emph{Решение:} Плотность вероятности для \( \xi \):
 \[
-    w(\eta) = \frac{d\eta}{d\xi} = e^{\xi} = e^{\ln\eta}
+    w(\xi) = \frac{1}{\sqrt{2\pi}\sigma} \exp\left( 
+        -\frac{(\xi-a)^2}{2\sigma^2} 
+    \right)
 \]
-Найдём моменты случайной величины \( \eta = e^\xi \)
-\begin{gather}
-    \mu_1 = \int e^\xi \xi d\xi = \xi e^\xi - \int e^\xi d\xi = 
-        e^\xi( \xi - 1 ) = a \nonumber \\
-    \mu_2 = \int e^\xi \xi^2 d\xi = \xi^2 e^\xi - 2\mu_1 = \sigma^2 
-        \nonumber \\
-    \mu_3 = \xi^3 e^\xi - 3\mu_2 \text{ и т.д.} \nonumber
-\end{gather}
-Обобщая формулу для любого \( n \), получим:
+Производная \( d\eta/d\xi \):
 \[
-    \mu_n = e^\xi \left[ 
-        \xi^n - \sum\limits_{i=1}^{n-1}(n-i+1)!\xi^i - n! 
-    \right]
+    \frac{d\eta}{d\xi} = e^{\xi} = e^{\ln\eta} = \eta
+\]
+Тогда плотность вероятности для \( \eta \) можно записать в следующем виде:
+\[
+    w(\eta) = w(\xi)\cdot\frac{d\xi}{d\eta} = 
+        \frac{1}{\sqrt{2\pi}\sigma} \frac{1}{\eta} \exp\left( 
+            -\frac{(\xi-a)^2}{2\sigma^2} 
+        \right)
+\]
+Найдём математическое ожидание величины \( \eta \):
+\begin{gather}
+    M(\eta) = m_1 = \frac{1}{\sqrt{2\pi}\sigma} \int\lni \eta \frac{1}{\eta}
+        \exp\left( -\frac{(\ln\eta-a)^2}{2\sigma^2} \right) 
+        d\eta = \left[ x = \ln\eta, d\eta = e^x dx \right] =
+    \nonumber \\
+    = \frac{1}{\sqrt{2\pi}\sigma} \int\lii
+        \exp\left( -\frac{(x-a)^2}{2\sigma^2} + x \right) dx \nonumber
+\end{gather}
+Делая преобразования выражения под экспонентой к полному квадрату, получим:
+\begin{gather}
+    M(\eta) = \frac{\exp\left( 
+        a + \frac{1}{2}\sigma^2 
+    \right)}{\sqrt{2\pi}\sigma} \int\lii \exp\left( 
+        -\frac{(x-[a+\sigma^])^2}{2\sigma^2}
+    \right) d(x-(a+\sigma^2)) = \exp\left( a + \frac{1}{2}\sigma^2 \right)
+    \nonumber
+\end{gather}
+Аналогично, для поиска второго момента, получаем:
+\[
+    m_2 = \frac{1}{\sqrt{2\pi}\sigma} \int\lni \eta^2 \frac{1}{\eta} \exp\left( 
+        -\frac{(\ln\eta-a)^2}{2\sigma^2} \right) d\eta = 
+        \exp\left( 2\sigma^2 + 2a \right)
+\]
+Подставляя в выражение для дисперсии, получим:
+\[
+    D(\eta) = m_2 - m_1^2 = e^{2\sigma^2+2a} - e^{\sigma^2+2a}
 \]
 
 \newpage
@@ -110,7 +137,7 @@
 следующие уравнения:
 \begin{gather}
     R_c(\tau) = R_s(\tau) = \sigma_\xi^2 e^{-\alpha|\tau|} \nonumber \\
-    R_{cs}(\tau) = \sigma_\xi^2 e^{-\alpha|\tau|} \cdot 
+    R_{cs}(\tau) = \sigma_\xi^2 \frac{a}{\omega_0} e^{-\alpha|\tau|} \cdot 
         \mathrm{sgn}(\tau) \nonumber
 \end{gather}
 \begin{gather}
