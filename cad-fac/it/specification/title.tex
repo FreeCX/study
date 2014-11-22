@@ -1,0 +1,62 @@
+\documentclass[a4paper, 14pt]{extreport}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{subcaption}
+\usepackage{lastpage}
+\usepackage[left=2.5cm, right=1.5cm, top=2.0cm, bottom=2.0cm]{geometry}
+
+\renewcommand{\rmdefault}{ftm}
+\titleformat{\chapter}
+    {\normalsize}
+    {\bfseries\thechapter}
+    {1em}{\bfseries}
+\titleformat{\section}
+    {\normalsize}
+    {\bfseries\thesection}
+    {1em}{\bfseries}
+\titleformat{\subsection}
+    {\normalsize}
+    {\bfseries\thesubsection}
+    {1em}{\bfseries}
+\titleformat{\subsubsection}
+    {\normalsize}
+    {\bfseries\thesubsubsection}
+    {1em}{\bfseries}
+\titleformat{\paragraph}
+    {\normalsize}
+    {\bfseries\theparagraph}
+    {1em}{\bfseries}
+
+\titlespacing*{\chapter}{0pt}{-30pt}{8pt}
+\titlespacing*{\section}{0pt}{*4}{*4}
+\titlespacing*{\subsection}{0pt}{*4}{*4}
+\titlespacing*{\subsubsection}{0pt}{*4}{*4}
+\titlespacing*{\paragraph}{0pt}{*4}{*4}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\begin{document}
+    \begin{titlepage}
+        \clearpage
+        \vspace*{\fill}
+        \begin{center}
+            \large
+            \begin{minipage}{\textwidth}
+                \centering
+                Игровые программы. Основы проектирования.\\
+                \textbf{ТЕХНИЧЕСКОЕ ЗАДАНИЕ ГОСТ 34.602-89}\\
+                на \pageref{LastPage} листах
+            \end{minipage}
+        \end{center}
+        \vfill
+        \clearpage
+    \end{titlepage}
+    \tableofcontents
+    \newpage
+    \input{text}
+\end{document}

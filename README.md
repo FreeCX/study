@@ -22,3 +22,5 @@
 
 ##### Кафедра САПР
 * [Информационные технологии](cad-fac/it)
+ * [реферат](cad-fac/it/abstract)
+ * [ТЗ](cad-fac/it/specification)
