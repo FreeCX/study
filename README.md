@@ -2,10 +2,10 @@
 Репозиторий с учебными материалами
 
 ##### Кафедра "Физика"
-* [Биофизика](phys-fac/etc/biophys)
-* [Вакуумная и газоразрядная электроника](phys-fac/etc/statradiophys)
-* [Вакуумная и газоразрядная электроника](phys-fac/etc/vacuum)
-* [Квантовая теория](phys-fac/etc/quantum_theory)
+* [Биофизика](phys-fac/physics/biophys)
+* [Статистическая радиофизика и обработка сигналов](phys-fac/physics/statradiophys)
+* [Вакуумная и газоразрядная электроника](phys-fac/physics/vacuum)
+* [Квантовая теория](phys-fac/physics/quantum_theory)
 * [Квантовая электроника](phys-fac/crap/laser)
 * [Культурология](phys-fac/crap/culturology)
 * [Методы и средства измерительных систем](phys-fac/etc/methods)
@@ -15,10 +15,10 @@
 * [Социология](phys-fac/crap/socilogy)
 * [Теоретическая механика](phys-fac/etc/theor_mech)
 * [Теория вероятностей](phys-fac/etc/math)
-* [Термодинамика](phys-fac/etc/thermodynamics)
-* [Физика атома](phys-fac/etc/atom)
+* [Термодинамика](phys-fac/physics/thermodynamics)
+* [Физика атома](phys-fac/physics/atom)
 * [Химия](phys-fac/crap/chemistry)
-* [Электродинамика](phys-fac/etc/electrodynamics)
+* [Электродинамика](phys-fac/physics/electrodynamics)
 
 ##### Кафедра "САПРиПК"
 * [Информационные технологии](cad-fac/it)
