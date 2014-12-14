@@ -1,7 +1,7 @@
 ## Учебные материалы
 Репозиторий с учебными материалами
 
-##### Кафедра физики
+##### Кафедра "Физика"
 * [Биофизика](phys-fac/etc/biophys)
 * [Вакуумная и газоразрядная электроника](phys-fac/etc/statradiophys)
 * [Вакуумная и газоразрядная электроника](phys-fac/etc/vacuum)
@@ -20,7 +20,11 @@
 * [Химия](phys-fac/crap/chemistry)
 * [Электродинамика](phys-fac/etc/electrodynamics)
 
-##### Кафедра САПР
+##### Кафедра "САПРиПК"
 * [Информационные технологии](cad-fac/it)
- * [реферат](cad-fac/it/abstract)
+ * [ПЗ](cad-fac/it/abstract)
  * [ТЗ](cad-fac/it/specification)
+ * [Презентация](cad-fac/it/presentation)
+* [Междисциплинарный курсовой проект](cad-fac/icp)
+ * [TeX-header](cad-fac/icp/presentation.tex)
+ * [TeX-slides](cad-fac/icp/text.tex)
