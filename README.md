@@ -22,9 +22,5 @@
 
 ##### Кафедра "САПРиПК"
 * [Информационные технологии](cad-fac/it)
- * [ПЗ](cad-fac/it/abstract)
- * [ТЗ](cad-fac/it/specification)
- * [Презентация](cad-fac/it/presentation)
 * [Междисциплинарный курсовой проект](cad-fac/icp)
- * [TeX-header](cad-fac/icp/presentation.tex)
- * [TeX-slides](cad-fac/icp/text.tex)
+* [Модели и методы автоматизированных систем](cad-fac/m&mas)
