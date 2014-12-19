@@ -1,0 +1,78 @@
+\documentclass[a4paper, 14pt]{extreport}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage[left=2.5cm, right=1.5cm, top=2.0cm, bottom=2.0cm]{geometry}
+
+\graphicspath{{images//}}
+\renewcommand{\rmdefault}{ftm}
+
+\titleformat{\chapter}
+    {\centering\normalsize}
+    {\thechapter}
+    {8pt}{\MakeUppercase}
+\titleformat{\section}
+    {\centering\normalsize}
+    {\thesection}
+    {1em}{}
+\titleformat{\subsection}
+    {\centering\normalsize}
+    {\thesubsection}
+    {1em}{}
+\titlespacing*{\chapter}{0pt}{-30pt}{8pt}
+\titlespacing*{\section}{\parindent}{*4}{*4}
+\titlespacing*{\subsection}{\parindent}{*4}{*4}
+
+\begin{document}
+    \begin{titlepage}
+        \begin{center}
+            Министерство образования и науки РФ \\
+            Государственное образовательное учреждение\\
+            Высшего профессионального образования\\
+            <<Волгоградский государственный технический университет>>\\
+            Кафедра <<САПРиПК>>
+        \end{center}
+        \vspace{2.0cm}
+        \begin{center}
+            \large \textbf{ОТЧЁТ} \\
+            по семестровой работе
+        \end{center}
+        \begin{flushleft}
+            Студента\\
+            Фамилия \underline{Голубева} 
+            Имя \underline{Алексей}\\
+            Отчество \underline{Владимировича}\\
+            Факультет \underline{ФЭВТ} курс \underline{5} группа \underline{САПР-1.1п}
+        \end{flushleft}
+        \vspace{1.0cm}
+        \noindentТема семестровой работы: \underline{Модуль кластеризации патентной информации}\\
+        \underline{на основе статистического метода LDA.}
+        \vspace{2.0cm}
+        \begin{flushleft}
+            РУКОВОДИТЕЛЬ ПРАКТИКИ\\
+            Кафедра \underline{САПР и ПК} Должность \underline{профессор} \\
+            Фамилия \underline{Кравеч} Имя \underline{Алла}\\
+            Отчество \underline{Григорьевна}
+        \end{flushleft}
+        \vspace{1.5cm}
+        \begin{flushright}
+            <<\underline{\hspace{1.0cm}}>>\underline{\hspace{5.0cm}} \the\year
+        \end{flushright}
+        \vspace{\fill}
+        \begin{center}
+            Волгоград \the\year
+        \end{center}
+    \end{titlepage}
+    \tableofcontents
+    \newpage
+    \onehalfspacing
+    \input{text}
+\end{document}
