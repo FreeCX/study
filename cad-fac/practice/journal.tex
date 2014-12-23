@@ -2,7 +2,8 @@
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english, russian]{babel}
-\usepackage[left=2.5cm, right=1.5cm, top=1.0cm, bottom=1.0cm]{geometry}
+\usepackage[left=2.5cm, right=1.5cm, top=2.0cm, bottom=2.0cm]{geometry}
+\usepackage[column]{hedfeatures}
 \renewcommand{\rmdefault}{ftm}
 
 \begin{document}
@@ -21,20 +22,22 @@
         \end{center}
         \begin{flushleft}
             Студента\\
-            Фамилия \underline{\hspace{5cm}} 
-            Имя \underline{\hspace{5.1cm}}\\
-            Отчество \underline{\hspace{5cm}}\\
-            Факультет \underline{\hspace{4.8cm}} курс \underline{\hspace{2cm}} 
-            группа \underline{\hspace{4cm}}\\
+            Фамилия \underline{Голубева\hspace{3.1cm}} 
+            Имя \underline{Алексея\hspace{2.1cm}}\\
+            Отчество \underline{Владимировича\hspace{1.6cm}}\\
+            Факультет \underline{\hspace{4.8cm}} курс \underline{1\hspace{1.5cm}} 
+            группа \underline{САПР-1.1п\hspace{1.9cm}}\\
             \vspace{1cm}
             Специальность \underline{\hspace{12.8cm}}\\
-            База проведения практики \underline{\hspace{10.4cm}}\\
+            База проведения практики \underline{ВолгГТУ\hspace{8.4cm}}\\
             \vspace{1cm}
             КАЛЕНДАРНЫЕ СРОКИ ПРАКТИКИ:\\
-            По учебному плану: \hspace{0.5cm} начало \underline{\hspace{4cm}} 
-            конец \underline{\hspace{4cm}}\\
-            Дата прибытия на практику: <<\underline{\hspace{1cm}}>> \underline{\hspace{3cm}} \the\year г.\\
-            Дата выбытия: \hspace{3cm}<<\underline{\hspace{1cm}}>> \underline{\hspace{3cm}} \the\year г.
+            По учебному плану: \hspace{0.2cm} начало \underline{01.09.2014\hspace{1.8cm}} 
+            конец \underline{22.12.2014\hspace{1.8cm}}\\
+            Дата прибытия на практику: <<\underline{01}>> \underline{сентября\hspace{1.2cm}} 
+            \the\year г.\\
+            Дата выбытия: \hspace{3cm}<<\underline{21}>> \underline{декабря\hspace{1.4cm}} 
+            \the\year г.
         \end{flushleft}
         \vspace{1cm}
         \noindentИндивидуальное задание: \underline{\hspace{10.7cm}}\\
@@ -42,9 +45,9 @@
         \vspace{1cm}
         \begin{flushleft}
             РУКОВОДИТЕЛЬ ПРАКТИКИ\\
-            Кафедра \underline{\hspace{5cm}} Должность \underline{\hspace{5cm}} \\
-            Фамилия \underline{\hspace{4.9cm}} Имя \underline{\hspace{6.5cm}}\\
-            Отчество \underline{\hspace{4.9cm}}
+            Кафедра \underline{САПРиПК\hspace{2.7cm}} Должность \underline{профессор\hspace{2.8cm}} \\
+            Фамилия \underline{Кравец\hspace{3.3cm}} Имя \underline{Алла\hspace{5.5cm}}\\
+            Отчество \underline{Григорьевна\hspace{2.2cm}}
         \end{flushleft}
         \vspace{\fill}
         \begin{center}
@@ -53,15 +56,25 @@
     \end{titlepage}
     \begin{table}[h!]
         \centering
-        \begin{tabular}{|l|l|l|}
-            \hline 
-            Дата & Работа, выполненая студентом & Отметка руководителя, подпись \\ \hline
-            -- & -- & -- \\ \hline
+        \begin{tabular}{|m{.15\textwidth}|m{.45\textwidth}|m{.3\textwidth}|}
+        \hline
+        Количество часов & Работа, выполненная студентом & Отметка руководителя, подпись \\ \hline
+        0.5 & Получение задания & \\ \hline
+        5 & Сбор информации по теме & \\ \hline
+        1 & Систематизация собранной информации & \\ \hline
+        1.5 & Составление структуры & \\ \hline
+        5 & Подготовка теоретической части & \\ \hline
+        1 & Создание и подготовка репозитория на GitHub & \\ \hline
+        5 & Верстка теоретической части & \\ \hline
+        2 & Подготовка примера работы с библиотекой Leaflet & \\ \hline
+        5 & Подготовка практической части & \\ \hline
+        5 & Верстка практической части & \\ \hline
+        5 & Проверка, редактирование & \\ \hline
         \end{tabular}
     \end{table}
     \pagestyle{empty}
     \vspace{\fill}
     \noindent<<\underline{\hspace{1cm}}>> \underline{\hspace{5cm}} \the\year г.\\
-    Студент \hspace{1cm} \underline{\hspace{6cm}} \hspace{2cm} (\underline{\hspace{5cm}})\\
-    Руководитель \underline{\hspace{6cm}} \hspace{2cm} (\underline{\hspace{5cm}})\\
+    Студент \hspace{1cm} \underline{Голубев~А.~В.\hspace{3.2cm}} \hspace{2cm} (\underline{\hspace{5cm}})\\
+    Руководитель \underline{Кравец~А.~Г.\hspace{3.45cm}} \hspace{2cm} (\underline{\hspace{5cm}})\\
 \end{document}
