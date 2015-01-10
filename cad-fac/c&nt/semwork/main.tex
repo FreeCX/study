@@ -7,7 +7,7 @@
 \usepackage{listings}
 \usepackage{hyperref}
 
-\graphicspath{{img/}}
+\graphicspath{{images/}}
 \renewcommand{\vec}[1]{\mathbf{#1}}
 
 \lstdefinelanguage{OpenCL}{morekeywords=
@@ -162,7 +162,6 @@
 	\( \vec{y}_m \) будет проводиться одновременно и независимо. Потребуется только после каждого 
 	вычислительного шага по \eqref{eq8.10} проводить сборку вектора \( \vec{y}_{m+1} \) на всех процессорных 
 	элементах.\cite{methods}
-
 \section{Используемый пример}
 В качестве примера используем систему ОДУ для расчёта направления силовых линий для различных векторных 
 полей. Систему уравнений можно записать следующим образом:
@@ -174,15 +173,165 @@
 где \( \vec{A}(\vec{r}) \) -- векторное поле, \( \vec{r}(t) \) -- интегральная кривая, 
 \( \vec{r}_0 \) -- начальное условие.
 
+\newpage
+
+\section{Используемое оборудование}
+\noindentТестирование программ производилось на следующем оборудовании:
+\begin{enumerate}
+	\item AMD Opteron(TM) Processor 6272 @ 2.10Ghz x 64
+	\item Intel(R) Core(TM) i5-4690 CPU @ 3.50GHz x 4
+	\item AMD Radeon R9 200 Series @ 1.10Ghz
+\end{enumerate}
+
+\noindentИспользуемые операционные системы:
+\begin{enumerate}
+	\item CentOS release 6.5 (Final) / Linux version 2.6.32-431.el6.x86\_64
+	\item Arch Linux / Linux 3.17.6-1-ARCH x86\_64
+\end{enumerate}
+
+\noindentИспользуемые версии компиляторов:
+\begin{enumerate}
+	\item gcc version 4.4.7 20120313 (Red Hat 4.4.7-11) (GCC)
+	\item gcc version 4.9.2 20141224 (prerelease) (GCC) 
+\end{enumerate}
+
+\noindentФлаги оптимизации скомпилированных программ:
+\begin{enumerate}
+	\item -O3 -m64 -march=bdver1 -mavx -msse -msse2 -msse3 -msse4 -msse4.1 \\
+		-msse4.2 -msse4a -mssse3 -mfpmath=387,sse -pipe
+	\item -O3 -m64 -march=haswell -mavx -mavx2 -mmmx -mmovbe -msse \\
+		-msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mssse3 -mfpmath=sse,387 \\
+		-Ofast -flto -funroll-loops -fomit-frame-pointer -pipe
+\end{enumerate}
+
+\newpage
+
 \section{Последовательная программа}
 % результаты тестов
 % оценка ускорения
 \section{Подход к распараллеливанию}
-% параллелизм данных / задачи
-% основные моменты
+Время последовательного алгоритма для одного уравнения при реализации полностью неявного метода 
+Рунге -- Кутта может быть описано следующтим соотношением:
+\[
+	T_\text{посл} = s\cdot T_f + N \cdot \left[ s^2 \cdot t_\text{умн} + s^2 \cdot t_\text{сл} + 
+		s \cdot T_f \right] + s \cdot t_\text{умн} + s \cdot t_\text{сл}
+\]
+где \( T_f \) -- время вычисления функции \( f \) -- правой части исходного дифференциального уравнения;
+\( t_\text{умн} \) -- время выполнения операции одиночного умножения; \( t_\text{сл} \) -- время 
+выполенения операции одиночного сложения; \( N \) -- число итераций в методе. Для представленого алгоритма 
+время выполенения на \( p \) процессорах без учёта обменов и других накладных расходов задаётся соотношением:
+\[
+	T_\text{пар} = T_f + N \cdot \left[ s \cdot t_\text{умн} + s \cdot t_\text{сл} + T_f \right] + 
+		t_\text{умн} + t_\text{сл}
+\]
+
+Соответственно, коэффициент ускорения равен
+\[
+	К_\text{уск} = \frac{T_\text{посл}}{T_\text{пар}} = 
+		\frac{s\cdot T_f + N\cdot\left[ 2s^2 \cdot t* + s\cdot T_f\right] + 2s\cdot t*}
+			{T_f + N\cdot\left[ 2s\cdot t* + T_f\right] + 2\cdot t*}
+\]
+При подсчёте коэффициента ускорения считалось, что \( t_\text{сл} = t_\text{умн} = t* \) -- любая 
+арифметическая операция с плавающей точкой выполняется за одно и то же время независимо от вида опрерации.
+Коэффициент ускорения для сложных функций правой части коэффициент ускорения практически равен числу 
+процессоров, а коэффициент эффективности -- единице:
+\[
+	K_\text{уск} \approx \frac{s \cdot T_f + N \cdot s \cdot T_f}{T_f + N \cdot T_f } = s = p
+\]
+
+versus
+
+Получим оценку ускорения рассмотренного алгоритма ранее. Оценку будем производить по соотношению временных 
+затрат на выполение одно шага. Для последовательной версии \( T_1 \approx R(n) \times t_a \), здесь 
+\( R(n) \) -- количество арифметических опреаций для расчёта правых частей системы ОДУ, \( t_a \) -- 
+обобщенное время выполения одной арифметической опреации. Для параллельной версии имеем 
+\[
+	T_p \approx \frac{R(n)}{p}t_a + (p-1)\frac{n}{p}t_{c}
+\]
+Здесь \( t_c \) -- время на пересылку одного числа. Тогда ускорение можно оценить как
+\[
+	S_p = \frac{T_1}{T_p} \approx \frac{p \cdot R(n) \cdot t_a}{R(n) \cdot t_a + (p-1)\cdot n \cdot t_c} = 
+	\frac{p}{1+\cfrac{(p-1)nk}{R(n)}}, \quad\text{где} k = t_c / t_a
+\]
+
+Из полученных формул следует, что чем выше вычислительная сложность расчёта правых частей заданной системы 
+ОДУ, тем большего ускорения можно достичь при использовании параллельного алгоритма.
+
+\section{Входные данные}
+	Тестирование последовательной и параллельной программы производился на следующем наборе данных
+	\begin{table}[h]
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			Шаг & \multicolumn{6}{c|}{Количество точек} & \multicolumn{3}{c|}{Данные} \\ \hline
+			\( 10^{-8} \) & 100 & 1000 & 5000 & 10000 & 150000 & 200000 & lines & random & rotation \\ 
+			\hline
+			\( 10^{-16} \) & 100 & 1000 & 5000 & 10000 & 150000 & 200000 & lines & random & rotation \\ 
+			\hline
+		\end{tabular}
+	\end{table}
+	Программы для генерации входных данных доступны в конце приложения.
+
+\newpage
+
 \section{Результаты}
+Результаты полученные на кластере:
+\begin{figure}[ht!]
+    \center
+    \includegraphics[width=0.8\textwidth]{linesField_cl_1E-8}
+    \includegraphics[width=0.8\textwidth]{linesField_cl_1E-16}
+    \caption{linesField}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[ht!]
+    \center
+    \includegraphics[width=0.8\textwidth]{randomField_cl_1E-8}
+    \includegraphics[width=0.8\textwidth]{randomField_cl_1E-16}
+    \caption{randomField}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[ht!]
+    \center
+    \includegraphics[width=0.8\textwidth]{rotationField_cl_1E-8}
+    \includegraphics[width=0.8\textwidth]{rotationField_cl_1E-16}
+    \caption{rotationField}
+\end{figure}
+
+\pagebreak
+
+Результаты полученные на стационарном компьютере:
+\begin{figure}[ht!]
+    \center
+    \includegraphics[width=0.8\textwidth]{linesField_my_1E-8}
+    \includegraphics[width=0.8\textwidth]{linesField_my_1E-16}
+    \caption{linesField}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[ht!]
+    \center
+    \includegraphics[width=0.8\textwidth]{randomField_my_1E-8}
+    \includegraphics[width=0.8\textwidth]{randomField_my_1E-16}
+    \caption{randomField}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[ht!]
+    \center
+    \includegraphics[width=0.8\textwidth]{rotationField_my_1E-8}
+    \includegraphics[width=0.8\textwidth]{rotationField_my_1E-16}
+    \caption{rotationField}
+\end{figure}
 % число ядер / узлов
 % размерность
+
+\newpage
+
 \section{Выводы}
 
 \newpage
@@ -194,6 +343,9 @@
 		Томский государственный университет "--- 2013
 	\bibitem{theory} Назарова, И.~А. Параллельные полностью неявные методы численного решения жестких 
 		задач для СОДУ~/ И.~А. Назарова ~// Донецкий национальный технический университет "--- 2005
+	\bibitem{book01} Горелов, Ю.~Н. Численные методы решений обыкновенных дифференциальных уравнений 
+		(метод Рунге -- Кутта) ~/ Ю.~Н. Горелов ~// Самарский университет "--- 2006
+	\bibitem{book02}
 \end{thebibliography}
 
 \newpage
@@ -224,5 +376,10 @@
 
 Настройка и работа с OpenCL:
 \lstinputlisting[language=C++, basicstyle=\tiny, firstline=8]{code/opencl_init.cpp}
+
+Программы генерации входных данных:
+\lstinputlisting[language=C, basicstyle=\tiny]{code/lines.c}
+\lstinputlisting[language=C, basicstyle=\tiny]{code/random.c}
+\lstinputlisting[language=C, basicstyle=\tiny]{code/rotation.c}
 
 \end{document}
