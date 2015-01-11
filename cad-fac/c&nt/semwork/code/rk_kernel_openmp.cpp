@@ -153,10 +153,10 @@ void rk4_caller( FILE * std, size_t max_points, vector *v0, int count_v0, double
 
     omp_set_dynamic( 0 );
     omp_set_num_threads( count_v0 );
-    start = clock();
     *fibers = (Fiber *) malloc( count_v0 * sizeof(Fiber) );
     arguments = (kernel_args *) malloc(count_v0 * sizeof(kernel_args) );
-    #pragma omp parallel for shared( arguments ) private( i )
+    start = clock();
+    #pragma omp parallel for shared( arguments, fiberes ) private( i )
     for ( i = 0; i < count_v0; i++ ){
         arguments[i].id = i;
         arguments[i].v0 = v0;

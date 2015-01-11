@@ -47,7 +47,7 @@ char* RK_OpenCL::opencl_load_program_from_source( int *size ) {
     char* program_string;
     FILE* prog;
 
-    prog = fopen( "core/opencl/rk_kernel.cl", "r" );
+    prog = fopen( "rk_kernel_opencl.cl", "r" );
     fseek( prog, 0, SEEK_END );
     *size = ftell( prog );
     fseek( prog, 0, SEEK_SET );

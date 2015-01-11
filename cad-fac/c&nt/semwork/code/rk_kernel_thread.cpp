@@ -122,12 +122,12 @@ void *rk4_kernel( void *args ) {
         points_aux = (vector *) realloc( points_aux, n_points_aux * sizeof(vector) );
         set( &(points_aux[n_points_aux - 1]), initial);
         set( &k1, mult_scalar( direction, arguments.h ) );
-        set( &k2, mult_scalar( trilinear_interpolation(sum(initial, mult_scalar( k1, 0.5 )),
-             arguments.n_x, arguments.n_y, arguments.n_z, arguments.field), arguments.h) );
-        set( &k3, mult_scalar( trilinear_interpolation(sum(initial, mult_scalar( k2, 0.5 )),
-             arguments.n_x, arguments.n_y, arguments.n_z, arguments.field), arguments.h) );
-        set( &k4, mult_scalar( trilinear_interpolation(sum(initial, k3),
-             arguments.n_x, arguments.n_y, arguments.n_z, arguments.field), arguments.h) );
+        set( &k2, mult_scalar( trilinear_interpolation( sum( initial, mult_scalar( k1, 0.5 ) ),
+             arguments.n_x, arguments.n_y, arguments.n_z, arguments.field ), arguments.h ) );
+        set( &k3, mult_scalar( trilinear_interpolation( sum( initial, mult_scalar( k2, 0.5 ) ),
+             arguments.n_x, arguments.n_y, arguments.n_z, arguments.field ), arguments.h ) );
+        set( &k4, mult_scalar( trilinear_interpolation( sum( initial, k3 ),
+             arguments.n_x, arguments.n_y, arguments.n_z, arguments.field ), arguments.h) );
         set( &initial, sum( initial, sum( mult_scalar( k1 , 0.166666667 ), 
              sum( mult_scalar( k2, 0.333333333 ), sum( mult_scalar( k3, 0.333333333 ), 
                   mult_scalar( k4, 0.166666667 ) ) ) ) ) );
@@ -148,10 +148,10 @@ void rk4_caller( FILE * std, size_t max_points, vector *v0, int count_v0, double
     pthread_t *threads;
     int i;
 
-    start = clock();
     *fibers = (Fiber *) malloc( count_v0 * sizeof(Fiber) );
     threads = (pthread_t *) malloc( count_v0 * sizeof(pthread_t) );
     arguments = (kernel_args *) malloc(count_v0 * sizeof(kernel_args) );
+    start = clock();
     for ( i = 0; i < count_v0; i++ ) {
         arguments[i].id = i;
         arguments[i].v0 = v0;
