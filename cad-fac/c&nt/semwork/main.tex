@@ -6,6 +6,8 @@
 \usepackage{array}
 \usepackage{listings}
 \usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{tocloft}
 
 \graphicspath{{images/}}
 \renewcommand{\vec}[1]{\mathbf{#1}}
@@ -35,11 +37,31 @@
 \topic{Решение системы ОДУ методом Рунге-Кутты 4 порядка}
 \variant{9}
 \student[m]{студент группы САПР-1.1п\\Голубев~А.~В.}
-\teacher[m]{доцент технических наук\\Андреев~А.~А.}
+\teacher[m]{к.т.н. Андреев~А.~Е.}
+
+\titleformat{\section}
+    {\centering\normalsize}
+    {\thesection}
+    {1em}{}
+\titlespacing*{\section}{\parindent}{*4}{*4}
+\renewcommand{\cfttoctitlefont}{\normalfont\hspace{0.38\textwidth}}
+\renewcommand{\cftbeforetoctitleskip}{-1em}
+\renewcommand{\cftchapfont}{\normalsize}
+\renewcommand{\cftsecfont}{\hspace{-21pt}}
+\renewcommand{\cftsubsecfont}{\hspace{-53pt}}
+\renewcommand{\cftbeforechapskip}{0em}
+\renewcommand{\cftparskip}{-1mm}
+\renewcommand{\cftdotsep}{1}
+\renewcommand{\cftsecpresnum}{}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
 
 \begin{document}
 \maketitle
 \tableofcontents
+\newpage
 \section{Постановка задач}
 	\begin{enumerate}
 		\item Реализовать с использованием технологий параллельных вычислений задание по вариантам 
@@ -181,11 +203,16 @@
 
 \section{Используемое оборудование}
 \noindentТестирование программ производилось на следующем оборудовании:
-\begin{enumerate}
-	\item AMD Opteron(TM) Processor 6272 @ 2.10Ghz x 64
-	\item Intel(R) Core(TM) i5-4690 CPU @ 3.50GHz x 4
-	\item GIGABYTE Radeon R9 280X @ 1.10Ghz [4.1 TFlops]
-\end{enumerate}
+\begin{table}[h]
+    \center
+    \begin{tabular}{|C{5cm}|C{2cm}|C{2cm}|C{3cm}|C{3cm}|}
+        \hline
+        Оборудование & Частота, Ггц & Кол-во ядер, шт & float, GFLOPS/s & double, GFLOPS/s \\ \hline
+        AMD Opteron(TM) Processor 6272 & 2.10 & 64 & - & - \\ \hline
+        Intel(R) Core(TM) i5-4690 & 3.5 & 4 & 3.7 & 3.7 \\ \hline
+        GIGABYTE Radeon R9 280X & 1.10 & 32 & 4400 & 1112 \\ \hline
+    \end{tabular}
+\end{table}
 
 \noindentИспользуемые операционные системы:
 \begin{enumerate}
@@ -205,7 +232,7 @@
 		-msse4.2 -msse4a -mssse3 -mfpmath=387,sse -pipe
 	\item -O3 -m64 -march=haswell -mavx -mavx2 -mmmx -mmovbe -msse \\
 		-msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mssse3 -mfpmath=sse,387 \\
-		-Ofast -flto -funroll-loops -fomit-frame-pointer -pipe
+		-ffast-math -flto -pipe
 \end{enumerate}
 
 \newpage
@@ -276,101 +303,166 @@
 		p\left( \frac{1-p}{p+1} \right)
 \]
 
-\begin{figure}[ht!]
-    \center
-    \includegraphics[width=0.7\textwidth]{g_p}
-    \caption{Зависимость достижимого ускорения от количества процессорных элементов}
-    \label{img:01}
-\end{figure}
+% доделать
 
 \newpage
 
 \section{Входные данные}
-	Тестирование последовательной и параллельной программы производился на следующем наборе данных
-	\begin{table}[h]
-		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
-			\hline
-			Шаг & \multicolumn{6}{c|}{Количество точек} & \multicolumn{3}{c|}{Данные} \\ \hline
-			\( 10^{-8} \) & 100 & 1000 & 5000 & 10000 & 150000 & 200000 & lines & random & rotation \\ 
-			\hline
-			\( 10^{-16} \) & 100 & 1000 & 5000 & 10000 & 150000 & 200000 & lines & random & rotation \\ 
-			\hline
-		\end{tabular}
-	\end{table}
+Тестирование последовательной и параллельной программы производился на следующем наборе данных
+\begin{table}[h]
+    \center
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+		\hline
+		Шаг & \multicolumn{8}{c|}{Количество точек} \\ \hline
+		\( 10^{-8} \) & 100 & 1000 & 5000 & 10000 & 50000 & 100000 & 150000 & 200000 \\ 
+		\hline
+	\end{tabular}
+\end{table}
 
-	Программы для генерации входных данных доступны в конце приложения.
-
-\newpage
+Программы для генерации входных данных доступны в конце приложения.
 
 \section{Результаты}
 \label{sec:test}
 Результаты полученные на кластере:
 \begin{figure}[ht!]
-    \center
-    \includegraphics[width=0.8\textwidth]{linesField_cl_1E-8}
-    \includegraphics[width=0.8\textwidth]{linesField_cl_1E-16}
-    \caption{linesField (256 вычислителей)}
+    \begin{minipage}{0.55\textwidth}
+        \includegraphics[width=\textwidth]{linesField_cl_1E-8}
+    \end{minipage}
+    \begin{minipage}{0.47\textwidth}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            Шаг & default, с & OpenMP, с \\ \hline
+            1.00\cdot10^{2} & 1.00\cdot10^{-2} & 7.41\cdot10^{-2} \\ \hline
+            1.00\cdot10^{3} & 1.20\cdot10^{-1} & 8.64\cdot10^{-2} \\ \hline
+            5.00\cdot10^{3} & 6.30\cdot10^{-1} & 9.62\cdot10^{-2} \\ \hline
+            1.00\cdot10^{4} & 1.23 & 2.45\cdot10^{-1} \\ \hline
+            5.00\cdot10^{4} & 6.18& 5.52\cdot10^{-1} \\ \hline
+            1.00\cdot10^{5} & 1.24\cdot10^{1} & 6.35\cdot10^{-1} \\ \hline
+            1.50\cdot10^{5} & 1.84\cdot10^{1} & 9.27\cdot10^{-1} \\ \hline
+            2.00\cdot10^{5} & 2.46\cdot10^{1} & 1.13 \\ \hline
+        \end{tabular}
+    \end{minipage}
+    \caption{linesField (256 потоков)}
 \end{figure}
 
-\pagebreak
+\newpage
 
 \begin{figure}[ht!]
-    \center
-    \includegraphics[width=0.8\textwidth]{randomField_cl_1E-8}
-    \includegraphics[width=0.8\textwidth]{randomField_cl_1E-16}
-    \caption{randomField (256 вычислителей)}
+    \begin{minipage}{0.55\textwidth}
+        \includegraphics[width=\textwidth]{randomField_cl_1E-8}
+    \end{minipage}
+    \begin{minipage}{0.47\textwidth}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            Шаг & default, с & OpenMP, с \\ \hline
+            1.00\cdot10^{2} & 1.00\cdot10^{-2} & 7.59\cdot10^{-2} \\ \hline
+            1.00\cdot10^{3} & 1.40\cdot10^{-1} & 6.79\cdot10^{-2} \\ \hline
+            5.00\cdot10^{3} & 7.10\cdot10^{-1} & 1.02\cdot10^{-1} \\ \hline
+            1.00\cdot10^{4} & 1.40 & 2.31\cdot10^{-1} \\ \hline
+            5.00\cdot10^{4} & 6.96 & 4.82\cdot10^{-1} \\ \hline
+            1.00\cdot10^{5} & 1.39\cdot10^{1} & 6.90\cdot10^{-1} \\ \hline
+            1.50\cdot10^{5} & 2.08\cdot10^{1} & 9.65\cdot10^{-1} \\ \hline
+            2.00\cdot10^{5} & 2.77\cdot10^{1} & 1.26 \\ \hline
+        \end{tabular}
+    \end{minipage}
+    \caption{randomField (256 потоков)}
 \end{figure}
-
-\pagebreak
 
 \begin{figure}[ht!]
-    \center
-    \includegraphics[width=0.8\textwidth]{rotationField_cl_1E-8}
-    \includegraphics[width=0.8\textwidth]{rotationField_cl_1E-16}
-    \caption{rotationField (7 вычислителей)}
+    \begin{minipage}{0.55\textwidth}
+        \includegraphics[width=\textwidth]{rotationField_cl_1E-8}
+    \end{minipage}
+    \begin{minipage}{0.47\textwidth}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            Шаг & default, с & OpenMP, с \\ \hline
+            1.00\cdot10^{2} & 0.00 & 1.17\cdot10^{-3} \\ \hline
+            1.00\cdot10^{3} & 0.00 & 1.63\cdot10^{-3} \\ \hline
+            5.00\cdot10^{3} & 2.00\cdot10^{-2} & 3.75\cdot10^{-3} \\ \hline
+            1.00\cdot10^{4} & 5.00\cdot10^{-2} & 6.75\cdot10^{-3} \\ \hline
+            5.00\cdot10^{4} & 2.10\cdot10^{-1} & 2.93\cdot10^{-2} \\ \hline
+            1.00\cdot10^{5} & 4.00\cdot10^{-1} & 5.90\cdot10^{-2} \\ \hline
+            1.50\cdot10^{5} & 6.10\cdot10^{-1} & 8.72\cdot10^{-2} \\ \hline
+            2.00\cdot10^{5} & 8.00\cdot10^{-1} & 1.14\cdot10^{-1} \\ \hline
+        \end{tabular}
+    \end{minipage}
+    \caption{rotationField (7 потоков)}
 \end{figure}
 
-\pagebreak
+\newpage
 
 Результаты полученные на стационарном компьютере:
-\begin{figure}[ht!]
+\begin{table}[h]
     \center
-    \includegraphics[width=0.8\textwidth]{linesField_my_1E-8}
-    \includegraphics[width=0.8\textwidth]{linesField_my_1E-16}
-    \caption{linesField (256 вычислителей)}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Шаг & default, с & OpenMP, с & OpenCL, с \\ \hline
+        1.00\cdot10^{2} & 3.12\cdot10^{-3} & 3.73\cdot10^{-3} & 1.28\cdot10^{-3} \\ \hline
+        1.00\cdot10^{3} & 3.09\cdot10^{-2} & 1.67\cdot10^{-2} & 1.21\cdot10^{-2} \\ \hline
+        5.00\cdot10^{3} & 1.54\cdot10^{-1} & 7.89\cdot10^{-2} & 6.08\cdot10^{-2} \\ \hline
+        1.00\cdot10^{4} & 3.08\cdot10^{-1} & 2.40\cdot10^{-1} & 1.22\cdot10^{-1} \\ \hline
+        5.00\cdot10^{4} & 1.54 & 5.61\cdot10^{-1} & 6.13\cdot10^{-1} \\ \hline
+        1.00\cdot10^{5} & 3.07 & 9.10\cdot10^{-1} & 1.23 \\ \hline
+        1.50\cdot10^{5} & 4.59 & 1.34 & 1.85 \\ \hline
+        2.00\cdot10^{5} & 6.12 & 1.71 & 2.46 \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{figure}[ht!]
+    \includegraphics[width=\textwidth]{linesField_my_1E-8}
+    \caption{linesField (256 потоков)}
 \end{figure}
 
-\pagebreak
+\newpage
+
+\begin{table}[h]
+    \center
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Шаг & default, с & OpenMP, с & OpenCL, с \\ \hline
+        1.00\cdot10^{2} & 3.16\cdot10^{-3} & 4.09\cdot10^{-3} & 1.70\cdot10^{-3} \\ \hline
+        1.00\cdot10^{3} & 3.09\cdot10^{-2} & 1.88\cdot10^{-2} & 1.66\cdot10^{-2} \\ \hline
+        5.00\cdot10^{3} & 1.54\cdot10^{-1} & 1.18\cdot10^{-1} & 8.33\cdot10^{-2} \\ \hline
+        1.00\cdot10^{4} & 3.09\cdot10^{-1} & 1.87\cdot10^{-1} & 1.62\cdot10^{-1} \\ \hline
+        5.00\cdot10^{4} & 1.54 & 6.11\cdot10^{-1} & 8.16\cdot10^{-1} \\ \hline
+        1.00\cdot10^{5} & 3.07 & 9.34\cdot10^{-1} & 1.62\\ \hline
+        1.50\cdot10^{5} & 4.59 & 1.31 & 2.52 \\ \hline
+        2.00\cdot10^{5} & 6.13 & 1.69 & 3.48 \\ \hline
+    \end{tabular}
+\end{table}
 
 \begin{figure}[ht!]
-    \center
-    \includegraphics[width=0.8\textwidth]{randomField_my_1E-8}
-    \includegraphics[width=0.8\textwidth]{randomField_my_1E-16}
-    \caption{randomField (256 вычислителей)}
+    \includegraphics[width=\textwidth]{randomField_my_1E-8}
+    \caption{randomField (256 потоков)}
 \end{figure}
 
-\pagebreak
+\newpage
+
+\begin{table}
+    \center
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Шаг & default, с & OpenMP, с & OpenCL, с \\ \hline
+        1.00\cdot10^{2} & 9.70\cdot10^{-5} & 3.58\cdot10^{-4} & 3.22\cdot10^{-3} \\ \hline
+        1.00\cdot10^{3} & 9.45\cdot10^{-4} & 6.20\cdot10^{-4} & 2.39\cdot10^{-2} \\ \hline
+        5.00\cdot10^{3} & 4.66\cdot10^{-3} & 2.04\cdot10^{-3} & 7.10\cdot10^{-2} \\ \hline
+        1.00\cdot10^{4} & 9.37\cdot10^{-3} & 3.81\cdot10^{-3} & 1.42\cdot10^{-1} \\ \hline
+        5.00\cdot10^{4} & 4.67\cdot10^{-2} & 1.74\cdot10^{-2} & 7.08\cdot10^{-1} \\ \hline
+        1.00\cdot10^{5} & 9.34\cdot10^{-2} & 2.62\cdot10^{-2} & 1.42 \\ \hline
+        1.50\cdot10^{5} & 1.39\cdot10^{-1} & 4.54\cdot10^{-2} & 2.13 \\ \hline
+        2.00\cdot10^{5} & 1.85\cdot10^{-1} & 5.54\cdot10^{-2} & 2.84 \\ \hline
+    \end{tabular}
+\end{table}
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[width=0.8\textwidth]{rotationField_my_1E-8}
-    \includegraphics[width=0.8\textwidth]{rotationField_my_1E-16}
-    \caption{rotationField (7 вычислителей)}
+    \includegraphics[width=\textwidth]{rotationField_my_1E-8}
+    \caption{rotationField (8 потоков)}
 \end{figure}
 
 \newpage
 
 \section{Выводы}
-В данной работе был рассмотрел параллельный алгоритм Рунге -- Кутты, произведена оценка его эффективности 
-и получены экспериментальные данные на нескольких наборах данных.
-
-Деградацию скорости вычислений на кластере можно объяснить рисунком \ref{img:01}, где достижимое 
-ускорение резко осциллирует. Напротив, тесты проведённые на стационарном оборудовании показали хорошие 
-результаты. Версии программ использующие OpenMP и OpenCL показали значительный прирост в скорости работы, 
-при увеличении рассматриваемого интервала. Увеличение точности вычислений не сильно сказалось на скорости 
-работы программ. Последний из примеров показал плохую работу OpenCL при малом количестве вычислительных 
-блоков, что было ожидаемо, т.к. основное время расходуется на пересылку и сбор данных, а при малой 
-сложности задачи это является критическим параметром.
 
 \newpage
 
@@ -394,30 +486,30 @@
 \addcontentsline{toc}{section}{Приложение}
 \label{sec:app}
 \centerОбщая часть для всех программ:
-\lstinputlisting[language=C++, basicstyle=\tiny, firstline=12, lastline=109]{code/rk_kernel_default.cpp}
+\lstinputlisting[language=C++, basicstyle=\tiny, firstline=1, lastline=100]{code/rk_kernel_default.cpp}
 
 \newpage
 
 Ядро последовательной программы:
-\lstinputlisting[language=C++, basicstyle=\tiny, firstline=116]{code/rk_kernel_default.cpp}
+\lstinputlisting[language=C++, basicstyle=\tiny, firstline=100]{code/rk_kernel_default.cpp}
 
 \newpage
 
 Ядро программы использующая OpenMP:
-\lstinputlisting[language=C++, basicstyle=\tiny, firstline=117]{code/rk_kernel_openmp.cpp}
-
-\newpage
-
-Ядро программы использующая потоки:
-\lstinputlisting[language=C++, basicstyle=\tiny, firstline=116]{code/rk_kernel_thread.cpp}
+\lstinputlisting[language=C++, basicstyle=\tiny]{code/rk_kernel_openmp.cpp}
 
 \newpage
 
 Ядро программы использующая OpenCL:
-\lstinputlisting[language=OpenCL, basicstyle=\tiny, firstline=116]{code/rk_kernel_opencl.cl}
+\lstinputlisting[language=OpenCL, basicstyle=\tiny]{code/rk_kernel_opencl.cl}
 
 Настройка и работа с OpenCL:
-\lstinputlisting[language=C++, basicstyle=\tiny, firstline=8]{code/opencl_init.cpp}
+\lstinputlisting[language=C++, basicstyle=\tiny]{code/opencl_init.cpp}
+
+Структуры данных:
+\lstinputlisting[language=C++, basicstyle=\tiny]{code/args.h}
+\lstinputlisting[language=C++, basicstyle=\tiny]{code/dataset.cpp}
+\lstinputlisting[language=C++, basicstyle=\tiny]{code/fiber.cpp}
 
 Программы генерации входных данных:
 \lstinputlisting[language=C, basicstyle=\tiny]{code/lines.c}
