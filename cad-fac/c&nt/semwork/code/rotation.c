@@ -8,11 +8,12 @@ const char rotation_data[] =
     "0.0 64.0 10.0\n"
     "0.0 80.0 10.0\n"
     "0.0 96.0 10.0\n"
-    "0.0 112.0 10.0\n";
+    "0.0 112.0 10.0\n"
+    "0.0 128.0 10.0\n";
 
 int main( int argc, char *argv[] ) {
     int dim_x, dim_y, dim_z, i, j, k;
-    const int size = 7;
+    const int size = 8;
     float h = 0.1;
     FILE * f;
 

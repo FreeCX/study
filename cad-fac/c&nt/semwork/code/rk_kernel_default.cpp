@@ -1,14 +1,3 @@
-#include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <ctime>
-#include <dataset.h>
-#include <fiber.h>
-#include <pthread.h>
-#include <rk_c_kernel.h>
-
-using namespace runge_kutta;
-
 vector sum( vector v1, vector v2 ) {
     vector sum;
     sum.x = v1.x + v2.x;
@@ -50,6 +39,7 @@ double distance( vector x, vector y ) {
 vector nearest_neighbour( vector v0, int n_x, int n_y, int n_z, vector_field field ) {
     int x, y, z;
     vector zero;
+
     zero.x = zero.y = zero.z = 0.0;
     if ( ( v0.x - floor( v0.x ) ) > 0.5 && v0.x < ( n_x - 1 ) ) {
         x = (int) ceil( v0.x );
@@ -77,6 +67,7 @@ vector trilinear_interpolation( vector v0, int n_x, int n_y, int n_z, vector_fie
     int x1, y1, z1, x0, y0, z0;
     double xd, yd, zd;
     vector P1, P2, P3, P4, P5, P6, P7, P8, X1, X2, X3, X4, Y1, Y2, final;
+
     x1 = ceil( v0.x );
     y1 = ceil( v0.y );
     z1 = ceil( v0.z );
@@ -113,35 +104,35 @@ void *rk4_kernel( void *args ) {
     vector k1, k2, k3, k4, initial, direction;
     vector *points_aux = NULL;
     size_t n_points_aux = 0, j = 0;
-    
+
     set( &initial, arguments.v0[arguments.id] );
     set( &direction, arguments.field[DataSet::offset( arguments.n_x, arguments.n_y, initial.x, initial.y, 
          initial.z )] );
+    points_aux = (vector *) malloc( arguments.max_points * sizeof(vector) );
     while ( module( direction ) > 0 && n_points_aux < arguments.max_points ) {
         n_points_aux++;
-        points_aux = (vector *) realloc( points_aux, n_points_aux * sizeof(vector) );
         set( &( points_aux[n_points_aux - 1] ), initial);
         set( &k1, mult_scalar( direction, arguments.h ) );
         set( &k2, mult_scalar( trilinear_interpolation( sum( initial, mult_scalar( k1, 0.5 ) ),
              arguments.n_x, arguments.n_y, arguments.n_z, arguments.field ), arguments.h ) );
         set( &k3, mult_scalar( trilinear_interpolation( sum( initial, mult_scalar( k2, 0.5 ) ),
              arguments.n_x, arguments.n_y, arguments.n_z, arguments.field ), arguments.h ) );
-        set( &k4, mult_scalar( trilinear_interpolation( sum( initial, k3 ),
+        set( &k4, mult_scalar( trilinear_interpolation( sum( initial, k3) ,
              arguments.n_x, arguments.n_y, arguments.n_z, arguments.field ), arguments.h ) );
-        set( &initial, sum( initial, sum( mult_scalar( k1 , 0.166666667 ), 
-             sum( mult_scalar( k2, 0.333333333 ), sum( mult_scalar( k3, 0.333333333 ), 
-                  mult_scalar( k4, 0.166666667 ) ) ) ) ) );
+        set( &initial, sum( initial, sum( mult_scalar( k1 , 0.166666667 ), sum( mult_scalar( k2, 0.333333333 ),
+             sum( mult_scalar( k3, 0.333333333 ), mult_scalar( k4, 0.166666667 ) ) ) ) ) );
         set( &direction, trilinear_interpolation( initial, arguments.n_x, arguments.n_y, arguments.n_z, 
-                                                  arguments.field ) );
+             arguments.field ) );
     }
     (arguments.fibers)[arguments.id] = Fiber( n_points_aux );
     for ( j = 0; j < n_points_aux; j++ ) {
         (arguments.fibers)[arguments.id].setPoint( j, points_aux[j] );
     }
+    free( points_aux );
     return NULL;
 }
 
-void rk4_caller( FILE * std, size_t max_points, vector *v0, int count_v0, double h, 
+void rk4_caller( FILE * std, size_t max_points, vector *v0, int count_v0, double h,
                  int n_x, int n_y, int n_z, vector_field field, Fiber **fibers ) {
     kernel_args *arguments;
     clock_t start, finish;
@@ -150,7 +141,7 @@ void rk4_caller( FILE * std, size_t max_points, vector *v0, int count_v0, double
     *fibers = (Fiber *) malloc( count_v0 * sizeof(Fiber) );
     arguments = (kernel_args *) malloc( count_v0 * sizeof(kernel_args) );
     start = clock();
-    for ( i = 0; i < count_v0; i++ ){
+    for ( i = 0; i < count_v0; i++ ) {
         arguments[i].id = i;
         arguments[i].v0 = v0;
         arguments[i].count_v0 = count_v0;
@@ -164,7 +155,9 @@ void rk4_caller( FILE * std, size_t max_points, vector *v0, int count_v0, double
         rk4_kernel( &( arguments[i] ) );
     }
     finish = clock();
-    fprintf( std, "[default] CPU time for RK4: %.4Es\n", 
+    free( arguments );
+    free( *fibers );
+    fprintf( std, "[default] CPU time for RK4: %.4Es\n",
              ((double) (finish - start))/((double) CLOCKS_PER_SEC) );
     fprintf( std, " -------> max points: %lu\n", max_points );
 }

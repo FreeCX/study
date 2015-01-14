@@ -1,10 +1,3 @@
-#include <dataset.h>
-#include <fiber.h>
-#include <opcl.h>
-#include <stdio.h>
-
-using namespace runge_kutta;
-
 RK_OpenCL::RK_OpenCL() {
     _device_used = 0;
     _time = 0.0;
@@ -12,6 +5,7 @@ RK_OpenCL::RK_OpenCL() {
 
 void RK_OpenCL::opencl_create_platform( unsigned int num_platforms ) {
     cl_uint num_platforms_found;
+
     clGetPlatformIDs( 0, NULL, &num_platforms_found );
     if ( clGetPlatformIDs( num_platforms, &_platform, &num_platforms_found ) != CL_SUCCESS ){
         printf( "\nERROR: Failed to create platform.\n" );
@@ -36,8 +30,7 @@ void RK_OpenCL::opencl_create_context() {
 }
 
 void RK_OpenCL::opencl_create_queue() {
-    if ( ( _queue = clCreateCommandQueue( _context, _devices[_device_used], 
-                                          CL_QUEUE_PROFILING_ENABLE, NULL ) ) == NULL ){
+    if ( ( _queue = clCreateCommandQueue( _context, _devices[_device_used], CL_QUEUE_PROFILING_ENABLE, NULL ) ) == NULL ){
         printf( "\nERROR: Failed to create queue.\n" );
         exit( -1 );
     }
@@ -47,7 +40,7 @@ char* RK_OpenCL::opencl_load_program_from_source( int *size ) {
     char* program_string;
     FILE* prog;
 
-    prog = fopen( "rk_kernel_opencl.cl", "r" );
+    prog = fopen( "core/opencl/rk_kernel.cl", "r" );
     fseek( prog, 0, SEEK_END );
     *size = ftell( prog );
     fseek( prog, 0, SEEK_SET );
@@ -66,11 +59,9 @@ void RK_OpenCL::opencl_build_program() {
     err = clBuildProgram( _program, 0, NULL, NULL, NULL, NULL );
     if ( err != CL_SUCCESS ) {
         printf( "\nERROR: Failed to build program.\n" );
-        clGetProgramBuildInfo( _program, _devices[_device_used], CL_PROGRAM_BUILD_LOG, 0, 
-                                NULL, &ret_val_size );
+        clGetProgramBuildInfo( _program, _devices[_device_used], CL_PROGRAM_BUILD_LOG, 0, NULL, &ret_val_size );
         build_log = (char*) malloc( ( ret_val_size + 1 ) * sizeof(char) );
-        clGetProgramBuildInfo( _program, _devices[_device_used], CL_PROGRAM_BUILD_LOG, ret_val_size, 
-                               build_log, NULL );
+        clGetProgramBuildInfo( _program, _devices[_device_used], CL_PROGRAM_BUILD_LOG, ret_val_size, build_log, NULL );
         build_log[ret_val_size] = '\0';
         printf( "BUILD LOG: \n %s\n", build_log );
         exit( -1 );
@@ -116,8 +107,8 @@ void RK_OpenCL::opencl_prepare_kernel( vector *v0, unsigned int count_v0, double
                                     sizeof(vector)* n_x * n_y * n_z, field, NULL );
     _opencl_points = clCreateBuffer( _context, CL_MEM_WRITE_ONLY , sizeof(vector) * count_v0 * max_points, 
                                      NULL, NULL );
-    _opencl_n_points = clCreateBuffer( _context, CL_MEM_WRITE_ONLY , sizeof(unsigned int) * count_v0, 
-                                       NULL, NULL );
+    _opencl_n_points = clCreateBuffer( _context, CL_MEM_WRITE_ONLY , sizeof(unsigned int) * count_v0, NULL, 
+                                       NULL );
     _opencl_max_points = clCreateBuffer( _context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, 
                                          sizeof(unsigned int), &max_points, NULL );
     clSetKernelArg( _kernel, 0, sizeof(cl_mem), (void *)&_opencl_v0 );
@@ -185,8 +176,9 @@ void RK_OpenCL::opencl_time( cl_event* timer ) {
     _time += (double)( _finish - _start );
 }
 
-void RK_OpenCL::opencl_init( char* kernel_name, vector *v0, int count_v0, double h, int n_x, int n_y, int n_z,
-                             vector_field field, Fiber **fibers, size_t max_points ) {
+void RK_OpenCL::opencl_init( char* kernel_name, vector *v0, int count_v0, double h, 
+                             int n_x, int n_y, int n_z, vector_field field, Fiber **fibers, 
+                             size_t max_points ) {
     opencl_create_platform( 2 );
     opencl_get_devices_id();
     opencl_create_context();
