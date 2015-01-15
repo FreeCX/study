@@ -39,154 +39,144 @@
 \student[m]{студент группы САПР-1.1п\\Голубев~А.~В.}
 \teacher[m]{к.т.н. Андреев~А.~Е.}
 
-\titleformat{\section}
-    {\centering\normalsize}
-    {\thesection}
-    {1em}{}
+\titleformat{\section}{\centering\normalsize}{\thesection}{1em}{}
 \titlespacing*{\section}{\parindent}{*4}{*4}
 \renewcommand{\cfttoctitlefont}{\normalfont\hspace{0.38\textwidth}}
-\renewcommand{\cftbeforetoctitleskip}{-1em}
-\renewcommand{\cftchapfont}{\normalsize}
 \renewcommand{\cftsecfont}{\hspace{-21pt}}
-\renewcommand{\cftsubsecfont}{\hspace{-53pt}}
-\renewcommand{\cftbeforechapskip}{0em}
-\renewcommand{\cftparskip}{-1mm}
-\renewcommand{\cftdotsep}{1}
-\renewcommand{\cftsecpresnum}{}
-\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
-\renewcommand{\cftsecaftersnum}{.}
-\renewcommand{\cftsubsecaftersnum}{.}
+\renewcommand{\cftparskip}{2mm}
+\makeatletter
+\renewcommand{\l@section}{\@dottedtocline{1}{0em}{1.25em}}
+\makeatother
 
 \begin{document}
 \maketitle
 \tableofcontents
 \newpage
 \section{Постановка задач}
-	\begin{enumerate}
-		\item Реализовать с использованием технологий параллельных вычислений задание по вариантам 
-			(минимум 2 технологии: MPI и OpenMP, CUDA и OpenMP, OpenMP / OpenCL, Xeon Phi + MPI, 
-			MPI / GridGain, cloud computing и т.д.)
-		\item Оценить ускорение, степень параллелизма и другие параметры своих реализаций. Построить 
-			таблицы и графики на основании тестирования (в зависимости от числа узлов / ядер и от 
-			размерности задачи).
-		\item Пройти он-лайн тестирование по курсам (\url{www.intuit.ru}): С.А. Немнюгин Основы MPI и 
-			Введение в облачные вычисления \\
-            \url{http://www.intuit.ru/verifydiplomas/100835677} \\
-            \url{http://www.intuit.ru/verifydiplomas/100834994}
-	\end{enumerate}
+\begin{enumerate}
+	\item Реализовать с использованием технологий параллельных вычислений задание по вариантам 
+		(минимум 2 технологии: MPI и OpenMP, CUDA и OpenMP, OpenMP / OpenCL, Xeon Phi + MPI, 
+		MPI / GridGain, cloud computing и т.д.)
+	\item Оценить ускорение, степень параллелизма и другие параметры своих реализаций. Построить 
+		таблицы и графики на основании тестирования (в зависимости от числа узлов / ядер и от 
+		размерности задачи).
+	\item Пройти он-лайн тестирование по курсам (\url{www.intuit.ru}): С.А. Немнюгин Основы MPI и 
+		Введение в облачные вычисления \\
+        \url{http://www.intuit.ru/verifydiplomas/100835677} \\
+        \url{http://www.intuit.ru/verifydiplomas/100834994}
+\end{enumerate}
 
 \section{Параллельная реализация явного метода Рунге-Кутты}
-	Метод Рунге -- Кутты позволяет получать одношаговые разностные схемы различного порядка точности, в 
-	которых в зависимости от точности выбранной формулы правая часть системы может на рассматриваемом шаге 
-	вычисляется несколько раз.
+Метод Рунге -- Кутты позволяет получать одношаговые разностные схемы различного порядка точности, в 
+которых в зависимости от точности выбранной формулы правая часть системы может на рассматриваемом шаге 
+вычисляется несколько раз.
 
-	Для построения вычислительных схем методов Рунге -- Кутты четвёртого порядка в тейлоровском разложении 
-	искомого решения \( \vec{y}(t) \) учитываются члены, содержащие степени шага \( h = t_{m+1} - t_m \) до 
-	четвёртой включительно, наиболее часто используемой из которых является следующая:
-	\begin{equation}
-		\vec{y}_{m+1} = \vec{y}_m + \frac{\left( \vec{k}_1 + 2\vec{k}_2 + 2\vec{k}_3 + \vec{k}_4 \right)}{6}
-		\label{eq8.9}
-	\end{equation}
-	где 
-	\begin{gather}
-		\vec{k}_1 = h\vec{f}\left(t_m, \vec{y}_m \right), \notag \\
-		\vec{k}_2 = h\vec{f}\left(t_m + \frac{h}{2}, \vec{y}_m + \frac{\vec{k}_1}{2} \right), \notag \\
-		\vec{k}_3 = h\vec{f}\left(t_m + \frac{h}{2}, \vec{y}_m + \frac{\vec{k}_2}{2} \right), \notag \\
-		\vec{k}_4 = h\vec{f}\left(t_m + h, \vec{y}_m + \vec{k}_3 \right). \notag
-	\end{gather}
+Для построения вычислительных схем методов Рунге -- Кутты четвёртого порядка в тейлоровском разложении 
+искомого решения \( \vec{y}(t) \) учитываются члены, содержащие степени шага \( h = t_{m+1} - t_m \) до 
+четвёртой включительно, наиболее часто используемой из которых является следующая:
+\begin{equation}
+	\vec{y}_{m+1} = \vec{y}_m + \frac{\left( \vec{k}_1 + 2\vec{k}_2 + 2\vec{k}_3 + \vec{k}_4 \right)}{6}
+	\label{eq8.9}
+\end{equation}
+где 
+\begin{gather}
+	\vec{k}_1 = h\vec{f}\left(t_m, \vec{y}_m \right), \notag \\
+	\vec{k}_2 = h\vec{f}\left(t_m + \frac{h}{2}, \vec{y}_m + \frac{\vec{k}_1}{2} \right), \notag \\
+	\vec{k}_3 = h\vec{f}\left(t_m + \frac{h}{2}, \vec{y}_m + \frac{\vec{k}_2}{2} \right), \notag \\
+	\vec{k}_4 = h\vec{f}\left(t_m + h, \vec{y}_m + \vec{k}_3 \right). \notag
+\end{gather}
 
-	Схема \eqref{eq8.9} на каждом шаге \( h \) требует четырёх последовательных вычислений правой части 
-	системы ОДУ для определения значений \( \vec{k}_1, \vec{k}_2, \vec{k}_3, \vec{k}_4 \).
+Схема \eqref{eq8.9} на каждом шаге \( h \) требует четырёх последовательных вычислений правой части 
+системы ОДУ для определения значений \( \vec{k}_1, \vec{k}_2, \vec{k}_3, \vec{k}_4 \).
 
-	Поскольку в описанной выше вычислительной схеме наиболее трудоёмкой является операции расчёта правых 
-	частей ОДУ при вычислении \( \vec{k}_i (i = 1, 2, 3, 4) \), то основное внимание следует уделить 
-	распараллеливанию этой операции. Будем применять поход декомпозиции уравнений системы ОДУ на подсистемы. 
-	Поэтому для инициализации рассмотрим следующую схему декомпозиции данных по имеющимся процессорным 
-	элементам с локальной памятью: на каждый \( \mu \)-й ПЭ \( \mu = 0, \ldots, p - 1 ) \) распределяется 
-	\( n/p \) дифференциальных уравнений и вектор \( \vec{y}_0 \in \mathbb{R}^n \). Далее расчёты 
-	производятся по следующей схеме:
-	\begin{enumerate}
-		\item на каждой ПЭ одновременно вычисляются \( n/p \) соответствующих компонент вектора 
-			\( \vec{k}_1 \) по формуле 
-			\[ \left[ \vec{k}_1 \right]_\mu = h\left[ \vec{f}(t_m, \vec{y}_m) \right]_\mu; \]
-		\item для обеспечения второго расчётного этапа необходимо провести сборку вектора \( \vec{k}_1 \) 
-			целиком на каждом ПЭ. Затем независимо выполняется вычисление компонент вектора \( \vec{k}_2 \) 
-			по формуле 
-			\[ 
-				\left[ \vec{k}_2 \right]_\mu = 
-					h\left[ 
-						\vec{f}(t_m + \frac{h}{2}, \vec{y}_m + \frac{\vec{k}_1}{2}) 
-					\right]_\mu; 
-			\]
-		\item проводится сборка вектора \( \vec{k}_2 \) на каждом ПЭ, вычисляются компоненты вектора 
-			\( \vec{k}_3 \): 
-			\[ 
-				\left[ \vec{k}_3 \right]_\mu = 
-				h\left[ 
-					\vec{f}(t_m + \frac{h}{2}, \vec{y}_m + \frac{\vec{k}_2}{2}) 
-				\right]_\mu; 
-			\]
-		\item проводится сборка вектора \( \vec{k}_3 \) на каждом ПЭ, вычисляются компоненты вектора 
-			\( \vec{k}_4 \):
-			\[ \left[ \vec{k}_4 \right]_\mu = h\left[ \vec{f}(t_m, \vec{y}_m + \vec{k}_3 ) \right]_\mu; \]
+Поскольку в описанной выше вычислительной схеме наиболее трудоёмкой является операции расчёта правых 
+частей ОДУ при вычислении \( \vec{k}_i (i = 1, 2, 3, 4) \), то основное внимание следует уделить 
+распараллеливанию этой операции. Будем применять поход декомпозиции уравнений системы ОДУ на подсистемы. 
+Поэтому для инициализации рассмотрим следующую схему декомпозиции данных по имеющимся процессорным 
+элементам с локальной памятью: на каждый \( \mu \)-й ПЭ \( \mu = 0, \ldots, p - 1 ) \) распределяется 
+\( n/p \) дифференциальных уравнений и вектор \( \vec{y}_0 \in \mathbb{R}^n \). Далее расчёты 
+производятся по следующей схеме:
+\begin{enumerate}
+	\item на каждой ПЭ одновременно вычисляются \( n/p \) соответствующих компонент вектора 
+		\( \vec{k}_1 \) по формуле 
+		\[ \left[ \vec{k}_1 \right]_\mu = h\left[ \vec{f}(t_m, \vec{y}_m) \right]_\mu; \]
+	\item для обеспечения второго расчётного этапа необходимо провести сборку вектора \( \vec{k}_1 \) 
+		целиком на каждом ПЭ. Затем независимо выполняется вычисление компонент вектора \( \vec{k}_2 \) 
+		по формуле 
+	\[ 
+		\left[ \vec{k}_2 \right]_\mu = 
+			h\left[ 
+			\vec{f}(t_m + \frac{h}{2}, \vec{y}_m + \frac{\vec{k}_1}{2}) 
+			\right]_\mu; 
+	\]
+    \item проводится сборка вектора \( \vec{k}_2 \) на каждом ПЭ, вычисляются компоненты вектора 
+    	\( \vec{k}_3 \): 
+		\[ 
+			\left[ \vec{k}_3 \right]_\mu = 
+			h\left[ 
+				\vec{f}(t_m + \frac{h}{2}, \vec{y}_m + \frac{\vec{k}_2}{2}) 
+			\right]_\mu; 
+		\]
+	\item проводится сборка вектора \( \vec{k}_3 \) на каждом ПЭ, вычисляются компоненты вектора 
+		\( \vec{k}_4 \):
+		\[ \left[ \vec{k}_4 \right]_\mu = h\left[ \vec{f}(t_m, \vec{y}_m + \vec{k}_3 ) \right]_\mu; \]
 		\item рассчитываются с идеальным параллелизмом компоненты вектора \( \vec{y}_{m+1} \) : 
-			\[
-				\left[ \vec{y}_{m+1} \right]_\mu = \left[ \vec{y}_m \right]_\mu + \frac{1}{6}\left( 
-					\left[ \vec{k}_1 \right]_\mu + 2\left[ \vec{k}_2 \right]_\mu + 
-					2\left[ \vec{k}_3 \right]_\mu + \left[ \vec{k}_4 \right]_\mu
-				\right)
-			\]
-			и производится сборка вектора \( \vec{y}_{m+1} \) на каждом ПЭ. Если необходимо продолжить 
-			вычислительный процесс, то полагается \( m = m + 1 \) и осуществляется переход на пункт 1.
-	\end{enumerate}
+		\[
+			\left[ \vec{y}_{m+1} \right]_\mu = \left[ \vec{y}_m \right]_\mu + \frac{1}{6}\left( 
+				\left[ \vec{k}_1 \right]_\mu + 2\left[ \vec{k}_2 \right]_\mu + 
+				2\left[ \vec{k}_3 \right]_\mu + \left[ \vec{k}_4 \right]_\mu
+			\right)
+		\]
+		и производится сборка вектора \( \vec{y}_{m+1} \) на каждом ПЭ. Если необходимо продолжить 
+		вычислительный процесс, то полагается \( m = m + 1 \) и осуществляется переход на пункт 1.
+\end{enumerate}
 
-	Заметим, что в данном алгоритме производится четыре операции вычисления вектора правых частей ОДУ, 
-	шестнадцать операций сложения векторов и умножения вектора на число и четыре операции глобальной 
-	сборки векторов. 
+Заметим, что в данном алгоритме производится четыре операции вычисления вектора правых частей ОДУ, 
+шестнадцать операций сложения векторов и умножения вектора на число и четыре операции глобальной 
+сборки векторов. 
 
-	В случае, когда \( \vec{f}(t, \vec{y}(t)) \equiv A \times \vec{y}(t) \), где 
-	\( A \in \mathbb{R}^{n\times n} \) -- матрица с постоянными коэффициентами, можно получить алгоритм, 
-	который имеет меньшее число межпроцессорных пересылок данных на одной итерации метода Рунге -- Кутты. 
-	Для этого построим оператор перехода для одного вычислительного шага, позволяющий определить 
-	значение вектора неизвестных на следующей итерации \( \vec{y}_{m+1} \) через \( \vec{y}_m \). 
-	Преобразуем значения \( \vec{k}_1, \vec{k}_2, \vec{k}_3, \vec{k}_4 \):
-	\begin{gather}
-		\vec{k}_1 = hA\vec{y}_m, \notag \\
-		\vec{k}_2 = hA\left(\vec{y}_m + \frac{\vec{k}_1}{2}\right) = 
-			\vec{k}_1 + \left(\frac{h}{2}\right)A\vec{k}_1 = 
-			\left( E + \left(\frac{h}{2}\right)A \right)\vec{k}_1 = 
-			h\left( E + \left(\frac{h}{2}A \right)A \right) \vec{y}_m, \notag \\
-		\vec{k}_3 = hA\left( \vec{y}_m + \frac{1}{2}\vec{k}_2 \right) = 
-			\vec{k}_1 + \left( \frac{h}{2} \right)A\vec{k}_2 = 
-			\vec{k}_1 + \left( \frac{h}{2} \right)A\left( \vec{k}_1 + 
-			\left( \frac{h}{2} \right)A\vec{k}_1 \right) = \notag \\ =
-			h\left( E + \left( \frac{h}{2} \right)A + \left( \frac{h}{2} \right)^2 A^2 \right)A\vec{y}_m, 
-		\notag \\
-		\vec{k}_4 = hA\left( \vec{y}_m + \vec{k}_3 \right) = 
-			\vec{k}_1 + \left( hA + \left( \frac{h^2}{2} \right)A^2 + 
-				\left( \frac{h^3}{4} \right)A^3 \right)\vec{k}_1 = \notag \\ = 
-			h\left( E + hA + \left( \frac{h^2}{2} \right)A^2 + 
-				\left( \frac{h^3}{4} \right)A^3 \right)A\vec{y}_m
-		\notag
-	\end{gather}
-	и, подставив из в \eqref{eq8.9}, получим
-	\begin{gather}
-		\vec{y}_{m+1} = B\vec{y}_m; \quad
-		B = E + hA\left( E + \left( \frac{h}{2} \right)A\left( 
-			E + \left( \frac{h}{3} \right) A \left( E + \left( \frac{h}{4} \right)A \right) 
-		\right) \right)
-		\label{eq8.10}
-	\end{gather}
-	где \( B \) -- оператор перехода.
+В случае, когда \( \vec{f}(t, \vec{y}(t)) \equiv A \times \vec{y}(t) \), где 
+\( A \in \mathbb{R}^{n\times n} \) -- матрица с постоянными коэффициентами, можно получить алгоритм, 
+который имеет меньшее число межпроцессорных пересылок данных на одной итерации метода Рунге -- Кутты. 
+Для этого построим оператор перехода для одного вычислительного шага, позволяющий определить 
+значение вектора неизвестных на следующей итерации \( \vec{y}_{m+1} \) через \( \vec{y}_m \). 
+Преобразуем значения \( \vec{k}_1, \vec{k}_2, \vec{k}_3, \vec{k}_4 \):
+\begin{gather}
+	\vec{k}_1 = hA\vec{y}_m, \notag \\
+	\vec{k}_2 = hA\left(\vec{y}_m + \frac{\vec{k}_1}{2}\right) = 
+		\vec{k}_1 + \left(\frac{h}{2}\right)A\vec{k}_1 = 
+		\left( E + \left(\frac{h}{2}\right)A \right)\vec{k}_1 = 
+		h\left( E + \left(\frac{h}{2}A \right)A \right) \vec{y}_m, \notag \\
+	\vec{k}_3 = hA\left( \vec{y}_m + \frac{1}{2}\vec{k}_2 \right) = 
+		\vec{k}_1 + \left( \frac{h}{2} \right)A\vec{k}_2 = 
+		\vec{k}_1 + \left( \frac{h}{2} \right)A\left( \vec{k}_1 + 
+		\left( \frac{h}{2} \right)A\vec{k}_1 \right) = \notag \\ =
+		h\left( E + \left( \frac{h}{2} \right)A + \left( \frac{h}{2} \right)^2 A^2 \right)A\vec{y}_m, 
+	\notag \\
+	\vec{k}_4 = hA\left( \vec{y}_m + \vec{k}_3 \right) = 
+		\vec{k}_1 + \left( hA + \left( \frac{h^2}{2} \right)A^2 + 
+			\left( \frac{h^3}{4} \right)A^3 \right)\vec{k}_1 = \notag \\ = 
+		h\left( E + hA + \left( \frac{h^2}{2} \right)A^2 + 
+			\left( \frac{h^3}{4} \right)A^3 \right)A\vec{y}_m
+	\notag
+\end{gather}
+и, подставив из в \eqref{eq8.9}, получим
+\begin{gather}
+	\vec{y}_{m+1} = B\vec{y}_m; \quad
+	B = E + hA\left( E + \left( \frac{h}{2} \right)A\left( 
+		E + \left( \frac{h}{3} \right) A \left( E + \left( \frac{h}{4} \right)A \right) 
+	\right) \right)
+	\label{eq8.10}
+\end{gather}
+где \( B \) -- оператор перехода.
 
-	Рассчитав заранее матрицу \( B \), получим вычислительный алгоритм, в котором каждое новое значение 
-	вектора \( \vec{y}_{m+1} \) определяется за один шаг умножения матрицы \( B \) на вектор.
+Рассчитав заранее матрицу \( B \), получим вычислительный алгоритм, в котором каждое новое значение 
+вектора \( \vec{y}_{m+1} \) определяется за один шаг умножения матрицы \( B \) на вектор.
 
-	При параллельной реализации \eqref{eq8.10} умножение блочных строк матрицы \( B \) на вектора 
-	\( \vec{y}_m \) будет проводиться одновременно и независимо. Потребуется только после каждого 
-	вычислительного шага по \eqref{eq8.10} проводить сборку вектора \( \vec{y}_{m+1} \) на всех процессорных 
-	элементах.\cite{methods}
+При параллельной реализации \eqref{eq8.10} умножение блочных строк матрицы \( B \) на вектора 
+\( \vec{y}_m \) будет проводиться одновременно и независимо. Потребуется только после каждого 
+вычислительного шага по \eqref{eq8.10} проводить сборку вектора \( \vec{y}_{m+1} \) на всех процессорных 
+элементах.\cite{methods}
 
 \section{Используемый пример}
 В качестве примера используем СОДУ для расчёта направления силовых линий для различных векторных 
@@ -239,7 +229,7 @@
 
 \section{Последовательная программа}
 Параллельная и последовательная программа реализованы в качестве заменяемого ядра. Исходный код ядер для 
-последовательной (default) и параллельных (thread, OpenMP, OpenCL) программ представлены в разделе 
+последовательной (default) и параллельных (OpenMP, OpenCL) программ представлены в разделе 
 Приложение \eqref{sec:app}.
 
 Результаты проведенных тестов представлены в разделе \ref{sec:test}. 
@@ -278,37 +268,29 @@
 	E_p = \frac{T_1(n)}{pT_p(n)} = \frac{1}{p}S_p(n) = 1
 \]
 
-Оценим максимальное достижимое ускорение по закону Густавсона -- Барсиса:
-\begin{equation}
-	g = \frac{\tau(n)}{\tau(n) + \pi(n) / p}
-	\label{eq:gusbar}
-\end{equation}
-здесь \( \tau(n) \) и \( \pi(n) \) есть времена последовательной и параллельной частей выполняемых 
-вычислений, т.е. 
+\newpage
+
+Получим значение достижимого ускорения, при учёте, что \( f = 3/10 \):
 \[
-	T_1(n) = \tau(n) + \pi(n), \quad T_p = \tau(n) + \pi(n) / p
+    S_p = \frac{1}{f + (1-f)/p} = \frac{1}{\cfrac{3}{10} + \cfrac{7}{10} \cdot \cfrac{1}{p}}
 \]
-Преобразуем \eqref{eq:gusbar} к следующему виду:
+где \( f \) -- доля последовательных вычислений, \( p \) -- количество процессоров.
+
+Тогда показатель эффективности можно записать, как:
 \[
-	g = \left( 1 - \frac{p}{p+1} \right)\frac{T_1}{T_p} - \frac{p}{p+1}
-\]
-Используя ранее полученное значение для ускорения, получим значение достижимого ускорения:
-\[
-	g = \left( p - \frac{p^2}{p+1} \right) - \frac{p}{p+1}
+    E_p = \frac{1}{p}\frac{1}{f + (1-f)/p} = \frac{1}{\cfrac{3}{10}\cdot p + \cfrac{7}{10}}
 \]
 
-Используя формулу для ускорения масштабирования, подставляя полученный ранее коэффициент \( g \):
-\[
-	S_p = p + (1-p)\cdot g = p + p \left( 1 - p \right) \left( 1 - \frac{p}{p+1} \right) - 
-		p\left( \frac{1-p}{p+1} \right)
-\]
-
-% доделать
+\begin{figure}[ht!]
+    \center
+    \includegraphics[width=0.8\textwidth]{amhdal_eff}
+    \caption{Достижимое ускорение по закону Амдаля \( S(p) \) и показатель эффективности \( E(p) \)}
+\end{figure}
 
 \newpage
 
 \section{Входные данные}
-Тестирование последовательной и параллельной программы производился на следующем наборе данных
+Тестирование последовательной и параллельной программы производилось на следующем наборе данных
 \begin{table}[h]
     \center
 	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
@@ -320,6 +302,8 @@
 \end{table}
 
 Программы для генерации входных данных доступны в конце приложения.
+
+\newpage
 
 \section{Результаты}
 \label{sec:test}
@@ -345,8 +329,6 @@
     \caption{linesField (256 потоков)}
 \end{figure}
 
-\newpage
-
 \begin{figure}[ht!]
     \begin{minipage}{0.55\textwidth}
         \includegraphics[width=\textwidth]{randomField_cl_1E-8}
@@ -367,6 +349,8 @@
     \end{minipage}
     \caption{randomField (256 потоков)}
 \end{figure}
+
+\newpage
 
 \begin{figure}[ht!]
     \begin{minipage}{0.55\textwidth}
@@ -392,7 +376,7 @@
 \newpage
 
 Результаты полученные на стационарном компьютере:
-\begin{table}[h]
+\begin{table}[ht!]
     \center
     \begin{tabular}{|c|c|c|c|}
         \hline
@@ -411,11 +395,12 @@
 \begin{figure}[ht!]
     \includegraphics[width=\textwidth]{linesField_my_1E-8}
     \caption{linesField (256 потоков)}
+    \label{img:line}
 \end{figure}
 
 \newpage
 
-\begin{table}[h]
+\begin{table}[ht!]
     \center
     \begin{tabular}{|c|c|c|c|}
         \hline
@@ -434,11 +419,12 @@
 \begin{figure}[ht!]
     \includegraphics[width=\textwidth]{randomField_my_1E-8}
     \caption{randomField (256 потоков)}
+    \label{img:rand}
 \end{figure}
 
 \newpage
 
-\begin{table}
+\begin{table}[ht!]
     \center
     \begin{tabular}{|c|c|c|c|}
         \hline
@@ -458,11 +444,24 @@
     \center
     \includegraphics[width=\textwidth]{rotationField_my_1E-8}
     \caption{rotationField (8 потоков)}
+    \label{img:rot}
 \end{figure}
 
 \newpage
 
 \section{Выводы}
+В ходе семестровой работы был рассмотрен и реализован параллельный метод Рунге -- Кутты для системы ОДУ, 
+написаны программы для последовательной (default) и параллельных (OpenMP, OpenCL) версий. 
+
+Произведена теоретическая оценка коэффициента ускорения и показателя эффективности. Проведены практические 
+работы по замеру времени выполнения алгоритма при разных входных данных на разном оборудовании. 
+
+При малом количестве точек в системе выигрыш по скорости параллельной программы незначительный, но при их 
+увеличении разрыв становиться значительным. Так же важной особенностью является размерность задачи, так 
+как при малых значениях эффективность расчёта с использованием OpenCL резко снижается (рис.~\ref{img:rot}).
+
+На рисунках \ref{img:line} и \ref{img:rand} отставание программы с использованием OpenCL от программы на 
+OpenMP, которое можно объяснить временем затраченным на передачу и сбор данных.
 
 \newpage
 
