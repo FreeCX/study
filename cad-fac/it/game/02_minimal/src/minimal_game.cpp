@@ -17,6 +17,7 @@ struct Window {
 
 FontTable font;
 Player player;
+bool move_flag = false;
 
 // обработка ошибок
 void game_send_error( int code ) {
@@ -37,16 +38,28 @@ void game_event( void ) {
                 gw.height = gw.event.window.data2;
             }
             break;
+        case SDL_KEYUP:
+            switch ( gw.event.key.keysym.sym ) {
+                case SDLK_UP:
+                    move_flag = false;
+                    break;
+                default:
+                    break;
+            }
+            break;
         case SDL_KEYDOWN:
             switch ( gw.event.key.keysym.sym ) {
                 case SDLK_ESCAPE:
                     gw.quit_flag = true;
                     break;
+                case SDLK_UP:
+                    move_flag = true;
+                    break;
                 case SDLK_LEFT:
-                    player.add_angle( -0.1f );
+                    player.add_angle( -0.05f );
                     break;
                 case SDLK_RIGHT:
-                    player.add_angle( +0.1f );
+                    player.add_angle( +0.05f );
                     break;
                 default:
                     break;
@@ -59,7 +72,13 @@ void game_event( void ) {
 
 // игровой цикл
 void game_loop( void ) {
-    // insert code here
+    static int counter = 0;
+
+    player.step();
+    if ( move_flag && counter % 8 == 0 ) {
+        player.add_velocity( 1 );
+    }
+    counter++;
 }
 
 // отрисовка
@@ -87,13 +106,14 @@ void game_destroy( void ) {
 // блок инициализации
 void game_init( void ) {
     SDL_Init( SDL_INIT_VIDEO | SDL_INIT_EVENTS );
-    gw.window = SDL_CreateWindow( gw.name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gw.width, gw.height, 
-                                  SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
+    gw.window = SDL_CreateWindow( gw.name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+                                  gw.width, gw.height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
     if ( gw.window == nullptr ) {
         game_send_error( EXIT_FAILURE );
     }
     gw.render = SDL_CreateRenderer( gw.window, gw.SDL_RENDER_DRIVER, 
-                                    SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE );
+                                    SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC | 
+                                    SDL_RENDERER_TARGETTEXTURE );
     if ( gw.render == nullptr ) {
         game_send_error( EXIT_FAILURE );
     }
