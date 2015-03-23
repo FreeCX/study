@@ -1,7 +1,10 @@
 #include <SDL2/SDL.h>
+#include <ctime>
+#include <vector>
 #include "draw.hpp"
 #include "font.hpp"
 #include "player.hpp"
+#include "asteroid.hpp"
 
 // используем структуру для хранения данных связанных с окном
 struct Window {
@@ -15,8 +18,11 @@ struct Window {
     int height = 640;
 } gw;
 
+size_t game_score = 0;
+size_t asteroid_count = 8;
 FontTable font;
 Player player;
+std::vector< Asteroid > asteroids;
 bool move_flag = false;
 
 // обработка ошибок
@@ -75,6 +81,9 @@ void game_loop( void ) {
     static int counter = 0;
 
     player.step();
+    for ( auto & a : asteroids ) {
+        a.step();
+    }
     if ( move_flag && counter % 8 == 0 ) {
         player.add_velocity( 1 );
     }
@@ -85,14 +94,20 @@ void game_loop( void ) {
 void game_render( void ) {
     const std::size_t BUFFER_SIZE = 128;
     wchar_t text_buffer[BUFFER_SIZE];
+    char life[player.life_max+1] = { 0 };
 
     SDL_RenderClear( gw.render );
+    // представляем количество жизней в виде '+'
+    memset( life, '+', player.get_life() );
     // подготавливаем выводимый текст
-    swprintf( text_buffer, BUFFER_SIZE, L"score %04d\n life ++++", 4096 );
+    swprintf( text_buffer, BUFFER_SIZE, L"score %08zu\n life %s", game_score, life );
     // рисуем текст
     font.draw( 8, 8, text_buffer );
     // рисуем игрока
     player.draw();
+    for ( auto & a : asteroids ) {
+        a.draw();
+    }
     SDL_RenderPresent( gw.render );
 }
 
@@ -105,6 +120,7 @@ void game_destroy( void ) {
 
 // блок инициализации
 void game_init( void ) {
+    srand( time( nullptr ) );
     SDL_Init( SDL_INIT_VIDEO | SDL_INIT_EVENTS );
     gw.window = SDL_CreateWindow( gw.name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
                                   gw.width, gw.height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
@@ -125,6 +141,13 @@ void game_init( void ) {
     font.load( gw.render, "./data/font.cfg" );
     // устанавливаем игрока по центру экрана
     player.set_position( gw.width / 2, gw.height / 2 );
+    asteroids.resize( asteroid_count );
+    for ( auto & a : asteroids ) {
+        a.init( rand() % 12 + 8, ( rand() % 32 + 16 ) * 1.0f );
+        a.set_rotation_speed( ( rand() % 100 + 1 ) / 2000.0f );
+        a.set_speed( ( rand() % 100 - 50 ) / 30, ( rand() % 100 - 50 ) / 30 );
+        a.set_position( rand() % gw.width, rand() % gw.height );
+    }
 }
 
 // точка входа программы
