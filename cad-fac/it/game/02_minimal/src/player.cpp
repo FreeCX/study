@@ -1,5 +1,33 @@
 #include "player.hpp"
 
+void Player::set_position( int x, int y ) { 
+    this->x = x; this->y = y; 
+}
+
+void Player::set_angle( float angle ) { 
+    this->angle = angle; 
+}
+
+void Player::add_angle( float add ) { 
+    angle = _fmod( angle + add + M_PI, 2 * M_PI ) - M_PI;
+}
+
+void Player::add_velocity( int add ) {
+    if ( velocity < velocity_max ) {
+        velocity += add; 
+    }
+}
+
+void Player::add_life( short add ) { 
+    if ( life + add <= life_max ) {
+        life += add; 
+    }
+}
+
+char Player::get_life( void ) { 
+    return life; 
+}
+
 void Player::step( void ) {
     static short counter = 0;
 
@@ -34,7 +62,6 @@ void Player::draw( void ) {
         pos[i+0] = this->x + round( x * cos( angle ) - y * sin( angle ) );
         pos[i+1] = this->y + round( x * sin( angle ) + y * cos( angle ) );
     }
-    set_coloru( COLOR_WHITE );
     for ( int i = 0; i < max_length - 2; i += 2 ) {
         draw_aaline( pos[i+0], pos[i+1], pos[i+2], pos[i+3] );
     }
