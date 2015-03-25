@@ -49,13 +49,11 @@ void Player::step( void ) {
     counter++;
 }
 
-void Player::draw( void ) {
-    const int a = 32, b = 16;
-    const int max_length = 10;
+void Player::draw( DrawSystem & draw ) {
     //            0    1    2      3  4  5  6      7  8   9
     int pos[] = { 0, - a, - a / 2, b, 0, 0, a / 2, b, 0, -a };
 
-    set_coloru( COLOR_WHITE );
+    draw.set_coloru( COLOR_WHITE );
     for ( int i = 0; i < max_length; i += 2 ) {
         const float x = pos[i+0];
         const float y = pos[i+1];
@@ -63,7 +61,7 @@ void Player::draw( void ) {
         pos[i+1] = this->y + round( x * sin( angle ) + y * cos( angle ) );
     }
     for ( int i = 0; i < max_length - 2; i += 2 ) {
-        draw_aaline( pos[i+0], pos[i+1], pos[i+2], pos[i+3] );
+        draw.aaline( pos[i+0], pos[i+1], pos[i+2], pos[i+3] );
     }
-    set_coloru( COLOR_BLACK );
+    draw.set_coloru( COLOR_BLACK );
 }
