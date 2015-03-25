@@ -121,4 +121,5 @@ int DrawSystem::circle( int x, int y, int r ) {
             );
         }
     }
+    return result;
 }
