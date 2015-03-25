@@ -5,6 +5,7 @@
 #include "font.hpp"
 #include "player.hpp"
 #include "asteroid.hpp"
+#include "bullet.hpp"
 
 // используем структуру для хранения данных связанных с окном
 struct Window {
@@ -22,6 +23,8 @@ size_t game_score = 0;
 size_t asteroid_count = 8;
 FontTable font;
 Player player;
+DrawSystem draw( nullptr, 16 );
+BulletSystem bullet( 5, 10 );
 std::vector< Asteroid > asteroids;
 bool move_flag = false;
 
@@ -67,6 +70,9 @@ void game_event( void ) {
                 case SDLK_RIGHT:
                     player.add_angle( +0.05f );
                     break;
+                case SDLK_SPACE:
+                    bullet.append( player );
+                    break;
                 default:
                     break;
             }
@@ -81,6 +87,7 @@ void game_loop( void ) {
     static int counter = 0;
 
     player.step();
+    bullet.step();
     for ( auto & a : asteroids ) {
         a.step();
     }
@@ -104,9 +111,10 @@ void game_render( void ) {
     // рисуем текст
     font.draw( 8, 8, text_buffer );
     // рисуем игрока
-    player.draw();
+    player.draw( draw );
+    bullet.draw( draw );
     for ( auto & a : asteroids ) {
-        a.draw();
+        a.draw( draw );
     }
     SDL_RenderPresent( gw.render );
 }
@@ -136,7 +144,7 @@ void game_init( void ) {
     // включаем режим смешивания
     SDL_SetRenderDrawBlendMode( gw.render, SDL_BLENDMODE_BLEND );
     // инициализируем модуля рисования
-    draw_init( gw.render );
+    draw.set_render( gw.render );
     // загружаем текстуру для шрифта
     font.load( gw.render, "./data/font.cfg" );
     // устанавливаем игрока по центру экрана
