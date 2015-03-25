@@ -1,42 +1,50 @@
 #include "draw.hpp"
 
-SDL_Renderer * _render = nullptr;
-
-void draw_init( SDL_Renderer * render ) {
-    _render = render;
+DrawSystem::DrawSystem( SDL_Renderer * renderer, const size_t segments ) {
+    this->segments = segments;
+    render = renderer;
+    coords = new float [segments * 2];
+    for ( size_t i = 0; i < segments * 2; i += 2 ) {
+        coords[i+0] = cos( 0.5f * i / M_PI );
+        coords[i+1] = sin( 0.5f * i / M_PI );
+    }
 }
 
-Uint32 get_coloru( void ) {
-    Uint8 r, g, b;
-
-    SDL_GetRenderDrawColor( _render, &r, &g, &b, nullptr );
-    return ( r << 16 ) + ( g << 8 ) + b;
+DrawSystem::~DrawSystem() {
+    delete[] coords;
 }
 
-int set_coloru( Uint32 color ) {
-    Uint8 r, g, b;
-
-    r = ( color >> 16 );
-    g = ( ( color >> 8 ) & 0xff );
-    b = ( color & 0xff );
-    return SDL_SetRenderDrawColor( _render, r, g, b, 0xff );
+void DrawSystem::set_render( SDL_Renderer * renderer ) {
+    render = renderer;
 }
 
-int set_color3u( Uint8 red, Uint8 green, Uint8 blue ) {
-    return SDL_SetRenderDrawColor( _render, red, green, blue, 0xff );
+Uint32 DrawSystem::get_coloru( void ) {
+    SDL_GetRenderDrawColor( render, &red, &green, &blue, nullptr );
+    return ( red << 16 ) + ( green << 8 ) + blue;
 }
 
-int set_color4u( Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha ) {
-    return SDL_SetRenderDrawColor( _render, red, green, blue, alpha );
+int DrawSystem::set_coloru( Uint32 color ) {
+    red = ( color >> 16 );
+    green = ( ( color >> 8 ) & 0xff );
+    blue = ( color & 0xff );
+    return SDL_SetRenderDrawColor( render, red, green, blue, 0xff );
 }
 
-int draw_aaline( int x1, int y1, int x2, int y2 ) {
+int DrawSystem::set_color3u( Uint8 red, Uint8 green, Uint8 blue ) {
+    return SDL_SetRenderDrawColor( render, red, green, blue, 0xff );
+}
+
+int DrawSystem::set_color4u( Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha ) {
+    return SDL_SetRenderDrawColor( render, red, green, blue, alpha );
+}
+
+int DrawSystem::aaline( int x1, int y1, int x2, int y2 ) {
     Uint32 intshift, erracc, erradj, erracctmp, wgt;
     int dx, dy, tmp, xdir, y0p1, x0pxdir, result;
     Sint32 xx0, yy0, xx1, yy1;
     Uint8 r, g, b, a;
 
-    result = SDL_GetRenderDrawColor( _render, &r, &g, &b, &a );
+    result = SDL_GetRenderDrawColor( render, &r, &g, &b, &a );
     xx0 = x1; yy0 = y1;
     xx1 = x2; yy1 = y2;
     if ( yy0 > yy1 ) {
@@ -47,7 +55,7 @@ int draw_aaline( int x1, int y1, int x2, int y2 ) {
     dx = xx1 - xx0;
     dy = yy1 - yy0;
     if ( dx == 0 || dy == 0 ) {
-        return SDL_RenderDrawLine( _render, x1, y1, x2, y2 );
+        return SDL_RenderDrawLine( render, x1, y1, x2, y2 );
     }
     xdir = 1;
     if ( dx < 0 ) {
@@ -57,7 +65,7 @@ int draw_aaline( int x1, int y1, int x2, int y2 ) {
     erracc = 0;
     intshift = 24;
     result |= set_color3u( r, g, b );
-    result |= SDL_RenderDrawPoint( _render, x1, y1 );
+    result |= SDL_RenderDrawPoint( render, x1, y1 );
     if ( dy > dx ) {
         erradj = ( ( dx << 16 ) / dy ) << 16;
         x0pxdir = xx0 + xdir;
@@ -71,9 +79,9 @@ int draw_aaline( int x1, int y1, int x2, int y2 ) {
             yy0++;
             wgt = ( erracc >> intshift ) & 255;
             result |= set_color4u( r, g, b, 255 - wgt );
-            result |= SDL_RenderDrawPoint( _render, xx0, yy0 );
+            result |= SDL_RenderDrawPoint( render, xx0, yy0 );
             result |= set_color4u( r, g, b, wgt );
-            result |= SDL_RenderDrawPoint( _render, x0pxdir, yy0 );
+            result |= SDL_RenderDrawPoint( render, x0pxdir, yy0 );
         }
     } else {
         erradj = ( ( dy << 16 ) / dx ) << 16;
@@ -88,10 +96,29 @@ int draw_aaline( int x1, int y1, int x2, int y2 ) {
             xx0 += xdir;
             wgt = ( erracc >> intshift ) & 255;
             result |= set_color4u( r, g, b, 255 - wgt );
-            result |= SDL_RenderDrawPoint( _render, xx0, yy0 );
+            result |= SDL_RenderDrawPoint( render, xx0, yy0 );
             result |= set_color4u( r, g, b, wgt );
-            result |= SDL_RenderDrawPoint( _render, xx0, y0p1 );
+            result |= SDL_RenderDrawPoint( render, xx0, y0p1 );
         }
     }
     return result;
+}
+
+int DrawSystem::circle( int x, int y, int r ) {
+    int result = 0;
+
+    // FIX THIS
+    for ( size_t i = 0; i < segments * 2; i += 2 ) {
+        if ( i != (segments-1) * 2 ) {
+            result |= aaline( 
+                x + r * coords[i+0], y + r * coords[i+1],
+                x + r * coords[i+2], y + r * coords[i+3] 
+            );
+        } else {
+            result |= aaline( 
+                x + r * coords[i+0], y + r * coords[i+1],
+                x + r * coords[0], y + r * coords[1] 
+            );
+        }
+    }
 }

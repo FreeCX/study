@@ -11,9 +11,20 @@ enum COLOR {
     COLOR_MAGENTA   = 0xff00ff,
 };
 
-void draw_init( SDL_Renderer * render );
-Uint32 get_coloru( void );
-int set_coloru( Uint32 color );
-int set_color3u( Uint8 red, Uint8 green, Uint8 blue );
-int set_color4u( Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha );
-int draw_aaline( int x1, int y1, int x2, int y2 );
+class DrawSystem {
+public:
+    DrawSystem( SDL_Renderer * renderer, const size_t segments );
+    ~DrawSystem();
+    void set_render( SDL_Renderer * renderer );
+    Uint32 get_coloru( void );
+    int set_coloru( Uint32 color );
+    int set_color3u( Uint8 red, Uint8 green, Uint8 blue );
+    int set_color4u( Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha );
+    int circle( int x, int y, int r );
+    int aaline( int x1, int y1, int x2, int y2 );
+private:
+    SDL_Renderer * render;
+    Uint8 red, green, blue, alpha;
+    float * coords;
+    size_t segments;
+};
