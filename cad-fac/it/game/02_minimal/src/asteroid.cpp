@@ -48,8 +48,8 @@ void Asteroid::step( void ) {
     angle = _fmod( angle + rotate + M_PI, 2 * M_PI ) - M_PI;
 }
 
-void Asteroid::draw( void ) {
-    set_coloru( COLOR_WHITE );
+void Asteroid::draw( DrawSystem & draw ) {
+    draw.set_coloru( COLOR_WHITE );
     for ( int i = 0; i < sg_count * 2; i += 2 ) {
         const float x = segments[i+0];
         const float y = segments[i+1];
@@ -58,10 +58,10 @@ void Asteroid::draw( void ) {
     }
     for ( int i = 0; i < sg_count * 2; i += 2 ) {
         if ( i == ( sg_count - 1 ) * 2 ) {
-            draw_aaline( pos[i+0], pos[i+1], pos[0], pos[1] );
+            draw.aaline( pos[i+0], pos[i+1], pos[0], pos[1] );
         } else {
-            draw_aaline( pos[i+0], pos[i+1], pos[i+2], pos[i+3] );
+            draw.aaline( pos[i+0], pos[i+1], pos[i+2], pos[i+3] );
         }
     }
-    set_coloru( COLOR_BLACK );
+    draw.set_coloru( COLOR_BLACK );
 }

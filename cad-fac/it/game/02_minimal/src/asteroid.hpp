@@ -1,5 +1,4 @@
 #pragma once
-#include <SDL2/SDL.h>
 #include <cmath>
 #include "math.hpp"
 #include "draw.hpp"
@@ -14,7 +13,7 @@ public:
     void set_angle( float a );
     void set_rotation_speed( float w );
     void step( void );
-    void draw( void );
+    void draw( DrawSystem & draw );
 private:
     int x, y, vx, vy;
     float angle, rotate;
