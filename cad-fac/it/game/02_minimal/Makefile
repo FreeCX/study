@@ -14,4 +14,4 @@ $(dest_dir)$(target_file): $(object_files)
 	$(CXX) $(CFLAGS) -c $< -o $@
 
 clean:
-	-$(RM) $(prog_name) $(object_files)
+	-$(RM) $(target_file) $(object_files)
