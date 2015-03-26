@@ -1,12 +1,13 @@
 #include "draw.hpp"
 
 DrawSystem::DrawSystem( SDL_Renderer * renderer, const size_t segments ) {
+    const float delta = M_PI / segments;
     this->segments = segments;
     render = renderer;
     coords = new float [segments * 2];
     for ( size_t i = 0; i < segments * 2; i += 2 ) {
-        coords[i+0] = cos( 0.5f * i / M_PI );
-        coords[i+1] = sin( 0.5f * i / M_PI );
+        coords[i+0] = cos( i * delta );
+        coords[i+1] = sin( i * delta );
     }
 }
 
@@ -107,17 +108,16 @@ int DrawSystem::aaline( int x1, int y1, int x2, int y2 ) {
 int DrawSystem::circle( int x, int y, int r ) {
     int result = 0;
 
-    // FIX THIS
     for ( size_t i = 0; i < segments * 2; i += 2 ) {
-        if ( i != (segments-1) * 2 ) {
+        if ( i == ( segments - 1 ) * 2 ) {
             result |= aaline( 
-                x + r * coords[i+0], y + r * coords[i+1],
-                x + r * coords[i+2], y + r * coords[i+3] 
+                x + round( r * coords[i+0] ), y + round( r * coords[i+1] ),
+                x + round( r * coords[0]   ), y + round( r * coords[1]   )
             );
         } else {
             result |= aaline( 
-                x + r * coords[i+0], y + r * coords[i+1],
-                x + r * coords[0], y + r * coords[1] 
+                x + round( r * coords[i+0] ), y + round( r * coords[i+1] ),
+                x + round( r * coords[i+2] ), y + round( r * coords[i+3] ) 
             );
         }
     }
