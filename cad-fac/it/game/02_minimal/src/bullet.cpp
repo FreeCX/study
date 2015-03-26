@@ -10,9 +10,12 @@ BulletSystem::~BulletSystem() {
 }
 
 void BulletSystem::append( Player & player ) {
-    bullet.push_back( { 
-        player.get_x(), player.get_y(), max_life, player.get_angle(), max_velocity 
-    } );
+    float angle = player.get_angle();
+    int x = 0, y = 0;
+    
+    x = player.get_x() + round( player.a * sin( angle ) );
+    y = player.get_y() - round( player.a * cos( angle ) );
+    bullet.push_back( { x, y, max_life, angle, max_velocity } );
 }
 
 void BulletSystem::step( void ) {
