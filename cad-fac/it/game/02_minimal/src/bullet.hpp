@@ -13,7 +13,7 @@ typedef struct {
 
 class BulletSystem {
 public:
-    BulletSystem( const float velocity, const short life );
+    BulletSystem( const float velocity, const short life, const short radius );
     ~BulletSystem();
     void append( Player & player );
     void step( void );
@@ -22,4 +22,5 @@ private:
     std::vector< bullet_t > bullet;
     float max_velocity = 5.0f;
     short max_life = 20;
+    short max_radius = 4;
 };

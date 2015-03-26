@@ -1,8 +1,9 @@
 #include "bullet.hpp"
 
-BulletSystem::BulletSystem( const float velocity, const short life ) {
+BulletSystem::BulletSystem( const float velocity, const short life, const short radius ) {
     max_velocity = velocity;
     max_life = life;
+    max_radius = radius;
 }
 
 BulletSystem::~BulletSystem() {
@@ -40,7 +41,7 @@ void BulletSystem::step( void ) {
 void BulletSystem::draw( DrawSystem & draw ) {
     draw.set_coloru( COLOR_WHITE );
     for ( auto & b : bullet ) {
-        draw.circle( b.x, b.y, 4 );
+        draw.circle( b.x, b.y, max_radius );
     }
     draw.set_coloru( COLOR_BLACK );
 }
