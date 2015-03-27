@@ -16,7 +16,7 @@ public:
     BulletSystem( const float velocity, const short life, const short radius );
     ~BulletSystem();
     void append( Player & player );
-    void step( void );
+    void step( const int width, const int height );
     void draw( DrawSystem & draw );
 private:
     std::vector< bullet_t > bullet;

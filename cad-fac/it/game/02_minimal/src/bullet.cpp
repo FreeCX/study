@@ -19,19 +19,21 @@ void BulletSystem::append( Player & player ) {
     bullet.push_back( { x, y, max_life, angle, max_velocity + player.get_velocity() } );
 }
 
-void BulletSystem::step( void ) {
+void BulletSystem::step( const int width, const int height ) {
+    const int inv_zone = 20;
+
     for ( auto & b : bullet ) {
         b.x -= round( b.velocity * cos( b.angle + M_PI / 2.0f ) );
         b.y -= round( b.velocity * sin( b.angle + M_PI / 2.0f ) );
-        if ( b.x > 660 ) {
-            b.x = -20;
-        } else if ( b.x < -20 ) {
-            b.x = 660;
+        if ( b.x > width + inv_zone ) {
+            b.x = -inv_zone;
+        } else if ( b.x < -inv_zone ) {
+            b.x = width + inv_zone;
         }
-        if ( b.y > 660 ) {
-            b.y = -20;
-        } else if ( b.y < -20 ) {
-            b.y = 660;
+        if ( b.y > height + inv_zone ) {
+            b.y = -inv_zone;
+        } else if ( b.y < -inv_zone ) {
+            b.y = height + inv_zone;
         }
         b.life--;
     }
