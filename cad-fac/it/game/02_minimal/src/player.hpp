@@ -15,6 +15,7 @@ public:
     void set_angle( float angle );
     int get_x( void ) { return x; }
     int get_y( void ) { return y; }
+    float get_velocity( void ) { return velocity; }
     float get_angle( void ) { return angle; }
     void add_angle( float add );
     void add_velocity( int add );
