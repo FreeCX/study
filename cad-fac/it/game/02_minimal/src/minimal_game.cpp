@@ -30,7 +30,7 @@ size_t asteroid_count = 8;
 FontTable font;
 Player player;
 DrawSystem draw( nullptr, 16 );
-BulletSystem bullet( 5, 10, 4 );
+BulletSystem bullet( 5, 80, 2 );
 std::vector< Asteroid > asteroids;
 bool move_flag = false;
 bool shoot_flag = false;
