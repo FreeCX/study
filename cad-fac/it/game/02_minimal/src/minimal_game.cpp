@@ -81,15 +81,12 @@ void game_event( void ) {
                     break;
                 case SDLK_LEFT:
                     rotate_flag = ROTATE_LEFT;
-                    // player.add_angle( -0.05f );
                     break;
                 case SDLK_RIGHT:
                     rotate_flag = ROTATE_RIGHT;
-                    // player.add_angle( +0.05f );
                     break;
                 case SDLK_SPACE:
                     shoot_flag = true;
-                    // bullet.append( player );
                     break;
                 default:
                     break;
