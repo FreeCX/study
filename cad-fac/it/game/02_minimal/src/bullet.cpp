@@ -23,19 +23,24 @@ void BulletSystem::step( void ) {
     for ( auto & b : bullet ) {
         b.x -= round( b.velocity * cos( b.angle + M_PI / 2.0f ) );
         b.y -= round( b.velocity * sin( b.angle + M_PI / 2.0f ) );
+        if ( b.x > 660 ) {
+            b.x = -20;
+        } else if ( b.x < -20 ) {
+            b.x = 660;
+        }
+        if ( b.y > 660 ) {
+            b.y = -20;
+        } else if ( b.y < -20 ) {
+            b.y = 660;
+        }
         b.life--;
     }
-    // FIX THIS CODE
-    // std::sort( bullet.begin(), bullet.end(), 
-    //     []( const bullet_t & a, const bullet_t &b ) { return a.life < b.life; } 
-    // );
-    // for ( size_t i = bullet.size() - 1; i > 0; i++ ) {
-    //     if ( bullet[i].life > 0 ) {
-    //         break;
-    //     }
-    //     // maybe it works!
-    //     bullet.erase( bullet.begin() + i );
-    // }
+    std::sort( bullet.begin(), bullet.end(), 
+        []( const bullet_t & a, const bullet_t &b ) { return a.life < b.life; } 
+    );
+    bullet.erase( std::remove_if( bullet.begin(), bullet.end(), 
+        []( const bullet_t & a ) { return a.life == 0; } ), bullet.end()
+    );
 }
 
 void BulletSystem::draw( DrawSystem & draw ) {
