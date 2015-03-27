@@ -1,6 +1,4 @@
 #include <SDL2/SDL.h>
-#include <ctime>
-#include <vector>
 #include "draw.hpp"
 #include "font.hpp"
 #include "player.hpp"
@@ -31,7 +29,7 @@ FontTable font;
 Player player;
 DrawSystem draw( nullptr, 16 );
 BulletSystem bullet( 5, 80, 2 );
-std::vector< Asteroid > asteroids;
+AsteroidSystem asteroid( gw.width, gw.height, 16, 16 );
 bool move_flag = false;
 bool shoot_flag = false;
 short rotate_flag = ROTATE_NONE;
@@ -101,11 +99,9 @@ void game_event( void ) {
 void game_loop( void ) {
     static int counter = 0;
 
-    player.step();
-    bullet.step();
-    for ( auto & a : asteroids ) {
-        a.step();
-    }
+    player.step( gw.width, gw.height );
+    bullet.step( gw.width, gw.height );
+    asteroid.step( gw.width, gw.height );
     if ( counter % 8 == 0 ) {
         if ( move_flag ) {
             player.add_velocity( 1 );
@@ -143,9 +139,7 @@ void game_render( void ) {
     // рисуем игрока
     player.draw( draw );
     bullet.draw( draw );
-    for ( auto & a : asteroids ) {
-        a.draw( draw );
-    }
+    asteroid.draw( draw );
     SDL_RenderPresent( gw.render );
 }
 
@@ -158,7 +152,6 @@ void game_destroy( void ) {
 
 // блок инициализации
 void game_init( void ) {
-    srand( time( nullptr ) );
     SDL_Init( SDL_INIT_VIDEO | SDL_INIT_EVENTS );
     gw.window = SDL_CreateWindow( gw.name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
                                   gw.width, gw.height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
@@ -179,13 +172,6 @@ void game_init( void ) {
     font.load( gw.render, "./data/font.cfg" );
     // устанавливаем игрока по центру экрана
     player.set_position( gw.width / 2, gw.height / 2 );
-    asteroids.resize( asteroid_count );
-    for ( auto & a : asteroids ) {
-        a.init( rand() % 12 + 8, ( rand() % 32 + 16 ) * 1.0f );
-        a.set_rotation_speed( ( rand() % 100 + 1 ) / 2000.0f );
-        a.set_speed( ( rand() % 100 - 50 ) / 30, ( rand() % 100 - 50 ) / 30 );
-        a.set_position( rand() % gw.width, rand() % gw.height );
-    }
 }
 
 // точка входа программы
