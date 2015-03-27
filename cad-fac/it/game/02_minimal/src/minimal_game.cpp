@@ -19,6 +19,12 @@ struct Window {
     int height = 640;
 } gw;
 
+enum {
+    ROTATE_NONE,
+    ROTATE_LEFT,
+    ROTATE_RIGHT
+};
+
 size_t game_score = 0;
 size_t asteroid_count = 8;
 FontTable font;
@@ -27,6 +33,8 @@ DrawSystem draw( nullptr, 16 );
 BulletSystem bullet( 5, 10, 4 );
 std::vector< Asteroid > asteroids;
 bool move_flag = false;
+bool shoot_flag = false;
+short rotate_flag = ROTATE_NONE;
 
 // обработка ошибок
 void game_send_error( int code ) {
@@ -52,6 +60,13 @@ void game_event( void ) {
                 case SDLK_UP:
                     move_flag = false;
                     break;
+                case SDLK_LEFT:
+                case SDLK_RIGHT:
+                    rotate_flag = ROTATE_NONE;
+                    break;
+                case SDLK_SPACE:
+                    shoot_flag = false;
+                    break;
                 default:
                     break;
             }
@@ -65,13 +80,16 @@ void game_event( void ) {
                     move_flag = true;
                     break;
                 case SDLK_LEFT:
-                    player.add_angle( -0.05f );
+                    rotate_flag = ROTATE_LEFT;
+                    // player.add_angle( -0.05f );
                     break;
                 case SDLK_RIGHT:
-                    player.add_angle( +0.05f );
+                    rotate_flag = ROTATE_RIGHT;
+                    // player.add_angle( +0.05f );
                     break;
                 case SDLK_SPACE:
-                    bullet.append( player );
+                    shoot_flag = true;
+                    // bullet.append( player );
                     break;
                 default:
                     break;
@@ -91,8 +109,23 @@ void game_loop( void ) {
     for ( auto & a : asteroids ) {
         a.step();
     }
-    if ( move_flag && counter % 8 == 0 ) {
-        player.add_velocity( 1 );
+    if ( counter % 8 == 0 ) {
+        if ( move_flag ) {
+            player.add_velocity( 1 );
+        }
+        if ( shoot_flag ) {
+            bullet.append( player );
+        }
+    }
+    switch ( rotate_flag ) {
+        case ROTATE_LEFT:
+            player.add_angle( -0.05f );
+            break;
+        case ROTATE_RIGHT:
+            player.add_angle( +0.05f );
+            break;
+        default:
+            break;
     }
     counter++;
 }
