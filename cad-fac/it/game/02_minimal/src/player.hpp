@@ -21,7 +21,7 @@ public:
     void add_velocity( int add );
     void add_life( short add );
     char get_life( void );
-    void step( void );
+    void step( const int width, const int height );
     void draw( DrawSystem & draw );
 private:
     char life;

@@ -28,20 +28,21 @@ char Player::get_life( void ) {
     return life; 
 }
 
-void Player::step( void ) {
+void Player::step( const int width, const int heigth ) {
+    static const int inv_zone = a;
     static short counter = 0;
 
     x -= round( velocity * cos( angle + M_PI / 2.0f ) );
     y -= round( velocity * sin( angle + M_PI / 2.0f ) );
-    if ( x > 660 ) {
-        x = -20;
-    } else if ( x < -20 ) {
-        x = 660;
+    if ( x > width + inv_zone ) {
+        x = -inv_zone;
+    } else if ( x < -inv_zone ) {
+        x = width + inv_zone;
     }
-    if ( y > 660 ) {
-        y = -20;
-    } else if ( y < -20 ) {
-        y = 660;
+    if ( y > heigth + inv_zone ) {
+        y = -inv_zone;
+    } else if ( y < -inv_zone ) {
+        y = heigth + inv_zone;
     }
     if ( velocity > 0 && counter % 32 == 0 ) {
         velocity--;
