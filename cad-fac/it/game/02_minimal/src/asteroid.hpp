@@ -1,22 +1,28 @@
 #pragma once
 #include <cmath>
+#include <ctime>
+#include <vector>
 #include "math.hpp"
 #include "draw.hpp"
 
-class Asteroid {
+typedef struct {
+    int x, y;
+    int vx, vy;
+    int radius;
+    float angle, rotate;
+} asteroid_t;
+
+class AsteroidSystem {
 public:
-    Asteroid() {}
-    ~Asteroid();
-    void init( const int segment_count, const float radius );
-    void set_speed( int vx, int vy );
-    void set_position( int x, int y );
-    void set_angle( float a );
-    void set_rotation_speed( float w );
-    void step( void );
+    AsteroidSystem( const int width, const int height, const int asteroid_count, const int segment_count );
+    ~AsteroidSystem();
+    void step( const int width, const int height );
     void draw( DrawSystem & draw );
 private:
-    int x, y, vx, vy;
-    float angle, rotate;
-    int sg_count;
-    int * segments, * pos;
+    std::vector< asteroid_t > asteroids;
+    int asteroid_count;
+    int segment_count;
+    float * segments;
+    int * pos;
+    float * dist;
 };
