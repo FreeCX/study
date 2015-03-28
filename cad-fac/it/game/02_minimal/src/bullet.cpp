@@ -12,28 +12,27 @@ BulletSystem::~BulletSystem() {
 
 void BulletSystem::append( Player & player ) {
     float angle = player.get_angle();
-    int x = 0, y = 0;
+    vec2 p;
     
-    x = player.get_x() + round( player.a * sin( angle ) );
-    y = player.get_y() - round( player.a * cos( angle ) );
-    bullet.push_back( { x, y, max_life, angle, max_velocity + player.get_velocity() } );
+    p = vec2( player.get_x() + player.a * sin( angle ), player.get_y() - player.a * cos( angle ) );
+    bullet.push_back( { p, max_life, angle, max_velocity + player.get_velocity() } );
 }
 
 void BulletSystem::step( const int width, const int height ) {
     const int inv_zone = 20;
 
     for ( auto & b : bullet ) {
-        b.x -= round( b.velocity * cos( b.angle + M_PI / 2.0f ) );
-        b.y -= round( b.velocity * sin( b.angle + M_PI / 2.0f ) );
-        if ( b.x > width + inv_zone ) {
-            b.x = -inv_zone;
-        } else if ( b.x < -inv_zone ) {
-            b.x = width + inv_zone;
+        b.p.x -= b.velocity * cos( b.angle + M_PI / 2.0f );
+        b.p.y -= b.velocity * sin( b.angle + M_PI / 2.0f );
+        if ( b.p.x > width + inv_zone ) {
+            b.p.x = -inv_zone;
+        } else if ( b.p.x < -inv_zone ) {
+            b.p.x = width + inv_zone;
         }
-        if ( b.y > height + inv_zone ) {
-            b.y = -inv_zone;
-        } else if ( b.y < -inv_zone ) {
-            b.y = height + inv_zone;
+        if ( b.p.y > height + inv_zone ) {
+            b.p.y = -inv_zone;
+        } else if ( b.p.y < -inv_zone ) {
+            b.p.y = height + inv_zone;
         }
         b.life--;
     }
@@ -48,7 +47,7 @@ void BulletSystem::step( const int width, const int height ) {
 void BulletSystem::draw( DrawSystem & draw ) {
     draw.set_coloru( COLOR_WHITE );
     for ( auto & b : bullet ) {
-        draw.circle( b.x, b.y, max_radius );
+        draw.circle( round( b.p.x ), round( b.p.y ), max_radius );
     }
     draw.set_coloru( COLOR_BLACK );
 }

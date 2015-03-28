@@ -6,8 +6,8 @@
 #include "draw.hpp"
 
 typedef struct {
-    int x, y;
-    int vx, vy;
+    vec2 p;
+    vec2 v;
     int radius;
     float angle, rotate;
 } asteroid_t;
@@ -19,6 +19,7 @@ public:
     void step( const int width, const int height );
     void draw( DrawSystem & draw );
 private:
+    void collide( int i, int j );
     std::vector< asteroid_t > asteroids;
     int asteroid_count;
     int segment_count;

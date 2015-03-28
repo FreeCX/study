@@ -1,12 +1,12 @@
 #pragma once
-#include <cmath>
 #include <algorithm>
 #include <vector>
+#include "math.hpp"
 #include "draw.hpp"
 #include "player.hpp"
 
 typedef struct {
-    int x, y;
+    vec2 p;
     short life;
     float angle, velocity;
 } bullet_t;

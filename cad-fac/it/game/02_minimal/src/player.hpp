@@ -1,5 +1,4 @@
 #pragma once
-#include <cmath>
 #include "math.hpp"
 #include "draw.hpp"
 
@@ -10,11 +9,11 @@ public:
     const int a = 32, b = 16;
     const int max_length = 10;
 
-    Player() : life( 3 ), x( 0 ), y( 0 ), velocity( 0.0f ), angle( 0.0f ) {}
+    Player() : p( vec2( 0.0f, 0.0f ) ), life( 3 ), velocity( 0.0f ), angle( 0.0f ) {}
     void set_position( int x, int y );
     void set_angle( float angle );
-    int get_x( void ) { return x; }
-    int get_y( void ) { return y; }
+    float get_x( void ) { return p.x; }
+    float get_y( void ) { return p.y; }
     float get_velocity( void ) { return velocity; }
     float get_angle( void ) { return angle; }
     void add_angle( float add );
@@ -24,7 +23,7 @@ public:
     void step( const int width, const int height );
     void draw( DrawSystem & draw );
 private:
+    vec2 p;
     char life;
-    int x, y;
     float velocity, angle;
 };
