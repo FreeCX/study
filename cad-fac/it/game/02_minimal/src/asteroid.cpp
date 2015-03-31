@@ -9,13 +9,6 @@ AsteroidSystem::AsteroidSystem( const int width, const int height, const int ast
     segments = new float [segment_count * 2];
     pos = new int [segment_count * 2];
     dist = new float [asteroid_count * segment_count * 2];
-    asteroids.resize( asteroid_count );
-    for ( auto & a : asteroids ) {
-        a.radius = rand() % 32 + 16;
-        a.rotate = ( rand() % 100 + 1 ) / 3000.0f;
-        a.v      = vec2( ( rand() % 100 - 50 ) / 10.0f, ( rand() % 100 - 50 ) / 10.0f );
-        a.p      = vec2( rand() % width, rand() % height );
-    }
     for ( int i = 0; i < asteroid_count; i++ ) {
         for ( int j = 0; j < segment_count * 2; j += 2 ) {
             dist[i*segment_count*2+j+0] = ( 1.0f + 0.04f * ( rand() % 10 - 5 ) );
@@ -34,7 +27,25 @@ AsteroidSystem::~AsteroidSystem() {
     delete[] pos;
 }
 
+void AsteroidSystem::rand_append( void ) {
+    asteroid_t a;
+    a.radius = rand() % 32 + 16;
+    a.rotate = ( rand() % 100 + 1 ) / 3000.0f;
+    a.life   = 1;
+    a.v      = vec2( ( rand() % 100 - 50 ) / 20.0f, ( rand() % 100 - 50 ) / 20.0f );
+    a.p      = vec2( -a.radius, -a.radius );
+    a.index  = rand() % asteroid_count;
+    asteroids.push_back( a );
+}
+
+void AsteroidSystem::append( const vec2 p, const vec2 v, const int radius ) {
+    asteroids.push_back( { p, v, radius, 1, rand() % asteroid_count, 0.0f, 0.0f } );
+}
+
 void AsteroidSystem::step( const int width, const int height ) {
+    asteroids.erase( std::remove_if( asteroids.begin(), asteroids.end(), 
+        []( const asteroid_t & a ) { return a.life <= 0; } ), asteroids.end()
+    );
     for ( auto & a : asteroids ) {
         const int inv_zone = ceil( a.radius );
         a.p -= a.v;
@@ -50,9 +61,11 @@ void AsteroidSystem::step( const int width, const int height ) {
         }
         a.angle = _fmod( a.angle + a.rotate + M_PI, 2 * M_PI ) - M_PI;
     }
-    for ( size_t i = 0; i < asteroids.size() - 1; i++ ) {
-        for ( size_t j = i; j < asteroids.size(); j++ ) {
-            collide( i, j );
+    if ( asteroids.size() > 0 ) {
+        for ( size_t i = 0; i < asteroids.size() - 1; i++ ) {
+            for ( size_t j = i; j < asteroids.size(); j++ ) {
+                collide( i, j );
+            }
         }
     }
 }
@@ -62,8 +75,8 @@ void AsteroidSystem::draw( DrawSystem & draw ) {
     for ( size_t j = 0; j < asteroids.size(); j++ ) {
         const auto & a = asteroids[j];
         for ( int i = 0; i < segment_count * 2; i += 2 ) {
-            const float x = segments[i+0] * dist[j*segment_count*2+i+0] * a.radius;
-            const float y = segments[i+1] * dist[j*segment_count*2+i+1] * a.radius;
+            const float x = segments[i+0] * dist[a.index*segment_count*2+i+0] * a.radius;
+            const float y = segments[i+1] * dist[a.index*segment_count*2+i+1] * a.radius;
             pos[i+0] = round( a.p.x + x * cos( a.angle ) - y * sin( a.angle ) );
             pos[i+1] = round( a.p.y + x * sin( a.angle ) + y * cos( a.angle ) );
         }
@@ -78,17 +91,23 @@ void AsteroidSystem::draw( DrawSystem & draw ) {
     draw.set_coloru( COLOR_BLACK );
 }
 
-// write correct collide function
 void AsteroidSystem::collide( int i, int j ) {
     vec2 & v1 = asteroids[i].v, & v2 = asteroids[j].v;
     vec2 & p1 = asteroids[i].p, & p2 = asteroids[j].p;
     vec2 p = p2 - p1;
-    vec2 n = p.norm();
     float d = ( asteroids[i].radius + asteroids[j].radius ) - p.length();
 
     if ( d >= 0 ) {
-        float tmp = ( v1.length() + v2.length() );
-        p1 -= n * d; v1 = -n * tmp;
-        p2 += n * d; v2 = n * tmp;
+        vec2 n = p.norm();
+        std::swap( v1, v2 );
+        p1 -= n * d; p2 += n * d;
     }
+}
+
+size_t AsteroidSystem::count( void ) {
+    return asteroids.size();
+}
+
+asteroid_v & AsteroidSystem::get_vector( void ) {
+    return asteroids;
 }
