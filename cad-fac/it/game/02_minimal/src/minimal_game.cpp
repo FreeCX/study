@@ -33,6 +33,7 @@ AsteroidSystem asteroid( gw.width, gw.height, 16, 16 );
 bool move_flag = false;
 bool shoot_flag = false;
 short rotate_flag = ROTATE_NONE;
+const int asteroid_eps = 8;
 
 // обработка ошибок
 void game_send_error( int code ) {
@@ -95,10 +96,45 @@ void game_event( void ) {
     }
 }
 
+bool collide( const asteroid_t & a, const bullet_t & b ) {
+    vec2 p1 = a.p, p2 = b.p;
+    vec2 p = p2 - p1;
+    float d = a.radius - p.length();
+
+    if ( d >= 0 ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void collider( AsteroidSystem & a, BulletSystem & b ) {
+    auto & av = a.get_vector();
+    auto & bv = b.get_vector();
+
+    for ( auto & ast : av ) {
+        for ( auto & bul : bv ) {
+            if ( collide( ast, bul ) ) {
+                ast.life = bul.life = 0; // destroy it
+                const int r = ast.radius / 3;
+                if ( r > asteroid_eps ) {
+                    vec2 v = ast.v * 0.8f;
+                    float nr = r * 0.8f;
+                    a.append( ast.p - vec2( 0, nr ), v.rot( 0.75f * M_PI ), r );
+                    a.append( ast.p + vec2( nr, 0 ), v, r );
+                    a.append( ast.p - vec2( nr, 0 ), v.rot( 1.25f * M_PI ), r );
+                    game_score += ast.radius * 3;
+                }
+            }
+        }
+    }
+}
+
 // игровой цикл
 void game_loop( void ) {
     static int counter = 0;
 
+    collider( asteroid, bullet );
     player.step( gw.width, gw.height );
     bullet.step( gw.width, gw.height );
     asteroid.step( gw.width, gw.height );
@@ -109,6 +145,9 @@ void game_loop( void ) {
         if ( shoot_flag ) {
             bullet.append( player );
         }
+    }
+    if ( counter % 100 == 0 ) {
+        asteroid.rand_append();
     }
     switch ( rotate_flag ) {
         case ROTATE_LEFT:
@@ -133,7 +172,8 @@ void game_render( void ) {
     // представляем количество жизней в виде '+'
     memset( life, '+', player.get_life() );
     // подготавливаем выводимый текст
-    swprintf( text_buffer, BUFFER_SIZE, L"score %08zu\n life %s", game_score, life );
+    swprintf( text_buffer, BUFFER_SIZE, L"score %08zu\n life %s\nasteroid %ld", 
+        game_score, life, asteroid.count() );
     // рисуем текст
     font.draw( 8, 8, text_buffer );
     // рисуем игрока
