@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include <cmath>
 #include <float.h>
 
@@ -32,6 +33,7 @@ struct vec2 {
     vec2 operator * ( const vec2 &v );
     vec2 abs( void );
     vec2 norm( void );
+    vec2 rot( const float angle );
     float length( void );
     float dot( const vec2 &v );
     float x, y;

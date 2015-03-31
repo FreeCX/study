@@ -77,6 +77,12 @@ vec2 vec2::norm( void ) {
     return vec2( x * a, y * a );
 }
 
+vec2 vec2::rot( const float angle ) {
+    float x1 = x * cos( angle ) - y * sin( angle );
+    float y1 = x * sin( angle ) + y * cos( angle );
+    return vec2( x1, y1 );
+}
+
 float vec2::length( void ) {
     return sqrtf( x * x + y * y );
 }
