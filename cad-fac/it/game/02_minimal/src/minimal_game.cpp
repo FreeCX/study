@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include "draw.hpp"
 #include "font.hpp"
+#include "sound.hpp"
 #include "player.hpp"
 #include "asteroid.hpp"
 #include "bullet.hpp"
@@ -30,16 +31,12 @@ Player player;
 DrawSystem draw( nullptr, 16 );
 BulletSystem bullet( 5, 80, 2 );
 AsteroidSystem asteroid( gw.width, gw.height, 16, 16 );
+SoundSystem sound;
 bool move_flag = false;
 bool shoot_flag = false;
 short rotate_flag = ROTATE_NONE;
 const int asteroid_eps = 8;
-
-// обработка ошибок
-void game_send_error( int code ) {
-    SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Error", SDL_GetError(), nullptr );
-    exit( code );
-}
+uint4_t sound_track, sound_shoot;
 
 // обработка событий
 void game_event( void ) {
@@ -143,6 +140,7 @@ void game_loop( void ) {
             player.add_velocity( 1 );
         }
         if ( shoot_flag ) {
+            sound.play( sound_shoot, false );
             bullet.append( player );
         }
     }
@@ -196,13 +194,13 @@ void game_init( void ) {
     gw.window = SDL_CreateWindow( gw.name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
                                   gw.width, gw.height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
     if ( gw.window == nullptr ) {
-        game_send_error( EXIT_FAILURE );
+        game_send_error( SDL_GetError(), EXIT_FAILURE );
     }
     gw.render = SDL_CreateRenderer( gw.window, gw.SDL_RENDER_DRIVER, 
                                     SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC | 
                                     SDL_RENDERER_TARGETTEXTURE );
     if ( gw.render == nullptr ) {
-        game_send_error( EXIT_FAILURE );
+        game_send_error( SDL_GetError(), EXIT_FAILURE );
     }
     // включаем режим смешивания
     SDL_SetRenderDrawBlendMode( gw.render, SDL_BLENDMODE_BLEND );
@@ -212,6 +210,10 @@ void game_init( void ) {
     font.load( gw.render, "./data/font.cfg" );
     // устанавливаем игрока по центру экрана
     player.set_position( gw.width / 2, gw.height / 2 );
+    sound_track = sound.load( "./data/soundtrack.ogg" );
+    sound_shoot = sound.load( "./data/shot.ogg" );
+    sound.set_volume( sound_track, 120 );
+    sound.play( sound_track, true );
 }
 
 // точка входа программы
