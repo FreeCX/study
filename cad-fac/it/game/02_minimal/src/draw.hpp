@@ -11,6 +11,7 @@ enum COLOR {
     COLOR_YELLOW    = 0xffff00,
     COLOR_MAGENTA   = 0xff00ff,
 };
+const int ERROR_PROBLEM = 1000;
 
 class DrawSystem {
 public:
