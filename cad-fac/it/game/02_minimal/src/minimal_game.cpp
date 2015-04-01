@@ -24,7 +24,7 @@ enum {
     ROTATE_RIGHT
 };
 
-size_t game_score = 0;
+size_t game_score = 0, last_score = 0;
 size_t asteroid_count = 8;
 FontTable font;
 Player player;
@@ -36,7 +36,8 @@ bool move_flag = false;
 bool shoot_flag = false;
 short rotate_flag = ROTATE_NONE;
 const int asteroid_eps = 8;
-uint4_t sound_track, sound_shoot;
+uint4_t sound_track, sound_shoot, sound_explosion;
+uint4_t sound_engine, sound_bonus;
 
 // обработка событий
 void game_event( void ) {
@@ -73,6 +74,9 @@ void game_event( void ) {
                     gw.quit_flag = true;
                     break;
                 case SDLK_UP:
+                    if ( !move_flag ) {
+                        sound.play( sound_engine, false );
+                    }
                     move_flag = true;
                     break;
                 case SDLK_LEFT:
@@ -122,6 +126,7 @@ void collider( AsteroidSystem & a, BulletSystem & b ) {
                     a.append( ast.p - vec2( nr, 0 ), v.rot( 1.25f * M_PI ), r );
                     game_score += ast.radius * 3;
                 }
+                sound.play( sound_explosion, false );
             }
         }
     }
@@ -147,6 +152,12 @@ void game_loop( void ) {
     if ( counter % 100 == 0 ) {
         asteroid.rand_append();
     }
+    if ( game_score > 0 && log10( game_score - last_score ) >= 4 ) {
+        // добавляем одну жизнь каждые 10000 очков
+        last_score = game_score;
+        sound.play( sound_bonus, false );
+        player.add_life( 1 );
+    }
     switch ( rotate_flag ) {
         case ROTATE_LEFT:
             player.add_angle( -0.05f );
@@ -170,8 +181,7 @@ void game_render( void ) {
     // представляем количество жизней в виде '+'
     memset( life, '+', player.get_life() );
     // подготавливаем выводимый текст
-    swprintf( text_buffer, BUFFER_SIZE, L"score %08zu\n life %s\nasteroid %ld", 
-        game_score, life, asteroid.count() );
+    swprintf( text_buffer, BUFFER_SIZE, L"score %010zu\n life %s\n", game_score, life );
     // рисуем текст
     font.draw( 8, 8, text_buffer );
     // рисуем игрока
@@ -210,10 +220,16 @@ void game_init( void ) {
     font.load( gw.render, "./data/font.cfg" );
     // устанавливаем игрока по центру экрана
     player.set_position( gw.width / 2, gw.height / 2 );
+    // загрузка звуковых файлов
     sound_track = sound.load( "./data/soundtrack.ogg" );
     sound_shoot = sound.load( "./data/shot.ogg" );
+    sound_explosion = sound.load( "./data/explosion.ogg" );
+    sound_engine = sound.load( "./data/engine.ogg" );
+    sound_bonus = sound.load( "./data/bonus.ogg" );
+    // установка громкости для звуковых дорожек
     sound.set_volume( sound_track, 120 );
     sound.set_volume( sound_shoot, 150 );
+    sound.set_volume( sound_bonus, 100 );
     sound.play( sound_track, true );
 }
 
