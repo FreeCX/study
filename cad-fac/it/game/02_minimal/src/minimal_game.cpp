@@ -31,7 +31,7 @@ Player player;
 DrawSystem draw( nullptr, 16 );
 BulletSystem bullet( 5, 80, 2 );
 AsteroidSystem asteroid( gw.width, gw.height, 16, 16 );
-// SoundSystem sound; // FIX SoundSystem
+SoundSystem sound;
 bool move_flag = false;
 bool shoot_flag = false;
 short rotate_flag = ROTATE_NONE;
@@ -140,7 +140,7 @@ void game_loop( void ) {
             player.add_velocity( 1 );
         }
         if ( shoot_flag ) {
-            // sound.play( sound_shoot, false );
+            sound.play( sound_shoot, false );
             bullet.append( player );
         }
     }
@@ -210,10 +210,11 @@ void game_init( void ) {
     font.load( gw.render, "./data/font.cfg" );
     // устанавливаем игрока по центру экрана
     player.set_position( gw.width / 2, gw.height / 2 );
-    // sound_track = sound.load( "./data/soundtrack.ogg" );
-    // sound_shoot = sound.load( "./data/shot.ogg" );
-    // sound.set_volume( sound_track, 120 );
-    // sound.play( sound_track, true );
+    sound_track = sound.load( "./data/soundtrack.ogg" );
+    sound_shoot = sound.load( "./data/shot.ogg" );
+    sound.set_volume( sound_track, 120 );
+    sound.set_volume( sound_shoot, 150 );
+    sound.play( sound_track, true );
 }
 
 // точка входа программы
