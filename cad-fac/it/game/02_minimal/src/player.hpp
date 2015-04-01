@@ -4,7 +4,7 @@
 
 class Player {
 public:
-    const char life_max = 8;
+    const char life_max = 10;
     const float velocity_max = 10.0f;
     const int a = 32, b = 16;
     const int max_length = 10;
