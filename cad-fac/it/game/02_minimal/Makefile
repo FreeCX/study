@@ -1,6 +1,6 @@
 CXX          := g++
-CFLAGS 	     := -Wall -std=c++11 $(CFLAGS) $(shell sdl2-config --cflags)
-LFLAGS       := $(shell sdl2-config --libs) -lSDL2_image
+CFLAGS 	     := -Wall -g -std=c++11 $(shell pkg-config --cflags openal vorbisfile sdl2)
+LFLAGS       := $(shell pkg-config --libs openal vorbisfile sdl2 SDL2_image)
 target_file  := minimal_game
 dest_dir 	 := ./src/
 object_files := $(patsubst %.cpp, %.o, $(wildcard $(dest_dir)*.cpp))
