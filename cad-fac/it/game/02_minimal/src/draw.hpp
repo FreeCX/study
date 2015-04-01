@@ -29,3 +29,10 @@ private:
     float * coords;
     size_t segments;
 };
+
+inline void game_send_error( const char * buffer, int code ) {
+    SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Error", buffer, nullptr );
+    if ( code != ERROR_PROBLEM ) {
+        exit( code );
+    }
+}
