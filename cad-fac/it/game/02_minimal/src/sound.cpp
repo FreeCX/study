@@ -35,7 +35,7 @@ SoundSystem::~SoundSystem() {
 
 int SoundSystem::load( const char * filename ) {
     size_t count = audio_source.size();
-    int data_size = 0, size;
+    int data_size = 0, size = 0;
     int result = 0, section;
     OggVorbis_File ogg_file;
     vorbis_info * info;
@@ -64,9 +64,8 @@ int SoundSystem::load( const char * filename ) {
     format = info->channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     data_size = ov_pcm_total( &ogg_file, -1 ) * info->channels * 2;
     char * raw = new char [data_size];
-    // fix problem: load data in windows
     while ( size < data_size ) {
-        result = ov_read( &ogg_file, raw, data_size, 0, 2, 1, &section );
+        result = ov_read( &ogg_file, raw + size, data_size - size, 0, 2, 1, &section );
         if ( result > 0 ) {
             size += result;
         } else if ( result < 0 ) {
@@ -76,7 +75,6 @@ int SoundSystem::load( const char * filename ) {
             break;
         }
     }
-    ov_clear( &ogg_file );
     fclose( f );
     /* load ogg */
     alBufferData( buffer, format, raw, data_size, info->rate );
