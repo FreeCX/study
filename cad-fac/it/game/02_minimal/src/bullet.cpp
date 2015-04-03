@@ -64,7 +64,7 @@ bool collide( const asteroid_t & a, const bullet_t & b ) {
     }
 }
 
-size_t BulletSystem::collider( AsteroidSystem & asteroids ) {
+const size_t BulletSystem::collider( AsteroidSystem & asteroids ) {
     size_t game_score = 0;
 
     for ( auto & ast : asteroids.get_vector() ) {

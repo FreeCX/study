@@ -24,7 +24,7 @@ void Player::add_life( short add ) {
     }
 }
 
-char Player::get_life( void ) { 
+char Player::get_life( void ) const { 
     return life; 
 }
 
@@ -87,5 +87,5 @@ bool Player::collider( AsteroidSystem & asteroids ) {
             return status;
         }
     }
-    return false;
+    return status;
 }

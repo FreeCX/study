@@ -21,7 +21,7 @@ public:
     void step( const int width, const int height );
     void draw( DrawSystem & draw );
     bullet_v & get_vector( void );
-    size_t collider( AsteroidSystem & asteroids );
+    const size_t collider( AsteroidSystem & asteroids );
 private:
     bullet_v bullets;
     float max_velocity = 5.0f;

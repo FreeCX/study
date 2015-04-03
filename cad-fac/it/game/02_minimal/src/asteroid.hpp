@@ -20,10 +20,10 @@ public:
     AsteroidSystem( const int width, const int height, const int asteroid_count, const int segment_count );
     ~AsteroidSystem();
     void rand_append( void );
-    void append( const vec2 p, const vec2 v, const int radius );
+    void append( const vec2 & p, const vec2 & v, const int radius );
     void step( const int width, const int height );
     void draw( DrawSystem & draw );
-    size_t count( void );
+    size_t count( void ) const;
     asteroid_v & get_vector( void );
 private:
     void collide( int i, int j );

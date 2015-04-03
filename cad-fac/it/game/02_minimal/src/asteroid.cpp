@@ -38,7 +38,7 @@ void AsteroidSystem::rand_append( void ) {
     asteroids.push_back( a );
 }
 
-void AsteroidSystem::append( const vec2 p, const vec2 v, const int radius ) {
+void AsteroidSystem::append( const vec2 & p, const vec2 & v, const int radius ) {
     asteroids.push_back( { p, v, radius, 1, rand() % asteroid_count, 0.0f, 0.0f } );
 }
 
@@ -104,7 +104,7 @@ void AsteroidSystem::collide( int i, int j ) {
     }
 }
 
-size_t AsteroidSystem::count( void ) {
+size_t AsteroidSystem::count( void ) const {
     return asteroids.size();
 }
 

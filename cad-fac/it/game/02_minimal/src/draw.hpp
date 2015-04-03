@@ -26,7 +26,6 @@ public:
     int aaline( int x1, int y1, int x2, int y2 );
 private:
     SDL_Renderer * render;
-    Uint8 red, green, blue, alpha;
     float * coords;
     size_t segments;
 };

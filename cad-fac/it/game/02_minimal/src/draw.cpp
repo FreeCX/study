@@ -20,11 +20,15 @@ void DrawSystem::set_render( SDL_Renderer * renderer ) {
 }
 
 Uint32 DrawSystem::get_coloru( void ) {
+    Uint8 red, green, blue;
+
     SDL_GetRenderDrawColor( render, &red, &green, &blue, nullptr );
     return ( red << 16 ) + ( green << 8 ) + blue;
 }
 
 int DrawSystem::set_coloru( Uint32 color ) {
+    Uint8 red, green, blue;
+    
     red = ( color >> 16 );
     green = ( ( color >> 8 ) & 0xff );
     blue = ( color & 0xff );
@@ -41,17 +45,16 @@ int DrawSystem::set_color4u( Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha ) {
 
 int DrawSystem::aaline( int x1, int y1, int x2, int y2 ) {
     Uint32 intshift, erracc, erradj, erracctmp, wgt;
-    int dx, dy, tmp, xdir, y0p1, x0pxdir, result;
     Sint32 xx0, yy0, xx1, yy1;
+    int dx, dy, xdir, result;
     Uint8 r, g, b, a;
 
     result = SDL_GetRenderDrawColor( render, &r, &g, &b, &a );
     xx0 = x1; yy0 = y1;
     xx1 = x2; yy1 = y2;
     if ( yy0 > yy1 ) {
-        tmp = yy0; yy0 = yy1;
-        yy1 = tmp; tmp = xx0;
-        xx0 = xx1; xx1 = tmp;
+        std::swap( yy0, yy1 );
+        std::swap( xx0, xx1 );
     }
     dx = xx1 - xx0;
     dy = yy1 - yy0;
@@ -69,7 +72,7 @@ int DrawSystem::aaline( int x1, int y1, int x2, int y2 ) {
     result |= SDL_RenderDrawPoint( render, x1, y1 );
     if ( dy > dx ) {
         erradj = ( ( dx << 16 ) / dy ) << 16;
-        x0pxdir = xx0 + xdir;
+        int x0pxdir = xx0 + xdir;
         while ( --dy ) {
             erracctmp = erracc;
             erracc += erradj;
@@ -86,7 +89,7 @@ int DrawSystem::aaline( int x1, int y1, int x2, int y2 ) {
         }
     } else {
         erradj = ( ( dy << 16 ) / dx ) << 16;
-        y0p1 = yy0 + 1;
+        int y0p1 = yy0 + 1;
         while ( --dx ) {
             erracctmp = erracc;
             erracc += erradj;

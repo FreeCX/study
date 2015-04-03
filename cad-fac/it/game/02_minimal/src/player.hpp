@@ -13,14 +13,14 @@ public:
     Player() : p( vec2( 0.0f, 0.0f ) ), life( 3 ), velocity( 0.0f ), angle( 0.0f ) {}
     void set_position( int x, int y );
     void set_angle( float angle );
-    float get_x( void ) { return p.x; }
-    float get_y( void ) { return p.y; }
-    float get_velocity( void ) { return velocity; }
-    float get_angle( void ) { return angle; }
+    float get_x( void ) const { return p.x; }
+    float get_y( void ) const { return p.y; }
+    float get_velocity( void ) const { return velocity; }
+    float get_angle( void ) const { return angle; }
     void add_angle( float add );
     void add_velocity( int add );
     void add_life( short add );
-    char get_life( void );
+    char get_life( void ) const;
     void step( const int width, const int height );
     void draw( DrawSystem & draw );
     bool collider( AsteroidSystem & asteroids );

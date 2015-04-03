@@ -15,26 +15,26 @@ inline float _fmod( float x, float y ) {
 }
 
 struct vec2 {
-    vec2() {}
+    vec2() : x( 0.0f ), y( 0.0f ) {}
     vec2( const float x0, const float y0 ) : x( x0 ), y( y0 ) {}
     void operator () ( const float x0, const float y0 );
-    bool operator == ( const vec2 &v );
-    bool operator != ( const vec2 &v );
-    vec2 & operator = ( const vec2 &v );
+    bool operator == ( const vec2 & v ) const;
+    bool operator != ( const vec2 & v ) const ;
+    vec2 & operator = ( const vec2 & v );
     vec2 operator - ( void );
-    vec2 operator + ( const vec2 &v );
-    vec2 operator - ( const vec2 &v );
+    vec2 operator + ( const vec2 & v );
+    vec2 operator - ( const vec2 & v );
     vec2 operator * ( const float k );
     vec2 operator / ( const float k );
-    vec2 operator -= ( const vec2 &v );
-    vec2 operator += ( const vec2 &v );
+    vec2 operator -= ( const vec2 & v );
+    vec2 operator += ( const vec2 & v );
     vec2 operator *= ( const float k );
     vec2 operator /= ( const float k );
-    vec2 operator * ( const vec2 &v );
+    vec2 operator * ( const vec2 & v );
     vec2 abs( void );
     vec2 norm( void );
     vec2 rot( const float angle );
     float length( void );
-    float dot( const vec2 &v );
+    float dot( const vec2 & v ) const;
     float x, y;
 };

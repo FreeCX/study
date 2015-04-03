@@ -36,11 +36,11 @@ SoundSystem::~SoundSystem() {
 int SoundSystem::load( const char * filename ) {
     size_t count = audio_source.size();
     int data_size = 0, size = 0;
-    int result = 0, section;
     OggVorbis_File ogg_file;
     vorbis_info * info;
     ALuint buffer;
     ALenum format;
+    int section;
     FILE * f;
 
     audio_source.resize( count + 1 );
@@ -65,7 +65,7 @@ int SoundSystem::load( const char * filename ) {
     data_size = ov_pcm_total( &ogg_file, -1 ) * info->channels * 2;
     char * raw = new char [data_size];
     while ( size < data_size ) {
-        result = ov_read( &ogg_file, raw + size, data_size - size, 0, 2, 1, &section );
+        int result = ov_read( &ogg_file, raw + size, data_size - size, 0, 2, 1, &section );
         if ( result > 0 ) {
             size += result;
         } else if ( result < 0 ) {

@@ -25,7 +25,7 @@ typedef struct font_table font_table_t;
 
 class FontTable {
 public:
-    FontTable( void ) {}
+    FontTable( void ) : render( nullptr ), ft( nullptr ) {}
     ~FontTable( void );
     int load( SDL_Renderer * r, const char * font );
     void draw( int x, int y, const wchar_t * text );

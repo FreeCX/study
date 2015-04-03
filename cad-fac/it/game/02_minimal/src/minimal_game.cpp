@@ -145,7 +145,7 @@ void game_loop( void ) {
 void game_render( void ) {
     const std::size_t BUFFER_SIZE = 128;
     wchar_t text_buffer[BUFFER_SIZE];
-    char life[player.life_max+1] = { 0 };
+    static char life[16] = { 0 };
 
     SDL_RenderClear( gw.render );
     // представляем количество жизней в виде '+'

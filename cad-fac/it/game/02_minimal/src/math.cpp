@@ -4,15 +4,15 @@ void vec2::operator () ( const float x0, const float y0 ) {
     x = x0; y = y0;
 }
 
-bool vec2::operator == ( const vec2 &v ) {
+bool vec2::operator == ( const vec2 & v ) const {
     return x == v.x && y == v.y;
 }
 
-bool vec2::operator != ( const vec2 &v ) {
+bool vec2::operator != ( const vec2 & v ) const {
     return x != v.x || y != v.y;
 }
 
-vec2 & vec2::operator = ( const vec2 &v ) {
+vec2 & vec2::operator = ( const vec2 & v ) {
     x = v.x; y = v.y;
     return *this;
 }
@@ -21,11 +21,11 @@ vec2 vec2::operator - ( void ) {
     return vec2( -x, -y );
 }
 
-vec2 vec2::operator + ( const vec2 &v ) {
+vec2 vec2::operator + ( const vec2 & v ) {
     return vec2( x + v.x, y + v.y );
 }
 
-vec2 vec2::operator - ( const vec2 &v ) {
+vec2 vec2::operator - ( const vec2 & v ) {
     return vec2( x - v.x, y - v.y );
 }
 
@@ -39,12 +39,12 @@ vec2 vec2::operator / ( const float k ) {
     return tmp /= k;
 }
 
-vec2 vec2::operator -= ( const vec2 &v ) {
+vec2 vec2::operator -= ( const vec2 & v ) {
     x -= v.x; y -= v.y;
     return *this;
 }
 
-vec2 vec2::operator += ( const vec2 &v ) {
+vec2 vec2::operator += ( const vec2 & v ) {
     x += v.x; y += v.y;
     return *this;
 }
@@ -59,7 +59,7 @@ vec2 vec2::operator /= ( const float k ) {
     return *this;
 }
 
-vec2 vec2::operator * ( const vec2 &v ) {
+vec2 vec2::operator * ( const vec2 & v ) {
     return vec2( x * v.x, y * v.y );
 }
 
@@ -87,6 +87,6 @@ float vec2::length( void ) {
     return sqrtf( x * x + y * y );
 }
 
-float vec2::dot( const vec2 &v ) {
+float vec2::dot( const vec2 & v ) const {
     return x * v.x + y * v.y;
 }
