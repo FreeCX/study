@@ -35,7 +35,7 @@ SoundSystem sound;
 bool move_flag = false;
 bool shoot_flag = false;
 short rotate_flag = ROTATE_NONE;
-uint4_t sound_track, sound_shoot, 
+uint4_t sound_track, sound_shoot;
 uint4_t sound_explosion, sound_bonus;
 
 // обработка событий
