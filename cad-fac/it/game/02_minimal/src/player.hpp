@@ -1,6 +1,7 @@
 #pragma once
-#include "math.hpp"
+#include "asteroid.hpp"
 #include "draw.hpp"
+#include "math.hpp"
 
 class Player {
 public:
@@ -22,6 +23,7 @@ public:
     char get_life( void );
     void step( const int width, const int height );
     void draw( DrawSystem & draw );
+    bool collider( AsteroidSystem & asteroids );
 private:
     vec2 p;
     char life;

@@ -66,3 +66,26 @@ void Player::draw( DrawSystem & draw ) {
     }
     draw.set_coloru( COLOR_BLACK );
 }
+
+bool collide( vec2 p1, vec2 p2, asteroid_t & ast ) {
+    // написать функцию проверки пересечения отрезка и круга
+    return false;
+}
+
+bool Player::collider( AsteroidSystem & asteroids ) {
+    vec2 p1, p2, p3, p4;
+    bool status = false;
+
+    p1 = p + vec2( 0.0f, -a ).rot( angle );
+    p2 = p + vec2( -a / 2.0f, b ).rot( angle );
+    p3 = p;
+    p4 = p + vec2( a / 2.0f, b ).rot( angle );
+    for ( auto & ast : asteroids.get_vector() ) {
+        status = collide( p1, p2, ast ) | collide( p2, p3, ast ) | 
+                 collide( p3, p4, ast ) | collide( p4, p1, ast );
+        if ( status ) {
+            return status;
+        }
+    }
+    return false;
+}
