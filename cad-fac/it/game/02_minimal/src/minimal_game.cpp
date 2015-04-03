@@ -35,8 +35,8 @@ SoundSystem sound;
 bool move_flag = false;
 bool shoot_flag = false;
 short rotate_flag = ROTATE_NONE;
-uint4_t sound_track, sound_shoot, sound_explosion;
-uint4_t sound_engine, sound_bonus;
+uint4_t sound_track, sound_shoot, 
+uint4_t sound_explosion, sound_bonus;
 
 // обработка событий
 void game_event( void ) {
@@ -73,9 +73,6 @@ void game_event( void ) {
                     gw.quit_flag = true;
                     break;
                 case SDLK_UP:
-                    if ( !move_flag ) {
-                        sound.play( sound_engine, false );
-                    }
                     move_flag = true;
                     break;
                 case SDLK_LEFT:
@@ -107,7 +104,7 @@ void game_loop( void ) {
         sound.play( sound_explosion, false );
     }
     if ( player.collider( asteroid ) ) {
-        sound.play( sound_bonus, false );
+        // sound.play( sound_die, false );
         player.add_life( -1 );
     }
     player.step( gw.width, gw.height );
@@ -197,7 +194,6 @@ void game_init( void ) {
     sound_track = sound.load( "./data/soundtrack.ogg" );
     sound_shoot = sound.load( "./data/shot.ogg" );
     sound_explosion = sound.load( "./data/explosion.ogg" );
-    sound_engine = sound.load( "./data/engine.ogg" );
     sound_bonus = sound.load( "./data/bonus.ogg" );
     // установка громкости для звуковых дорожек
     sound.set_volume( sound_track, 120 );
