@@ -16,6 +16,7 @@ typedef std::vector< asteroid_t > asteroid_v;
 
 class AsteroidSystem {
 public:
+    const int asteroid_eps = 8;
     AsteroidSystem( const int width, const int height, const int asteroid_count, const int segment_count );
     ~AsteroidSystem();
     void rand_append( void );
