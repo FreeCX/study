@@ -52,3 +52,36 @@ void BulletSystem::draw( DrawSystem & draw ) {
 bullet_v & BulletSystem::get_vector( void ) {
     return bullets;
 }
+
+bool collide( const asteroid_t & a, const bullet_t & b ) {
+    vec2 p1 = a.p, p2 = b.p;
+    vec2 p = p2 - p1;
+    float d = a.radius - p.length();
+    if ( d >= 0 ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+size_t BulletSystem::collider( AsteroidSystem & asteroids ) {
+    size_t game_score = 0;
+
+    for ( auto & ast : asteroids.get_vector() ) {
+        for ( auto & bul : bullets ) {
+            if ( collide( ast, bul ) ) {
+                ast.life = bul.life = 0; // destroy it
+                const int r = ast.radius / 3;
+                if ( r > asteroids.asteroid_eps ) {
+                    vec2 v = ast.v * 0.8f;
+                    float nr = r * 0.8f;
+                    asteroids.append( ast.p - vec2( 0, nr ), v.rot( 0.75f * M_PI ), r );
+                    asteroids.append( ast.p + vec2( nr, 0 ), v, r );
+                    asteroids.append( ast.p - vec2( nr, 0 ), v.rot( 1.25f * M_PI ), r );
+                }
+                game_score += ast.radius * 3;
+            }
+        }
+    }
+    return game_score;
+}

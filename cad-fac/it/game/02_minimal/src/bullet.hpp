@@ -1,7 +1,8 @@
 #pragma once
 #include <vector>
-#include "math.hpp"
+#include "asteroid.hpp"
 #include "draw.hpp"
+#include "math.hpp"
 #include "player.hpp"
 
 typedef struct {
@@ -20,6 +21,7 @@ public:
     void step( const int width, const int height );
     void draw( DrawSystem & draw );
     bullet_v & get_vector( void );
+    size_t collider( AsteroidSystem & asteroids );
 private:
     bullet_v bullets;
     float max_velocity = 5.0f;
