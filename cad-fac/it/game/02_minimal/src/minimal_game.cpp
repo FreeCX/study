@@ -35,7 +35,6 @@ SoundSystem sound;
 bool move_flag = false;
 bool shoot_flag = false;
 short rotate_flag = ROTATE_NONE;
-const int asteroid_eps = 8;
 uint4_t sound_track, sound_shoot, sound_explosion;
 uint4_t sound_engine, sound_bonus;
 
@@ -97,46 +96,20 @@ void game_event( void ) {
     }
 }
 
-bool collide( const asteroid_t & a, const bullet_t & b ) {
-    vec2 p1 = a.p, p2 = b.p;
-    vec2 p = p2 - p1;
-    float d = a.radius - p.length();
-
-    if ( d >= 0 ) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-void collider( AsteroidSystem & a, BulletSystem & b ) {
-    auto & av = a.get_vector();
-    auto & bv = b.get_vector();
-
-    for ( auto & ast : av ) {
-        for ( auto & bul : bv ) {
-            if ( collide( ast, bul ) ) {
-                ast.life = bul.life = 0; // destroy it
-                const int r = ast.radius / 3;
-                if ( r > asteroid_eps ) {
-                    vec2 v = ast.v * 0.8f;
-                    float nr = r * 0.8f;
-                    a.append( ast.p - vec2( 0, nr ), v.rot( 0.75f * M_PI ), r );
-                    a.append( ast.p + vec2( nr, 0 ), v, r );
-                    a.append( ast.p - vec2( nr, 0 ), v.rot( 1.25f * M_PI ), r );
-                    game_score += ast.radius * 3;
-                }
-                sound.play( sound_explosion, false );
-            }
-        }
-    }
-}
-
 // игровой цикл
 void game_loop( void ) {
     static int counter = 0;
+    size_t add_score = 0;
 
-    collider( asteroid, bullet );
+    add_score = bullet.collider( asteroid );
+    if ( add_score > 0 ) {
+        game_score += add_score;
+        sound.play( sound_explosion, false );
+    }
+    if ( player.collider( asteroid ) ) {
+        sound.play( sound_bonus, false );
+        player.add_life( -1 );
+    }
     player.step( gw.width, gw.height );
     bullet.step( gw.width, gw.height );
     asteroid.step( gw.width, gw.height );
