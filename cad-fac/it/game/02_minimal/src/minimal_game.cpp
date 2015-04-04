@@ -149,6 +149,7 @@ void game_render( void ) {
 
     SDL_RenderClear( gw.render );
     // представляем количество жизней в виде '+'
+    memset( life, 0, 16 );
     memset( life, '+', player.get_life() );
     // подготавливаем выводимый текст
     swprintf( text_buffer, BUFFER_SIZE, L"score %010zu\n life %s\n", game_score, life );
