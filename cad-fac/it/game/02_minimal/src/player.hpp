@@ -19,13 +19,13 @@ public:
     float get_angle( void ) const { return angle; }
     void add_angle( float add );
     void add_velocity( int add );
-    void add_life( short add );
+    void add_life( signed short add );
     char get_life( void ) const;
     void step( const int width, const int height );
     void draw( DrawSystem & draw );
     bool collider( AsteroidSystem & asteroids );
 private:
     vec2 p;
-    char life;
+    short life;
     float velocity, angle;
 };

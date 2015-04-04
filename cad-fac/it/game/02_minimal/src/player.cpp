@@ -19,7 +19,7 @@ void Player::add_velocity( int add ) {
 }
 
 void Player::add_life( short add ) { 
-    if ( life + add <= life_max ) {
+    if ( life + add <= life_max && life + add >= 0 ) {
         life += add; 
     }
 }
@@ -68,8 +68,18 @@ void Player::draw( DrawSystem & draw ) {
 }
 
 bool collide( vec2 p1, vec2 p2, asteroid_t & ast ) {
-    // написать функцию проверки пересечения отрезка и круга
-    return false;
+    p1 -= ast.p; p2 -= ast.p;
+    vec2 delta = p2 - p1;
+    float a = delta.dot( delta );
+    float b = 2.0f * p1.dot( delta );
+    float c = p1.dot( p1 ) - powf( ast.radius, 2.0f );
+    if ( b > 0 ) {
+        return c < 0;
+    }
+    if ( b > ( 2.0f * a ) ) {
+        return ( 4.0f * a * c - powf( b, 2.0f ) ) < 0;
+    }
+    return a + b + c < 0;
 }
 
 bool Player::collider( AsteroidSystem & asteroids ) {
@@ -84,6 +94,7 @@ bool Player::collider( AsteroidSystem & asteroids ) {
         status = collide( p1, p2, ast ) | collide( p2, p3, ast ) | 
                  collide( p3, p4, ast ) | collide( p4, p1, ast );
         if ( status ) {
+            ast.life = 0;
             return status;
         }
     }
