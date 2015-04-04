@@ -9,7 +9,7 @@ ifeq ($(RELEASE), 1)
 	CFLAGS += -O3
 endif
 ifeq ($(DEBUG), 1)
-	CFLAGS += -ggdb -g3 -pg -O0
+	CFLAGS += -ggdb -g3
 endif
 
 all: $(dest_dir)$(target_file)
