@@ -20,12 +20,15 @@ public:
     void add_angle( float add );
     void add_velocity( int add );
     void add_life( signed short add );
+    void set_life( signed short life );
     char get_life( void ) const;
     void step( const int width, const int height );
     void draw( DrawSystem & draw );
     bool collider( AsteroidSystem & asteroids );
+    bool destroy( void );
 private:
     vec2 p;
     short life;
+    short immortal = 0;
     float velocity, angle;
 };
