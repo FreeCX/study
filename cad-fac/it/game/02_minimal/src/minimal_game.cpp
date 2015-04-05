@@ -34,6 +34,7 @@ AsteroidSystem asteroid( gw.width, gw.height, 16, 16 );
 SoundSystem sound;
 bool move_flag = false;
 bool shoot_flag = false;
+bool gameover_flag = true;
 short rotate_flag = ROTATE_NONE;
 uint4_t sound_track, sound_shoot;
 uint4_t sound_explosion, sound_bonus;
@@ -54,10 +55,13 @@ void game_event( void ) {
         case SDL_KEYUP:
             switch ( gw.event.key.keysym.sym ) {
                 case SDLK_UP:
+                case SDLK_w:
                     move_flag = false;
                     break;
                 case SDLK_LEFT:
+                case SDLK_a:
                 case SDLK_RIGHT:
+                case SDLK_d:
                     rotate_flag = ROTATE_NONE;
                     break;
                 case SDLK_SPACE:
@@ -73,15 +77,24 @@ void game_event( void ) {
                     gw.quit_flag = true;
                     break;
                 case SDLK_UP:
+                case SDLK_w:
                     move_flag = true;
                     break;
                 case SDLK_LEFT:
+                case SDLK_a:
                     rotate_flag = ROTATE_LEFT;
                     break;
                 case SDLK_RIGHT:
+                case SDLK_d:
                     rotate_flag = ROTATE_RIGHT;
                     break;
                 case SDLK_SPACE:
+                if ( gameover_flag ) {
+                        game_score = last_score = 0;
+                        gameover_flag = false;
+                        player.set_life( 3 );
+                        asteroid.get_vector().clear();
+                    }
                     shoot_flag = true;
                     break;
                 default:
@@ -98,47 +111,48 @@ void game_loop( void ) {
     static int counter = 0;
     size_t add_score = 0;
 
-    add_score = bullet.collider( asteroid );
-    if ( add_score > 0 ) {
-        game_score += add_score;
-        sound.play( sound_explosion, false );
-    }
-    if ( player.collider( asteroid ) ) {
-        // sound.play( sound_die, false );
-        player.add_life( -1 );
-    }
-    player.step( gw.width, gw.height );
-    bullet.step( gw.width, gw.height );
-    asteroid.step( gw.width, gw.height );
-    if ( counter % 8 == 0 ) {
-        if ( move_flag ) {
-            player.add_velocity( 1 );
+    if ( gameover_flag == false ) {
+        add_score = bullet.collider( asteroid );
+        if ( add_score > 0 ) {
+            game_score += add_score;
+            sound.play( sound_explosion, false );
         }
-        if ( shoot_flag ) {
-            sound.play( sound_shoot, false );
-            bullet.append( player );
+        if ( player.collider( asteroid ) ) {
+            gameover_flag = player.destroy();
         }
+        player.step( gw.width, gw.height );
+        bullet.step( gw.width, gw.height );
+        asteroid.step( gw.width, gw.height );
+        if ( counter % 8 == 0 ) {
+            if ( move_flag ) {
+                player.add_velocity( 1 );
+            }
+            if ( shoot_flag ) {
+                sound.play( sound_shoot, false );
+                bullet.append( player );
+            }
+        }
+        if ( counter % 100 == 0 ) {
+            asteroid.rand_append();
+        }
+        if ( game_score > 0 && log10( game_score - last_score ) >= 4 ) {
+            // добавляем одну жизнь каждые 10000 очков
+            last_score = game_score;
+            sound.play( sound_bonus, false );
+            player.add_life( 1 );
+        }
+        switch ( rotate_flag ) {
+            case ROTATE_LEFT:
+                player.add_angle( -0.05f );
+                break;
+            case ROTATE_RIGHT:
+                player.add_angle( +0.05f );
+                break;
+            default:
+                break;
+        }
+        counter++;
     }
-    if ( counter % 100 == 0 ) {
-        asteroid.rand_append();
-    }
-    if ( game_score > 0 && log10( game_score - last_score ) >= 4 ) {
-        // добавляем одну жизнь каждые 10000 очков
-        last_score = game_score;
-        sound.play( sound_bonus, false );
-        player.add_life( 1 );
-    }
-    switch ( rotate_flag ) {
-        case ROTATE_LEFT:
-            player.add_angle( -0.05f );
-            break;
-        case ROTATE_RIGHT:
-            player.add_angle( +0.05f );
-            break;
-        default:
-            break;
-    }
-    counter++;
 }
 
 // отрисовка
@@ -155,8 +169,14 @@ void game_render( void ) {
     swprintf( text_buffer, BUFFER_SIZE, L"score %010zu\n life %s\n", game_score, life );
     // рисуем текст
     font.draw( 8, 8, text_buffer );
-    // рисуем игрока
-    player.draw( draw );
+    if ( gameover_flag ) {
+        const wchar_t new_game[] = L"press space to start a new game...";
+        size_t ts = wcslen( new_game ) * font.get_width();
+        font.draw( ( gw.width - ts ) / 2, gw.height / 2, new_game );
+    } else {
+        // рисуем игрока
+        player.draw( draw );
+    }
     bullet.draw( draw );
     asteroid.draw( draw );
     SDL_RenderPresent( gw.render );
