@@ -32,6 +32,8 @@ public:
     void reload( SDL_Renderer * r );
     void set_coloru( Uint32 color );
     int get_error( void );
+    int get_height( void ) const { return ft->t_height; }
+    int get_width( void ) const { return ft->t_width; }
 private:
     int last_error = A_SUCCESS;
     SDL_Renderer * render;
