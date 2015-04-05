@@ -5,6 +5,7 @@ DrawSystem::DrawSystem( SDL_Renderer * renderer, const size_t segments ) {
     this->segments = segments;
     render = renderer;
     coords = new float [segments * 2];
+    // получаем координаты точек единичной окружности (для отрисовки окружности)
     for ( size_t i = 0; i < segments * 2; i += 2 ) {
         coords[i+0] = cos( i * delta );
         coords[i+1] = sin( i * delta );
@@ -19,6 +20,7 @@ void DrawSystem::set_render( SDL_Renderer * renderer ) {
     render = renderer;
 }
 
+// функция получения текущего цвета
 Uint32 DrawSystem::get_coloru( void ) {
     Uint8 red, green, blue;
 
@@ -26,6 +28,7 @@ Uint32 DrawSystem::get_coloru( void ) {
     return ( red << 16 ) + ( green << 8 ) + blue;
 }
 
+/* функции установки цвета (u, 3u, 4u) */
 int DrawSystem::set_coloru( Uint32 color ) {
     Uint8 red, green, blue;
     
@@ -43,6 +46,7 @@ int DrawSystem::set_color4u( Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha ) {
     return SDL_SetRenderDrawColor( render, red, green, blue, alpha );
 }
 
+// функция отрисовки сглаженной линии
 int DrawSystem::aaline( int x1, int y1, int x2, int y2 ) {
     Uint32 intshift, erracc, erradj, erracctmp, wgt;
     Sint32 xx0, yy0, xx1, yy1;
@@ -108,9 +112,11 @@ int DrawSystem::aaline( int x1, int y1, int x2, int y2 ) {
     return result;
 }
 
+// функция отрисовки круга
 int DrawSystem::circle( int x, int y, int r ) {
     int result = 0;
 
+    // проходим по всем сегментам (умножаем на радиус и сдвигаем на (x, y))
     for ( size_t i = 0; i < segments * 2; i += 2 ) {
         if ( i == ( segments - 1 ) * 2 ) {
             result |= aaline( 

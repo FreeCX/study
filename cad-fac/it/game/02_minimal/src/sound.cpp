@@ -3,36 +3,47 @@
 SoundSystem::SoundSystem() {
     const ALfloat listener_ori[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f };
 
-    device = alcOpenDevice( NULL );
-    if ( device == NULL ) {
+    // открываем звуковое устройство
+    device = alcOpenDevice( nullptr );
+    // обработка ошибок
+    if ( device == nullptr ) {
         game_send_error( alGetString( alGetError() ), EXIT_FAILURE );
     }
-    enumeration = alcIsExtensionPresent( NULL, "ALC_ENUMERATION_EXT" );
+    // проверка поддержки расширений
+    enumeration = alcIsExtensionPresent( nullptr, "ALC_ENUMERATION_EXT" );
     if ( enumeration == AL_FALSE ) {
         game_send_error( alGetString( alGetError() ), ERROR_PROBLEM );
     }
-    context = alcCreateContext( device, NULL );
-    if ( context == NULL ) {
+    // создаём контекст
+    context = alcCreateContext( device, nullptr );
+    if ( context == nullptr ) {
         game_send_error( alGetString( alGetError() ), EXIT_FAILURE );
     }
+    // устанавливаем контекст
     alcMakeContextCurrent( context );
     /* openal sound effect configuration */
+    // устанавливаем координаты слушателя
     alListener3f( AL_POSITION, 0, 0, 1.0f );
+    // устанавливаем скорость слушателя
     alListener3f( AL_VELOCITY, 0, 0, 0 );
+    // устанавливаем звуковое окружение
     alListenerfv( AL_ORIENTATION, listener_ori );
     /* openal sound effect configuration */
 }
 
 SoundSystem::~SoundSystem() {
+    // удаляем используемые источники звука
     for ( auto & source : audio_source ) {
         alDeleteSources( 1, &source );
     }
+    /* освобождаем звуковой контекст и используемое устройстов */
     device = alcGetContextsDevice( context );
-    alcMakeContextCurrent( NULL );
+    alcMakeContextCurrent( nullptr );
     alcDestroyContext( context );
     alcCloseDevice( device );
 }
 
+// функция загрузки звуковых файлов
 int SoundSystem::load( const char * filename ) {
     size_t count = audio_source.size();
     int data_size = 0, size = 0;
@@ -43,15 +54,19 @@ int SoundSystem::load( const char * filename ) {
     int section;
     FILE * f;
 
+    // добавляем новый источник звука
     audio_source.resize( count + 1 );
     auto & source = audio_source[count];
+    // создаём источник
     alGenSources( (ALuint) 1, &( source ) );
+    /* устанавливаем его параметры */
     alSourcef( source, AL_PITCH, 1 );
     alSourcef( source, AL_GAIN, 1 );
     alSource3f( source, AL_POSITION, 0, 0, 0 );
     alSource3f( source, AL_VELOCITY, 0, 0, 0 );
+    // создаём звуковой буфер */
     alGenBuffers( (ALuint) 1, &buffer );
-    /* load ogg */
+    /* блок загрузки ogg файла */
     f = fopen( filename, "rb" );
     if ( f == nullptr ) {
         game_send_error( "Can't load sound file", EXIT_FAILURE );
@@ -76,27 +91,35 @@ int SoundSystem::load( const char * filename ) {
         }
     }
     fclose( f );
-    /* load ogg */
+    /* блок загрузки ogg файла */
+    // загружаем данные в звуковой буфер
     alBufferData( buffer, format, raw, data_size, info->rate );
+    // удаляем загруженные данные
     delete[] raw;
+    // переносим звуковой буфер в источник
     alSourcei( audio_source[count], AL_BUFFER, buffer );
+    // удаляем звуковой буфер
     alDeleteSources( 1, &buffer );
     return count;
 }
 
+// функция настройки громкости источника
 void SoundSystem::set_volume( const uint4_t handle, const uint2_t volume ) {
     alSourcef( audio_source[handle], AL_GAIN, (float) volume / 255 );
 }
 
+// функция проигрывания источника (с параметром отвечающий за зацикливание)
 void SoundSystem::play( const uint4_t handle, bool loop ) {
     alSourcei( audio_source[handle], AL_LOOPING, loop ? AL_TRUE : AL_FALSE );
     alSourcePlay( audio_source[handle] );
 }
 
+// функция приостановки источника
 void SoundSystem::pause( const uint4_t handle ) {
     alSourcePause( audio_source[handle] );
 }
 
+// функция остановки источника
 void SoundSystem::stop( const uint4_t handle ) {
     alSourceStop( audio_source[handle] );
 }
