@@ -46,7 +46,7 @@ void Player::step( const int width, const int heigth ) {
     static short counter = 0;
 
     // передвигаем игрока по направлению angle со скоростью velocity
-    p += vec2( cos( angle + M_PI / 2.0f ), sin( angle + M_PI / 2.0f ) ) * velocity;
+    p -= vec2( cos( angle + M_PI / 2.0f ), sin( angle + M_PI / 2.0f ) ) * velocity;
     /* блок зацикливания игрового поля */
     if ( p.x > width + inv_zone ) {
         p.x = -inv_zone;
