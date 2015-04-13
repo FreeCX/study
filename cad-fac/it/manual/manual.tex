@@ -1,12 +1,32 @@
-\documentclass[a4paper, 14pt]{book}
+\documentclass[12pt]{extreport}
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english, russian]{babel}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{pscyr}
+\usepackage{listings}
+\usepackage{color}
 \usepackage[left=2.5cm, right=1.5cm, top=2.0cm, bottom=2.0cm]{geometry}
 
 \graphicspath{{images//}}
+\lstset{ %
+    language=C++,
+    basicstyle=\small\sffamily,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{white},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    captionpos=t,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={\%*}{*)}
+}
 
 \begin{document}
     \tableofcontents
