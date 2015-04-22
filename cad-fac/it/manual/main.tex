@@ -35,7 +35,8 @@
 улучшают возникаемые впечатления от игры.
 
 Но не будем филосовствовать на этот счёт и подойдём с другой стороны -- с технической. Для того чтобы начать
-разрабатывать игру с нуля нам нужен некоторый \emph{скелет} (в другом случае -- использовать функции используемого фреймворка).
+разрабатывать игру с нуля нам нужен некоторый \emph{скелет} (в другом случае -- использовать функции 
+используемого фреймворка).
 
 \section{Проектирование структуры игры}
 
@@ -145,9 +146,9 @@ GLUT:
 \end{lstlisting}
 
 Основные параметры на которые стоит обратить внимание: \textbf{name} -- имя окна, \textbf{width} -- ширина, 
-\textbf{height} -- высота. Это постоянные параметры, которые не будут меняться, а остальные зависят от используемой библиотеки. В случае с SDL2: \textbf{window} -- идентификатор окна, \textbf{render} -- 
-контекст отрисовщика, \textbf{event} -- структура хранящая оконные события. Для GLUT пока только одно 
-специфическое \textbf{win\_id} -- идентификатор окна.
+\textbf{height} -- высота. Это постоянные параметры, которые не будут меняться, а остальные зависят от используемой библиотеки. 
+В случае с SDL2: \textbf{window} -- идентификатор окна, \textbf{render} -- контекст отрисовщика, \textbf{event} -- структура 
+хранящая оконные события. Для GLUT пока только одно специфическое \textbf{win\_id} -- идентификатор окна.
 
 Теперь можно перейти к определению функции обработки событий клавиатуры.
 
@@ -296,8 +297,9 @@ GLUT:
 
 \chapter{Справка}
 \section{Полезные ресурсы разработчику}
-Если у вас в команде нет художников или музыкантов, или вам нужно узнать определенные подробности по работе с тем или иным инструментом, то во многих случаях 
-можно воспользоваться помощью интернета. Заказать у художника арты, у композитора фоновую музыку или обсудить тонкий вопрос по использования специфичного 
+Если у вас в команде нет художников или музыкантов, или вам нужно узнать определенные подробности по работе 
+с тем или иным инструментом, то во многих случаях можно воспользоваться помощью интернета. Заказать у 
+художника арты, у композитора фоновую музыку или обсудить тонкий вопрос по использования специфичного 
 алгоритма, то в данном случае лучшим решением будет обратиться к следующим интернет источникам.
 
 \begin{itemize}\itemsep-5pt
@@ -329,10 +331,19 @@ GLUT:
     \item Хабрахабр \url{http://habrahabr.ru}
 \end{itemize}
 
+Список книг по gamedev:
+\begin{itemize}
+    \item Invent Your Own Computer Games with Python \url{https://inventwithpython.com/chapters/}
+    \item Making Games with Python & Pygame \url{https://inventwithpython.com/pygame/chapters/}
+    \item Sylvester,~T. Designing Games: A Guide to Engineering Experiences. O'Reilly Media, 2013
+    \item Nystrom,~R. Game Programming Patterns \url{http://gameprogrammingpatterns.com/}
+    \item ...
+\end{itemize}
+
 \renewcommand{\bibname}{Список используемой литературы}
 \addcontentsline{toc}{chapter}{Список используемой литературы}
 \begin{thebibliography}{10}
-    \bibitem{main} Sylvester,~T. Designing Games: A Guide to Engineering Experiences. O'Reilly Media, 2013, 
+    \bibitem{main} Sylvester,~T. Designing Games: A Guide to Engineering Experiences. O'Reilly Media, 2013 
     \bibitem{pat} Nystrom,~R. Game Programming Patterns. --- Available at: 
         \url{http://gameprogrammingpatterns.com/}
     \bibitem{sdl2wiki} SDL2 wiki \url{https://wiki.libsdl.org/FrontPage}
