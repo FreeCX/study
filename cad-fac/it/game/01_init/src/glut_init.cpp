@@ -57,7 +57,7 @@ void game_destroy( void ) {
 }
 
 // точка входа программы
-int main( int argc, char *argv[] ) {
+int main( int argc, char * argv[] ) {
     glutInit( &argc, argv );
     game_init();
     glutMainLoop();

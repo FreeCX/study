@@ -14,7 +14,8 @@ struct Window {
 
 // обработка ошибок
 void game_send_error( int code ) {
-    SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Error", SDL_GetError(), nullptr );
+    SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Error", SDL_GetError(), 
+                              nullptr );
     exit( code );
 }
 
@@ -67,13 +68,17 @@ void game_destroy( void ) {
 // блок инициализации
 void game_init( void ) {
     SDL_Init( SDL_INIT_VIDEO | SDL_INIT_EVENTS );
-    gw.window = SDL_CreateWindow( gw.name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gw.width, gw.height, 
+    gw.window = SDL_CreateWindow( gw.name, SDL_WINDOWPOS_CENTERED, 
+                                  SDL_WINDOWPOS_CENTERED, 
+                                  gw.width, gw.height, 
                                   SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
     if ( gw.window == nullptr ) {
         game_send_error( EXIT_FAILURE );
     }
     gw.render = SDL_CreateRenderer( gw.window, gw.SDL_RENDER_DRIVER, 
-                                    SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE );
+                                    SDL_RENDERER_SOFTWARE | 
+                                    SDL_RENDERER_PRESENTVSYNC | 
+                                    SDL_RENDERER_TARGETTEXTURE );
     if ( gw.render == nullptr ) {
         game_send_error( EXIT_FAILURE );
     }
