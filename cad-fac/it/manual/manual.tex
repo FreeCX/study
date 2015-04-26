@@ -7,24 +7,29 @@
 \usepackage{pscyr}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{wrapfig}
+\usepackage{ucs}
 \usepackage[left=2.5cm, right=1.5cm, top=2.0cm, bottom=2.0cm]{geometry}
 
 \graphicspath{{images//}}
-\lstset{ %
+\lstset{%
     language=C++,
+    extendedchars=\true,
+    inputencoding=utf8x,
     basicstyle=\small\sffamily,
     numbers=left,
     numberstyle=\tiny,
     stepnumber=1,
     numbersep=5pt,
     backgroundcolor=\color{white},
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
+    showspaces=\false,
+    showstringspaces=\false,
+    showtabs=\false,
     tabsize=4,
     captionpos=t,
-    breaklines=true,
-    breakatwhitespace=false,
+    breaklines=\true,
+    keepspaces=true,
+    breakatwhitespace=\false,
     escapeinside={\%*}{*)}
 }
 
