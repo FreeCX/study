@@ -40,23 +40,25 @@
 
 \section{Проектирование структуры игры}
 
-Если говорить в общем, то самую простую структуру можно представить в следующем виде:
+Если говорить в общем, то самую простую структуру можно представить блок схемой \ref{img:skeleton}.
 % картинка с 
 % Инициализация -> Обработка событий -> Игровой цикл -> Рендеринг +-> Деинициализация
 %                  ^-----------------------------------------------
-
-\begin{figure}
+\begin{wrapfigure}[18]{r}{0.22\linewidth}
+    \includegraphics[width=0.2\textwidth]{game_loop}
+    \caption{Структура игрового цикла}
     \label{img:skeleton}
-\end{figure}
+\end{wrapfigure}
 
 На этом простом \emph{скелет} мы и разработаем игровую программы. Конечно используемые \emph{скелеты} в 
 профессиональной сфере могут (и будут) иметь более сложную структура, но для разработки простых игр, нам 
 хватит и данной структуры.
 
-Давайте рассмотрим каждый шаг в этой схеме. \textbf{Инициализация} -- блок подготовки и предобработки игровых
-данных. Это может быть пред-/загрузка графических, звуковых и конфигурационных файлов. Список может быть 
-и больше, в зависимости от конкретного типа игры: игровые карты, получение информации с игрового сервера, 
-генерация параметров игровых предметов и многое другое. Говоря в общем -- это подготовка данных для игры.
+Давайте рассмотрим каждый шаг в этой схеме. \textbf{Инициализация} -- блок подготовки и предобработки 
+игровыхданных. Это может быть пред-/загрузка графических, звуковых и конфигурационных файлов. Список может 
+быть и больше, в зависимости от конкретного типа игры: игровые карты, получение информации с игрового 
+сервера, генерация параметров игровых предметов и многое другое. Говоря в общем -- это подготовка данных 
+для игры.
 
 Блок \textbf{обработки событий} в основном отвечает за работу с оконной системой, т.е. нажатая клавиша, 
 передвинутый курсор, изменение размера окна программы и прочие события связанные с окном программы в 
@@ -91,13 +93,13 @@ SDL2 и GLUT.
 игровой программы.
 
 \begin{lstlisting}
-    void game_init( void ) { // initialization }
-    void game_event( void ) { // event system }
-    void game_loop( void ) { // game loop }
-    void game_render( void ) { // render game frame }
-    void game_destroy( void ) { // deinitialization }
+    void game_init( void ) { // инициализация }
+    void game_event( void ) { // обработка событий }
+    void game_loop( void ) { // игровой цикл }
+    void game_render( void ) { // функция рендеринга }
+    void game_destroy( void ) { // деинициализация }
     int main( int argc, char * argv[] ) {
-        // entry point
+        // точка входа в программу
         return EXIT_SUCCESS;
     }
 \end{lstlisting}
@@ -106,13 +108,13 @@ SDL2 и GLUT.
 объявления \emph{callback}-функций, которые будут обрабатывать определенные события. Как пример приведу 
 изменения, которые нужно совершить, чтобы удовлетворить программную архитектуру библиотеки GLUT.
 \begin{lstlisting}
-    void game_init( void ) { // initialization }
-    void game_...( <params> ) { // callback function }
-    void game_loop( int value ) { // game loop }
-    void game_render( void ) { // render game frame }
-    void game_destroy( void ) { // deinitialization }
+    void game_init( void ) { // инициализация }
+    void game_...( <params> ) { // callback функции }
+    void game_loop( int value ) { // игровой цикл }
+    void game_render( void ) { // функция рендеринга }
+    void game_destroy( void ) { // деинициализация }
     int main( int argc, char * argv[] ) {
-        // entry point
+        // точка входа в программу
         return EXIT_SUCCESS;
     }
 \end{lstlisting}
@@ -122,52 +124,21 @@ SDL2 и GLUT.
 для этого определим параметры, которые нам будут нужны для работы с окном.
 
 SDL2:
-\begin{lstlisting}
-    struct Window {
-        const char * name = (const char *) "Skeleton";
-        const int SDL_RENDER_DRIVER = 0;
-        SDL_Window * window = nullptr;
-        SDL_Renderer * render = nullptr;
-        SDL_Event event;
-        bool quit_flag = false;
-        int width = 640;
-        int height = 640;
-    } gw;
-\end{lstlisting}
+\lstinputlisting[firstline=3, lastline=13]{../game/01_init/src/sdl2_init.cpp}
 
 GLUT:
-\begin{lstlisting}
-    struct Window {
-        const char * name = (const char *) "Skeleton";
-        GLint win_id = 0;
-        GLint width = 640;
-        GLint height = 640;
-    } gw;
-\end{lstlisting}
+\lstinputlisting[firstline=3, lastline=10]{../game/01_init/src/glut_init.cpp}
 
 Основные параметры на которые стоит обратить внимание: \textbf{name} -- имя окна, \textbf{width} -- ширина, 
-\textbf{height} -- высота. Это постоянные параметры, которые не будут меняться, а остальные зависят от используемой библиотеки. 
-В случае с SDL2: \textbf{window} -- идентификатор окна, \textbf{render} -- контекст отрисовщика, \textbf{event} -- структура 
-хранящая оконные события. Для GLUT пока только одно специфическое \textbf{win\_id} -- идентификатор окна.
+\textbf{height} -- высота. Это постоянные параметры, которые не будут меняться, а остальные зависят от 
+используемой библиотеки. В случае с SDL2: \textbf{window} -- идентификатор окна, \textbf{render} -- контекст 
+отрисовщика, \textbf{event} -- структура хранящая оконные события. Для GLUT пока только одно специфическое 
+\textbf{win\_id} -- идентификатор окна.
 
 Теперь можно перейти к определению функции обработки событий клавиатуры.
 
 GLUT:
-\begin{lstlisting}
-    void game_keyboard( unsigned char key, int x, int y ) {
-        static bool fullscreen = true;
-        if ( key == 'q' ) {
-            glutDestroyWindow( gw.win_id );
-        } else if ( key == 'f' ) {
-            if ( fullscreen ) {
-                glutFullScreen();
-            } else {
-                glutReshapeWindow( gw.width, gw.height );
-            }
-            fullscreen = !fullscreen;
-        }
-    }
-\end{lstlisting}
+\lstinputlisting[firstline=25, lastline=38]{../game/01_init/src/glut_init.cpp}
 
 В данном отрывке кода представлено два события: закрытие окна по нажатию на клавишу 'q' и переключение между 
 режимами экрана 'f'.
@@ -186,12 +157,7 @@ GLUT:
 обработки ошибок. В дальнейшем она нам будет очень полезна, да и пользователь сможет понять что случилось при 
 экстренном закрытии программы.
 
-\begin{lstlisting}
-    void game_send_error( int code ) {
-        SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Error", SDL_GetError(), nullptr );
-        exit( code );
-    }
-\end{lstlisting}
+\lstinputlisting[firstline=15, lastline=20]{../game/01_init/src/sdl2_init.cpp}
 
 Библиотечная функция \emph{SDL\_ShowSimpleMessageBox} принимает несколько параметров на вход, а именно:
 \begin{enumerate}
@@ -205,24 +171,13 @@ GLUT:
 соответствующим кодом. 
 
 Идём далее и реализуем код для точки входа в программу используя рис.~\ref{img:skeleton}.
-\begin{lstlisting}
-    int main( int argc, char * argv[] ) {
-        game_init();
-        while ( !gw.quit_flag ) {
-            game_event();
-            game_loop();
-            game_render();
-        }
-        game_destroy();
-        return EXIT_SUCCESS;
-    }
-\end{lstlisting}
+\lstinputlisting[firstline=87, lastline=97]{../game/01_init/src/sdl2_init.cpp}
 
 Главное на что стоит обратить внимание, так это параметр \textbf{quit\_flag}, который будет сигнализировать 
-нам о закрытии программы. В остальном всё соответствует рис.~\ref{img:skeleton}).
+нам о закрытии программы. В остальном всё соответствует рис.~\ref{img:skeleton}.
 
 Теперь пойдём последовательно по блокам и опишем каждый из них. Начнём с рассмотрения псевдокода, а потом 
-напишем сам код.
+рассмотрим на примере работающего кода.
 
 Всё что нужно, чтобы инициализировать систему на данном этапе, так это несколько шагов:
 \begin{enumerate}
@@ -234,22 +189,7 @@ GLUT:
 
 Так давайте сделаем это:
 
-\begin{lstlisting}
-    void game_init( void ) {
-        SDL_Init( SDL_INIT_VIDEO | SDL_INIT_EVENTS );
-        gw.window = SDL_CreateWindow( gw.name, SDL_WINDOWPOS_CENTERED, 
-            SDL_WINDOWPOS_CENTERED, gw.width, gw.height, 
-            SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
-        if ( gw.window == nullptr ) {
-            game_send_error( EXIT_FAILURE );
-        }
-        gw.render = SDL_CreateRenderer( gw.window, gw.SDL_RENDER_DRIVER, 
-            SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC );
-        if ( gw.render == nullptr ) {
-            game_send_error( EXIT_FAILURE );
-        }
-    }
-\end{lstlisting}
+\lstinputlisting[firstline=68, lastline=85]{../game/01_init/src/sdl2_init.cpp}
 
 Рассмотрим кратко каждую из них (так как подробно описано в вики проекта \cite{sdl2wiki}).
 
@@ -259,12 +199,69 @@ GLUT:
     \item SDL\_CreateRender -- функция инициализации контекста отрисовщика
 \end{itemize}
 
-Блоки где производятся сравнения с нулевым указателем -- это блоки обработки ошибок.
+Блоки, где производятся сравнения с нулевым указателем -- это обработка ошибок.
 
-... продолжение следует ...
+Далее следует блок обработки событий. На этапе проектирования он будет иметь минимальный функционал:
+\begin{itemize}
+    \item обработка закрытия программы
+    \item обработка изменения размера окна
+    \item шаблон для обработки нажатия клавиш
+\end{itemize}
+
+В программном коде это будет выглядеть так:
+\lstinputlisting[firstline=22, lastline=47]{../game/01_init/src/sdl2_init.cpp}
+
+При вызове данной функции происходит следующее: с помощью \emph{SDL\_PollEvent} мы запрашиваем текущее 
+событие от системы SDL2, а далее с помощью конструкции \textbf{switch-case} выбираем соответствующую 
+ветку для обработки. Всего их сейчас три, не считая \textbf{default}. 
+
+Первая \emph{SQL\_QUIT} -- отвечает за обработку события выхода из программы -- в нашем случае это 
+установка булевой функции в значение \textbf{true}, что обеспечит нам выход из основного цикла.
+
+Вторая \emph{SDL\_WINDOWEVENT} и последующее за ним условие \emph{SDL\_WINDOWEVENT\_RESIZED} отвечают 
+за изменение размеров окна и соответствующее внесение изменения в параметры нашей структуры 
+(\emph{gw.width} и \emph{gw.height}).
+
+И последнее событие \emph{SDL\_KEYDOWN} отвечающее за нажатие клавиш. В данном случае нам нужно 
+ещё узнать какая именно клавиша была нажата (\emph{gw.event.key.keysym.sym}) и соответственно 
+как-то отреагировать на это. В нашем случае это обработка клавиши \emph{Esc} и установка флага 
+выхода в значение \textbf{true} (ещё один способ закрытия окна по событию).
+
+На текущий момент момент это всё, что нужно для работы обработчика событий в нашей программе, но нам 
+также нужно будет обрабатывать события отжатия клавиш \emph{SDL\_KEYUP}, но его мы разберём подробно 
+при разработке игры.
+
+Следующий три немаловажный блока -- игровой цикл, рендеринг и деинициализация. Мы рассмотрим их 
+вместе, так как они сейчас имеют наименьший объём кода и являются просто заглушками в программе.
+\lstinputlisting[firstline=49, lastline=66]{../game/01_init/src/sdl2_init.cpp}
+
+Выглядит довольно просто не так ли? Остановимся на отрисовщике и функции деинициализации подробнее.
+
+Чтобы наша программа могла рисовать в поле \emph{renderer} нужно его подготовить функцией 
+\emph{SDL\_RenderClear}, которая очищает предыдущий кадр и заливает поле отрисовки в установленный 
+цвет (по стандарту чёрный). Далее мы можем производить любые действия с ним. В конце отрисовки мы 
+должны перенести все произведенные манипуляции на экран, чем и занимается функция 
+\emph{SDL\_RenderPresent}.
+
+Для деинициализации окна нам нужно проделать несколько простых действий:
+\begin{itemize}
+    \item освободить контекст рендера: \emph{SDL\_DestroyRenderer}
+    \item закрыть окно созданное SDL2: \emph{SDL\_DestroyWindow}
+    \item выйти из программы: \emph{SDL\_Quit}
+\end{itemize}
+
+На этом наша заготовка готова к работе. Полный код можно посмотреть в разделе \ref{code:skeletonSDL2}
 
 \subsection{GLUT}
-....
+С библиотекой GLUT дела обстоят похожим образом. Отличия состоят в способе организации обработки событий.
+В основном GLUT использует \textbf{callback} функции для организации псевдо-ООП подход. Удобный подход, но 
+требующий организации более своеобразной структуры работы, но имеющий главный плюс -- работа в отдельных 
+потоках (рендеринг, обработка событий и т.д.), что хорошо влияет на общую производительность программы 
+(в отличии от последовательной обработки всех событий). Рассмотрим также основные блоки формирующие 
+программу.
+
+Начнём с точки входа в программу:
+\lstinputlisting[firstline=59, lastline=66]{../game/01_init/src/glut_init.cpp}
 
 \section{Игровая механика}
 \subsection{Физика}
@@ -296,6 +293,20 @@ GLUT:
 \section{...}
 
 \chapter{Справка}
+
+\section{Скелет игровой программы}
+\subsection{SDL2}
+\label{code:skeletonSDL2}
+\lstinputlisting{../game/01_init/src/sdl2_init.cpp}
+
+\pagebreak
+
+\subsection{GLUT}
+\label{code:skeletonGLUT}
+\lstinputlisting{../game/01_init/src/glut_init.cpp}
+
+\pagebreak
+
 \section{Полезные ресурсы разработчику}
 Если у вас в команде нет художников или музыкантов, или вам нужно узнать определенные подробности по работе 
 с тем или иным инструментом, то во многих случаях можно воспользоваться помощью интернета. Заказать у 
@@ -306,35 +317,34 @@ GLUT:
     \item FAQ по геймдизайну \url{http://www.sloperama.com/advice.html}
     \item Авторский блог Антона Карпова по разработке игр \url{http://www.ant-karlov.ru/}
     \item Аналог stackoverflow по gamedev \url{http://gamedev.stackexchange.com/}
-    \item Блог посвященный созданию 2D графики \url{http://2dgameartforprogrammers.blogspot.ru/}
+    \item Блог посвященный созданию 2D графики\\
+        \url{http://2dgameartforprogrammers.blogspot.ru/}
     \item Блог Райана Швайдера по gamedesign \url{http://www.nerfbat.com/lessons/}
     \item Источник свободных игровых ресурсов (CC0) \url{http://opengameart.org/}
     \item Крупнейшее сообщество модостроителей \url{http://moddb.com/}
-    \item Крупные сообщества по игрострою \url{http://www.gamedev.ru/} (rus) и \url{http://www.gamedev.net/} (eng)
+    \item Крупные сообщества по игрострою \url{http://www.gamedev.ru/} (rus) и\\
+        \url{http://www.gamedev.net/} (eng)
     \item Любительские конкурсы по разработке игр \url{http://igdc.ru/}
     \item Новости индустрии, блоги разработчиков и многое другое \url{http://gamasutra.com/}
     \item Сайт для специалистов по компьютерной графике \url{http://devmaster.net/}
     \item Сайт посвященный pixelart \url{http://www.pixeljoint.com/}
-    \item Уроки по созданию 3D \\
-        \url{http://www.digitaltutors.com/subject/game-development-asset-creation-tutorials}
+    \item Уроки по созданию 3D \url{http://www.digitaltutors.com/}
     \item Игровые спрайты старый игр \url{http://www.videogamesprites.net/}
     \item Свободный игровой контент \url{http://freegamearts.tuxfamily.org/}
     \item База свободных звуков \url{http://www.freesound.org/}
     \item Открытый музыкальный архив \url{http://www.openmusicarchive.org/}
     \item Базы 3D моделей \url{http://www.katorlegaz.com/3d_models/index.php}\\
-        \url{https://3dwarehouse.sketchup.com/?redirect=1}
+        \url{https://3dwarehouse.sketchup.com/}
     \item CG текстуры \url{http://www.cgtextures.com/}
     \item Свободные архивы по текстурам \url{http://www.mayang.com/textures/}\\
         \url{http://www.texturearchive.com/}
     \item Библиотеки шрифтов \url{http://openfontlibrary.org/}\\
         \url{https://www.acidfonts.com/}
     \item Хабрахабр \url{http://habrahabr.ru}
-\end{itemize}
-
-Список книг по gamedev:
-\begin{itemize}
-    \item Invent Your Own Computer Games with Python \url{https://inventwithpython.com/chapters/}
-    \item Making Games with Python \& Pygame \url{https://inventwithpython.com/pygame/chapters/}
+    \item Invent Your Own Computer Games with Python\\
+        \url{https://inventwithpython.com/chapters/}
+    \item Making Games with Python \& Pygame\\
+        \url{https://inventwithpython.com/pygame/chapters/}
     \item Sylvester,~T. Designing Games: A Guide to Engineering Experiences. O'Reilly Media, 2013
     \item Nystrom,~R. Game Programming Patterns \url{http://gameprogrammingpatterns.com/}
     \item ...
