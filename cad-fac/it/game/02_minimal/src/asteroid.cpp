@@ -1,6 +1,7 @@
 #include "asteroid.hpp"
 
-AsteroidSystem::AsteroidSystem( const int width, const int height, const int asteroid_count, const int segment_count ) {
+AsteroidSystem::AsteroidSystem( const int width, const int height, const int asteroid_count, 
+                                const int segment_count ) {
     const float delta = M_PI / segment_count;
 
     srand( time( nullptr ) );
