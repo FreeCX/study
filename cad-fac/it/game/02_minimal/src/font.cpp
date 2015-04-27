@@ -78,7 +78,7 @@ void FontTable::draw( int x, int y, const wchar_t * text ) {
     wint_t current;
 
     pos.x = old_x; pos.y = y;
-    // цикл по всей строки с текстом
+    // цикл по всей строке с текстом
     while ( ( current = text[i++] ) != NULL_STR ) {
         switch ( current ) {
             // обработка переноса строки

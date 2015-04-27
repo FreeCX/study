@@ -1,11 +1,11 @@
 #include "draw.hpp"
 
 DrawSystem::DrawSystem( SDL_Renderer * renderer, const size_t segments ) {
-    const float delta = M_PI / segments;
+    const float delta = M_PI / segments; // размер рисуемого сегмента
     this->segments = segments;
     render = renderer;
-    coords = new float [segments * 2];
-    // получаем координаты точек единичной окружности (для отрисовки окружности)
+    coords = new float [segments * 2]; // выделяем память под данные
+    // получаем координаты точек единичной окружности
     for ( size_t i = 0; i < segments * 2; i += 2 ) {
         coords[i+0] = cos( i * delta );
         coords[i+1] = sin( i * delta );
@@ -17,13 +17,14 @@ DrawSystem::~DrawSystem() {
 }
 
 void DrawSystem::set_render( SDL_Renderer * renderer ) {
-    render = renderer;
+    render = renderer; // запоминаем текущий рендер контекст
 }
 
 // функция получения текущего цвета
 Uint32 DrawSystem::get_coloru( void ) {
     Uint8 red, green, blue;
 
+    // функция получения цвета
     SDL_GetRenderDrawColor( render, &red, &green, &blue, nullptr );
     return ( red << 16 ) + ( green << 8 ) + blue;
 }
@@ -35,6 +36,7 @@ int DrawSystem::set_coloru( Uint32 color ) {
     red = ( color >> 16 );
     green = ( ( color >> 8 ) & 0xff );
     blue = ( color & 0xff );
+    // функция установки цвета
     return SDL_SetRenderDrawColor( render, red, green, blue, 0xff );
 }
 
