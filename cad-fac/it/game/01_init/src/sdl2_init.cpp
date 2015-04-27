@@ -82,7 +82,6 @@ void game_init( void ) {
     if ( gw.render == nullptr ) {
         game_send_error( EXIT_FAILURE );
     }
-    SDL_SetRenderDrawBlendMode( gw.render, SDL_BLENDMODE_BLEND );
 }
 
 // точка входа программы

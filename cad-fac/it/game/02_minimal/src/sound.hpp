@@ -21,7 +21,6 @@ public:
     void pause( const uint4_t handle );
     void stop( const uint4_t handle );
 private:
-    ALboolean enumeration;
     ALCcontext * context;
     ALCdevice * device;
     audio_v audio_source;

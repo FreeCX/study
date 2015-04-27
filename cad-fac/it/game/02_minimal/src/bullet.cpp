@@ -94,11 +94,14 @@ const size_t BulletSystem::collider( AsteroidSystem & asteroids ) {
                 if ( r > asteroids.asteroid_eps ) {
                     vec2 v = ast.v * 0.8f;
                     float nr = r * 0.8f;
-                    asteroids.append( ast.p - vec2( 0, nr ), v.rot( 0.75f * M_PI ), r );
+                    asteroids.append( ast.p - vec2( 0, nr ), 
+                                      v.rot( 0.75f * M_PI ), r );
                     asteroids.append( ast.p + vec2( nr, 0 ), v, r );
-                    asteroids.append( ast.p - vec2( nr, 0 ), v.rot( 1.25f * M_PI ), r );
+                    asteroids.append( ast.p - vec2( nr, 0 ), 
+                                      v.rot( 1.25f * M_PI ), r );
                 }
-                // подсчёт заработанных игровых очков (чем больше астероид, тем больше очков)
+                // подсчёт заработанных игровых очков
+                // (чем больше астероид, тем больше очков)
                 game_score += ast.radius * 3;
             }
         }

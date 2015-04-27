@@ -80,7 +80,7 @@ void Player::draw( DrawSystem & draw ) {
     if ( immortal % 8 == 0 ) {
         // устанавливаем цвет для рисования
         draw.set_coloru( COLOR_WHITE );
-        // собираем координаты всех точек корабля с учётом углаы
+        // собираем координаты всех точек корабля с учётом угла
         for ( int i = 0; i < max_length; i += 2 ) {
             const float x = pos[i+0];
             const float y = pos[i+1];

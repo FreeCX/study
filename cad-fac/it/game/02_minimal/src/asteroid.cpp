@@ -51,8 +51,10 @@ void AsteroidSystem::rand_append( void ) {
 }
 
 // функция добавления астероида
-void AsteroidSystem::append( const vec2 & p, const vec2 & v, const int radius ) {
-    asteroids.push_back( { p, v, radius, 1, rand() % asteroid_count, 0.0f, 0.0f } );
+void AsteroidSystem::append( const vec2 & p, const vec2 & v, 
+                             const int radius ) {
+    asteroids.push_back( { p, v, radius, 1, rand() % asteroid_count, 
+                           0.0f, 0.0f } );
 }
 
 // функция перемещения астероидов

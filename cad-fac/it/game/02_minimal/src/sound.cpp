@@ -10,7 +10,7 @@ SoundSystem::SoundSystem() {
         game_send_error( alGetString( alGetError() ), EXIT_FAILURE );
     }
     // проверка поддержки расширений
-    enumeration = alcIsExtensionPresent( nullptr, "ALC_ENUMERATION_EXT" );
+    ALboolean enumeration = alcIsExtensionPresent( nullptr, "ALC_ENUMERATION_EXT" );
     if ( enumeration == AL_FALSE ) {
         game_send_error( alGetString( alGetError() ), ERROR_PROBLEM );
     }
@@ -36,7 +36,7 @@ SoundSystem::~SoundSystem() {
     for ( auto & source : audio_source ) {
         alDeleteSources( 1, &source );
     }
-    /* освобождаем звуковой контекст и используемое устройстов */
+    /* освобождаем звуковой контекст и используемое устройство */
     device = alcGetContextsDevice( context );
     alcMakeContextCurrent( nullptr );
     alcDestroyContext( context );
@@ -64,7 +64,7 @@ int SoundSystem::load( const char * filename ) {
     alSourcef( source, AL_GAIN, 1 );
     alSource3f( source, AL_POSITION, 0, 0, 0 );
     alSource3f( source, AL_VELOCITY, 0, 0, 0 );
-    // создаём звуковой буфер */
+    // создаём звуковой буфер
     alGenBuffers( (ALuint) 1, &buffer );
     /* блок загрузки ogg файла */
     f = fopen( filename, "rb" );
@@ -110,7 +110,8 @@ void SoundSystem::set_volume( const uint4_t handle, const uint2_t volume ) {
 
 // функция проигрывания источника (с параметром отвечающий за зацикливание)
 void SoundSystem::play( const uint4_t handle, bool loop ) {
-    alSourcei( audio_source[handle], AL_LOOPING, loop ? AL_TRUE : AL_FALSE );
+    alSourcei( audio_source[handle], AL_LOOPING, 
+               loop ? AL_TRUE : AL_FALSE );
     alSourcePlay( audio_source[handle] );
 }
 
