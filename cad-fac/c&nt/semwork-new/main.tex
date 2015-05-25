@@ -1,0 +1,36 @@
+\documentclass[14pt, final, titlepage]{hedwork}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[derivative]{hedmaths}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{listings}
+
+\graphicspath{{images/}}
+\renewcommand{\rmdefault}{ftm}
+
+\lstset{
+    basicstyle=\footnotesize,
+    inputencoding=utf8,
+    extendedchars=\true,
+    language=bash,
+    breakatwhitespace=\false,
+    breaklines=True,
+    tabsize=2,
+    keepspaces=true,
+}
+
+\faculty{Факультет электроники и вычислительной техники}
+\department{<<Электронно-вычислительные машины и системы>>}
+\subject{Вычислительные системы и сетевые технологии}
+\topic{Развёртка, настройка и тестирование фреймворка Mr.LDA для анализа патентной информации}
+\variant{6}
+\student[m]{студент группы САПР-1.1п\\Голубев~А.~В.}
+\teacher[m]{к.т.н. Андреев~А.~Е.}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+    \input{text}
+\end{document}
