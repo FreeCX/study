@@ -1,0 +1,60 @@
+\documentclass[pscyr, nonums]{hedlab}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\graphicspath{{images/}}
+
+\lstset{
+    basicstyle=\scriptsize,
+    inputencoding=utf8,
+    extendedchars=\true,
+    language=[Sharp]C,
+    numbers=left,
+    numberstyle=\scriptsize,
+    breakatwhitespace=\false,
+    breaklines=True,
+    tabsize=2,
+    keepspaces=true,
+}
+
+\labnum{10}
+\labname{Анимация в Silverlight}
+\student{Голубев А. В.}
+\date{}
+
+\begin{document}
+    \makeheader
+    \emph{Цель работы:} получение общих сведений о технологии Silverlight, получение практических навыков создания анимированных web-приложений, 
+    использующих Silverlight.
+
+    \emph{Задачи:}
+    \begin{enumerate}\itemsep-5pt
+        \item Создать Silverlight-форму с объектами, подлежащими анимированию
+        \item Создать анимационные эффекты
+        \item Проверить их работоспособность
+    \end{enumerate}
+
+    \emph{Задание:} создать часы.
+
+    \emph{Скриншоты:}
+    \begin{figure}[ht]
+        \center
+        \includegraphics[width=0.9\textwidth]{Lab10_01}
+        \caption{Главная страница с Silverlight-формой}
+    \end{figure}
+
+    \pagebreak
+
+    \emph{Исходный код:}
+    \begin{center}
+        \textbf{Главная страница}
+    \end{center}
+    \lstinputlisting{./source/MainPage.xaml.cs}
+
+    \begin{center}
+        \textbf{Разметка главной страницы}
+    \end{center}
+    \lstinputlisting{./source/MainPage.xaml}
+\end{document}

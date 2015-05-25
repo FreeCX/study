@@ -1,0 +1,63 @@
+\documentclass[pscyr, nonums]{hedlab}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\graphicspath{{images/}}
+
+\lstset{
+    basicstyle=\scriptsize,
+    inputencoding=utf8,
+    extendedchars=\true,
+    language=[Sharp]C,
+    numbers=left,
+    numberstyle=\scriptsize,
+    breakatwhitespace=\false,
+    breaklines=True,
+    tabsize=2,
+    keepspaces=true,
+}
+
+\labnum{5}
+\labname{Использование Silverlight-форм в web-приложениях}
+\student{Голубев А. В.}
+\date{}
+
+\begin{document}
+    \makeheader
+    \emph{Цель работы:} получение общих сведений о технологии Silverlight, получение практических навыков создания web-приложений, использующих 
+    Silverlight-формы.
+
+    \emph{Задачи:}
+    \begin{enumerate}\itemsep-5pt
+        \item Создать базу данных согласно заданию
+        \item Создать Silverlight-форму для отображения данных из БД
+        \item Создать ASP.NET приложение, в котором используется Silverlight-форма
+    \end{enumerate}
+
+    \emph{Скриншоты:}
+    \begin{figure}[ht]
+        \center
+        \includegraphics[width=0.9\textwidth]{Lab05_01}
+        \caption{Главная страница с Silverlight-формой}
+    \end{figure}
+
+    \pagebreak
+
+    \emph{Исходный код:}
+    \begin{center}
+        \textbf{Главная страница}
+    \end{center}
+    \lstinputlisting{./source/MainPage.xaml.cs}
+
+    \begin{center}
+        \textbf{Сервис}
+    \end{center}
+    \lstinputlisting{./source/UserCatalog.asmx.cs}
+
+    \begin{center}
+        \textbf{Разметка главной страницы}
+    \end{center}
+    \lstinputlisting{./source/MainPage.xaml}
+\end{document}

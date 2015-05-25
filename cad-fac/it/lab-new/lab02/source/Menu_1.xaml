@@ -1,0 +1,61 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:pi="http://schemas.microsoft.com/prototyping/2010/interactivity"
+	mc:Ignorable="d"
+	x:Class="Lab02Screens.Menu_1"
+	Width="1024" Height="100">
+
+	<Grid x:Name="LayoutRoot" Background="White">
+		<Button Content="Главная" HorizontalAlignment="Left" Margin="16,24,0,0" VerticalAlignment="Top" Width="216" Height="56" FontSize="18.667">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="Click">
+					<pi:NavigateToScreenAction TargetScreen="Lab02Screens.Экран_1"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</Button>
+		<Button Content="Таблицы" HorizontalAlignment="Left" Margin="248,24,0,0" VerticalAlignment="Top" Width="216" Height="56" FontSize="18.667">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="Click">
+					<pi:NavigateToScreenAction TargetScreen="Lab02Screens.TableScreen"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</Button>
+		<Button Content="О прототипе" HorizontalAlignment="Left" Margin="480,24,0,0" VerticalAlignment="Top" Width="216" Height="56" FontSize="18.667">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="Click">
+					<pi:NavigateToScreenAction TargetScreen="Lab02Screens.About"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</Button>
+		<Button Content="Контакты" HorizontalAlignment="Left" Margin="712,24,0,0" VerticalAlignment="Top" Width="216" Height="56" FontSize="18.667">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="Click">
+					<pi:NavigateToScreenAction TargetScreen="Lab02Screens.Contacts"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</Button>
+		<Canvas Margin="944,24,16,20">
+			<Canvas.Background>
+				<ImageBrush Stretch="Uniform" ImageSource="login-512-000000.png"/>
+			</Canvas.Background>
+			<Canvas Height="56" Width="64">
+				<Canvas.Background>
+					<ImageBrush Stretch="Uniform" ImageSource="login-512-000000.png"/>
+				</Canvas.Background>
+				<Button Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="64" Height="56" Opacity="0.195">
+					<Button.Background>
+						<ImageBrush Stretch="Uniform" ImageSource="login-512-000000.png"/>
+					</Button.Background>
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Click">
+							<pi:NavigateToScreenAction TargetScreen="Lab02Screens.SignIn"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</Button>
+			</Canvas>
+		</Canvas>
+	</Grid>
+</UserControl>

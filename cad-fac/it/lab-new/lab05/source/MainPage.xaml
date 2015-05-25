@@ -1,0 +1,33 @@
+<UserControl x:Class="Lab05.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+    <UserControl.Resources>
+        <DataTemplate x:Key="DataTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Height="70" Source="{Binding Avatar, Mode=OneWay}" Grid.Column="0" Margin="5"/>
+                <TextBlock Height="70" Text="{Binding Name, Mode=OneWay}" Grid.Column="1" Margin="5"/>
+                <TextBlock Height="70" Text="{Binding LastName, Mode=OneWay}" Grid.Column="2" Margin="5"/>
+                <TextBlock Height="70" Text="{Binding Address, Mode=OneWay}" Grid.Column="3" Margin="5"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <ListBox x:Name="Users" HorizontalAlignment="Left" Height="252" Margin="10,38,0,0" VerticalAlignment="Top" Width="380" ItemTemplate="{StaticResource DataTemplate}"/>
+        <TextBox x:Name="SearchBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+        <Button Content="Find" HorizontalAlignment="Left" Margin="315,11,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+    </Grid>
+</UserControl>
