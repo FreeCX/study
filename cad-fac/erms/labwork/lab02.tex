@@ -1,0 +1,122 @@
+\documentclass[pscyr, 12pt]{hedlab}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\labname{Разработка баз данных в СУБД Oracle}
+\labnum{2}
+\student{Голубев~А.~В., САПР-1.1п}
+\labdate{}
+
+\makeatletter
+\newcommand{\lstuppercase}{\uppercase\expandafter{\expandafter\lst@token
+                           \expandafter{\the\lst@token}}}
+\newcommand{\lstlowercase}{\lowercase\expandafter{\expandafter\lst@token
+                           \expandafter{\the\lst@token}}}
+\makeatother
+
+\lstdefinestyle{Oracle}{%
+    basicstyle=\footnotesize\ttfamily,
+    keywordstyle=\lstuppercase,
+    emphstyle=\itshape,
+    showstringspaces=false,
+}
+
+\lstdefinelanguage[Oracle]{SQL}[]{SQL}{
+    morekeywords={ACCESS, MOD, NLS_DATE_FORMAT, NVL, REPLACE, SYSDATE, TO_CHAR, TO_NUMBER, TRUNC},
+}
+\lstset{language=[Oracle]SQL, style=Oracle,}
+
+\begin{document}
+    \makeheader
+    \noindent\textbf{Цель:} получение навыков создания базы данных и работы с ней в диалоговом режиме.
+
+    \noindent\textbf{Постановка задачи:}
+    \vspace*{-1em}
+    \begin{itemize}\itemsep-5pt
+        \item создать таблицу с исплозьванием оператора \emph{CREATE TABLE}
+        \item заполнить таблицу произвольными данными
+        \item произвести индексацию таблицы с использованием оператора \emph{CREATE INDEX}
+        \item распечать содержимое таблицы
+    \end{itemize}
+  
+    \noindent\textbf{Оператор CREATE TABLE:}
+    \begin{lstlisting}
+CREATE TABLE documents (
+    id number(5) primary key,
+    d_body varchar2(254),
+    d_date date default (sysdate),
+    d_lang varchar(254),
+    d_code varchar(254)
+)
+    \end{lstlisting}
+
+    \noindent\textbf{Операторор CREATE INDEX:}
+    \begin{lstlisting}
+CREATE INDEX i_fast ON documents(d_body, d_lang, d_code);
+    \end{lstlisting}
+
+    \noindent\textbf{Код выводящий содержимое таблицы:}
+    \begin{lstlisting}
+declare
+    cursor doc_cur is        
+        select * from documents;
+begin
+    for cur in doc_cur loop
+        dbms_output.put_line( cur.id || ' : ' || cur.d_body || ' : ' || cur.d_date || 
+                              ' : ' || cur.d_lang || ' : ' || cur.d_code );
+    end loop;
+end;
+    \end{lstlisting}
+
+    \newpage
+
+    \noindent\textbf{Распечатка содержимого таблицы:}\\
+    \begin{minipage}{0.47\textwidth}
+        \begin{lstlisting}
+1 : test : 28-APR-15 : eng : ff01
+2 : physics : 28-APR-15 : eng : 14084265
+3 : physics : 28-APR-15 : fra : 9393713
+4 : exam : 28-APR-15 : eng : 12501962
+5 : math : 28-APR-15 : ukr : 1257529
+6 : apple : 28-APR-15 : eng : 12044507
+7 : physics : 28-APR-15 : rus : 3091905
+8 : apple : 28-APR-15 : jap : 16124295
+9 : physics : 28-APR-15 : fra : 12625939
+10 : apple : 28-APR-15 : jap : 6064049
+11 : math : 28-APR-15 : fra : 8539662
+12 : physics : 28-APR-15 : bel : 14271115
+13 : physics : 28-APR-15 : ita : 4136508
+14 : physics : 28-APR-15 : fra : 2604624
+15 : apple : 28-APR-15 : kor : 219395
+        \end{lstlisting}
+    \end{minipage}
+    \hspace*{1em}
+    \begin{minipage}{0.47\textwidth}
+            \begin{lstlisting}
+16 : apple : 28-APR-15 : fra : 3588368
+17 : orange : 28-APR-15 : bel : 11003793
+18 : apple : 28-APR-15 : bel : 5664197
+19 : physics : 28-APR-15 : ukr : 7619159
+20 : exam : 28-APR-15 : fra : 6383862
+21 : orange : 28-APR-15 : ukr : 10033407
+22 : physics : 28-APR-15 : kor : 8309077
+23 : exam : 28-APR-15 : ukr : 11482178
+24 : orange : 28-APR-15 : eng : 1890677
+25 : exam : 28-APR-15 : jap : 15609198
+26 : orange : 28-APR-15 : fra : 9086164
+27 : apple : 28-APR-15 : ita : 4378353
+28 : orange : 28-APR-15 : fra : 9420126
+29 : math : 28-APR-15 : ukr : 2688763
+30 : apple : 28-APR-15 : fra : 10371860
+        \end{lstlisting}
+    \end{minipage}
+
+    \noindent\textbf{Вывод:} в результате проделанной работы
+    \vspace*{-1em}
+    \begin{enumerate}\itemsep-5pt
+        \item получил навыки по созданию и работе с базой данных
+        \item узнал структуру, которая используется для формирования таблиц
+        \item основные команды для работы с таблицами
+    \end{enumerate}
+\end{document}

@@ -1,0 +1,66 @@
+\documentclass[pscyr, 12pt]{hedlab}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\labname{Разработка баз данных в СУБД Oracle}
+\labnum{4}
+\student{Голубев~А.~В., САПР-1.1п}
+\labdate{}
+
+
+\lstdefinestyle{Oracle}{%
+    basicstyle=\footnotesize\ttfamily,
+    keywordstyle=\lstuppercase,
+    emphstyle=\itshape,
+    showstringspaces=false,
+}
+
+\makeatletter
+\newcommand{\lstuppercase}{\uppercase\expandafter{\expandafter\lst@token
+                           \expandafter{\the\lst@token}}}
+\newcommand{\lstlowercase}{\lowercase\expandafter{\expandafter\lst@token
+                           \expandafter{\the\lst@token}}}
+\makeatother
+
+\lstdefinelanguage[Oracle]{SQL}[]{SQL}{
+    morekeywords={ACCESS, MOD, NLS_DATE_FORMAT, NVL, REPLACE, SYSDATE, TO_CHAR, TO_NUMBER, TRUNC},
+}
+\lstset{language=[Oracle]SQL, style=Oracle,}
+
+\begin{document}
+    \makeheader
+    \noindent\textbf{Цель:} освоение средств разработки запросов, пользователей, последовательностей и синонимов, знакомство со специфичными для 
+    распределенных систем объектами Oracle -- снимками и связями с удаленными БД.
+
+    \noindent\textbf{Постановка задачи:}
+    \vspace*{-1em}
+    \begin{itemize}\itemsep-5pt
+        \item создать\vspace*{-1em}
+        \begin{itemize}\itemsep-5pt
+            \item пользователей
+            \item последовательности
+            \item синонимы
+        \end{itemize}\vspace*{-0.5em}
+        \item распечать результат запроса
+    \end{itemize}
+  
+    \noindent\textbf{SQL Запрос:}
+    \lstinputlisting{source/lab04.sql}
+
+    \pagebreak
+
+    \noindent\textbf{Результат выполнения:}
+    \lstinputlisting{source/lab04.out}
+
+    \noindent\textbf{Вывод:} в результате проделанной работы\vspace*{-0.5em}
+    \begin{enumerate}\itemsep-5pt
+        \item получил навыки по созданию и работе с\vspace*{-1em}
+        \begin{itemize}\itemsep-5pt
+            \item пользователями
+            \item представлениями
+            \item синонимомами
+        \end{itemize}\vspace*{-0.5em}
+        \item получил информацию по новым командам для работы с таблицами
+    \end{enumerate}
+\end{document}

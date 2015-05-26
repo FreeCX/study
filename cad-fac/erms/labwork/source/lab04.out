@@ -1,0 +1,42 @@
+User created.
+User created.
+Sequence created.
+   NEXTVAL
+----------
+     2
+   NEXTVAL
+----------
+     3
+select Seq1.nextval from dual
+*
+ERROR at line 1:
+ORA-08004: sequence SEQ1.NEXTVAL exceeds MAXVALUE and cannot be instantiated
+Sequence dropped.
+Table created.
+1 row created.
+1 row created.
+       AT1 AT2
+---------- -----
+     1 text1
+     2 text2
+Grant succeeded.
+Enter password: 
+Connected.
+       AT1 AT2
+---------- -----
+     1 text1
+     2 text2
+Connected.
+View created.
+Grant succeeded.
+Enter password: 
+Connected.
+1 row created.
+       AT1 AT2
+---------- -----
+     2 text2
+     3 text3
+User dropped.
+User dropped.
+View dropped.
+Table dropped.

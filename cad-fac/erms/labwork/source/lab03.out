@@ -1,0 +1,46 @@
+Table dropped.
+Table dropped.
+Table created.
+Table created.
+Table altered.
+Table altered.
+1 row created.
+1 row created.
+1 row created.
+1 row created.
+1 row created.
+    DEPTNO DNAME       LOC
+---------- --------------- ---------------
+     1 edited-dept     DALLAS
+     2 unique-dept     NY
+     EMPNO ENAME       JOB                 MGR HIREDATE     SAL
+---------- --------------- -------------------- ---------- --------- ----------
+      COMM     DEPTNO
+---------- ----------
+     1 Mr.Black    Rocket Engines                   3.3
+     4      1
+
+     2 Mr.White    Test Inc.                       2.71
+     3      2
+
+     3 Mr.Green    Ink                          3.3
+     2      1
+Table(s) Locked.
+2 rows updated.
+Commit complete.
+    DEPTNO DNAME       LOC
+---------- --------------- ---------------
+     1 edited-dept     DALLAS
+     2 unique-dept     NY
+     EMPNO ENAME       JOB                 MGR HIREDATE     SAL
+---------- --------------- -------------------- ---------- --------- ----------
+      COMM     DEPTNO
+---------- ----------
+     1 Mr.Black    Rocket Engines                  3.63
+     4      1
+
+     2 Mr.White    Test Inc.                       2.71
+     3      2
+
+     3 Mr.Green    Ink                         3.63
+     2      1
