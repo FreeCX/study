@@ -1,0 +1,29 @@
+\documentclass[14pt, final]{hedwork}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+
+\graphicspath{{../semwork/images/}}
+\renewcommand{\rmdefault}{ftm}
+
+\lstset{
+    basicstyle=\footnotesize,
+    inputencoding=utf8,
+    extendedchars=\true,
+    language=bash,
+    breakatwhitespace=\false,
+    breaklines=True,
+    tabsize=2,
+    keepspaces=true,
+}
+
+\Urlmuskip = 0mu plus 1mu
+
+\begin{document}
+    \input{title}
+    \tableofcontents
+    \input{../../c&nt/semwork-new/text}
+\end{document}
