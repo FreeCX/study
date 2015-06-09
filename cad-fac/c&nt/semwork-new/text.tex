@@ -61,8 +61,6 @@ LDA. В отличие от других методов, которые испо
 отличие от трудно настраиваемой и специализированной реализации на основе выборки Гиббса, является 
 легко расширяемым.
 
-\newpage
-
 \chapter{Установка}
 В качестве базовой системы была выбрана Arch Linux \cite{arch}, основные возможности которого заключаются в 
 \begin{itemize}
@@ -73,7 +71,7 @@ LDA. В отличие от других методов, которые испо
     \item большое количество справочной документации\\
         \url{https://wiki.archlinux.org/}
 \end{itemize}
-Подробный гид по установке Arch Linux доступно по ссылке\\
+Подробное руководство по установке Arch Linux доступно по ссылке\\
 \url{https://wiki.archlinux.org/index.php/Beginners%27_guide}.
 
 \section{Виртуализация}
@@ -102,7 +100,7 @@ VirtualBox активно развивается с частыми обновл�
 rpm пакета скаченного с официального сайта. Установка VirtualBox из репозитория не желательна, так как в 
 этом случае будут установлены ненужные зависимости, такие как gui-оболочка.
 
-\noindent\textbf{ВАЖНО} После установки необходимо добавить пользователя в группу \emph{vboxusers}:
+\noindent После установки необходимо добавить пользователя в группу \emph{vboxusers}:
 \begin{lstlisting}
 $ sudo usermod -aG vboxusers <name>
 \end{lstlisting}
@@ -442,44 +440,6 @@ $ $hadoop jar ./mrlda-0.9.0-SNAPSHOT-fatjar.jar edu.umd.cloud9.io.ReadSequenceFi
 
 \newpage
 
-\renewcommand{\bibname}{Информационные источники}
-\addcontentsline{toc}{chapter}{Информационные источники}
-\begin{thebibliography}{10}
-    \bibitem{arch} Свободно распространяемый дистрибутив Arch Linux\\
-        \url{https://archlinux.org/}
-    \bibitem{archwiki} Вики документация по дистрибутиву Arch Linux\\
-        \url{https://wiki.archlinux.org/}
-    \bibitem{hadoop} Справочная документация по Apache Hadoop\\
-        \url{http://hadoop.apache.org/docs/stable/}
-    \bibitem{systemd} Демон инициализации systemd\\
-        \url{http://www.freedesktop.org/wiki/Software/systemd/}
-    \bibitem{mrlda} Репозиторий кода фреймворка Mr.LDA\\
-        \url{https://github.com/lintool/Mr.LDA}
-    \bibitem{lda} Habrahabr -- Рекомендательные системы: LDA\\
-        \url{http://habrahabr.ru/company/surfingbird/blog/150607/}
-    \bibitem{virtualbox} Программынй продукт виртуализации VirtualBox\\
-        \url{https://www.virtualbox.org/}
-\end{thebibliography}
-
-\noindentИнформация по настройке Hadoop:\vspace*{-0.5em}
-\begin{itemize}\itemsep-5pt
-    \item Getting started with Hadoop in easy steps\\\footnotesize
-        \url{http://www.thecloudavenue.com/2011/12/getting-started-with-hadoop-is-easy.html}
-        \normalsize
-    \item How to setup a Hadoop 2-node cluster on VirtualBox in less than an hour\\\footnotesize
-        \url{https://gordoncluster.wordpress.com/2013/07/10/how-to-setup-a-hadoop-2-
-        node-cluster-on-virtualbox-in-less-than-an-hour/}
-        \normalsize
-    \item Hadoop 2.6.0 Multi Node Cluster Setup on Ubuntu 14.10\\\footnotesize
-        \url{http://chaalpritam.blogspot.ru/2015/01/hadoop-260-multi-node-cluster-setup-on.html}
-        \normalsize
-    \item Apache Hadoop 2.7.0\\\footnotesize
-        \url{https://hadoop.apache.org/docs/r2.7.0/}
-        \normalsize
-\end{itemize}
-
-\newpage
-
 \renewcommand{\bibname}{Список используемой литературы}
 \addcontentsline{toc}{chapter}{Список используемой литературы}
 \begin{thebibliography}{10}
@@ -488,4 +448,27 @@ $ $hadoop jar ./mrlda-0.9.0-SNAPSHOT-fatjar.jar edu.umd.cloud9.io.ReadSequenceFi
     \bibitem{mrldainfo} Zhai,~K. Mr. LDA: A Flexible Large Scale Topic Modeling Package using Variational 
         Inference in MapReduce~/ Ke Zhai, Jordan Boyd-Graber, Nima Asadi~//
         Available at: http://www2012.org/proceedings/proceedings/p879.pdf
+    \bibitem{arch} Свободно распространяемый дистрибутив Arch Linux~// Режим доступа:
+        \url{https://archlinux.org/}
+    \bibitem{archwiki} Вики документация по дистрибутиву Arch Linux~// Режим доступа:
+        \url{https://wiki.archlinux.org/}
+    \bibitem{hadoop} Справочная документация по Apache Hadoop~// Режим доступа:
+        \url{http://hadoop.apache.org/docs/stable/}
+    \bibitem{systemd} Демон инициализации systemd~// Режим доступа:
+        \url{http://www.freedesktop.org/wiki/Software/systemd/}
+    \bibitem{mrlda} Репозиторий кода фреймворка Mr.LDA~// Режим доступа:
+        \url{https://github.com/lintool/Mr.LDA}
+    \bibitem{lda} Николенко, С. Рекомендательные системы: LDA~// Режим доступа:
+        \url{http://habrahabr.ru/company/surfingbird/blog/150607/}
+    \bibitem{virtualbox} Програмный продукт виртуализации VirtualBox~// Режим доступаы:
+        \url{https://www.virtualbox.org/}
+    \bibitem{hadoop01} Sripati, P. Getting started with Hadoop in easy steps~// Available at:
+        \url{http://www.thecloudavenue.com/2011/12/getting-started-with-hadoop-is-easy.html}
+    \bibitem{hadoop02} How to setup a Hadoop 2-node cluster on VirtualBox in less than an hour~//
+        Available at: \url{https://gordoncluster.wordpress.com/2013/07/10/how-to-setup-a-hadoop-2-
+        node-cluster-on-virtualbox-in-less-than-an-hour/}
+    \bibitem{hadoop03} Hadoop 2.6.0 Multi Node Cluster Setup on Ubuntu 14.10~// Available at:
+        \url{http://chaalpritam.blogspot.ru/2015/01/hadoop-260-multi-node-cluster-setup-on.html}
+    \bibitem{hadoop04} Apache Hadoop 2.7.0~// Available at:
+        \url{https://hadoop.apache.org/docs/r2.7.0/}
 \end{thebibliography}
