@@ -1,0 +1,106 @@
+\documentclass[a4paper, 14pt]{extreport}
+\usepackage[column]{hedfeatures}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\usepackage[left=2.5cm, right=1.5cm, top=2.0cm, bottom=2.0cm]{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\graphicspath{{images/}}
+\renewcommand{\rmdefault}{ftm}
+
+\titleformat{\chapter}
+    {\centering\normalsize}
+    {\thechapter}
+    {8pt}{\MakeUppercase}
+\titlecontents{chapter}[0pt]
+    {}%
+    {\contentsmargin{0pt}
+        \thecontentslabel\enspace%
+        \normalsize}
+    {\contentsmargin{0pt}\normalsize}
+    {\titlerule*[.5pc]{.}\contentspage}[] 
+\titlecontents{section}[0pt]
+    {}%
+    {\contentsmargin{0pt}
+        \thecontentslabel\enspace%
+        \normalsize}
+    {\contentsmargin{0pt}\normalsize}
+    {\titlerule*[.5pc]{.}\contentspage}[] 
+\titlecontents{subsection}[0pt]
+    {}%
+    {\contentsmargin{0pt}
+        \thecontentslabel\enspace%
+        \normalsize}
+    {\contentsmargin{0pt}\normalsize}
+    {\titlerule*[.5pc]{.}\contentspage}[] 
+\titleformat{\section}
+    {\centering\normalsize}
+    {\thesection}
+    {1em}{}
+\titleformat{\subsection}
+    {\centering\normalsize}
+    {\thesubsection}
+    {1em}{}
+\titlespacing*{\chapter}{0pt}{10pt}{10pt}
+\titlespacing*{\section}{\parindent}{*2}{*2}
+\titlespacing*{\subsection}{\parindent}{*2}{*2}
+
+\makeatletter
+\renewcommand\chapter{\thispagestyle{plain}%
+\global\@topnum\z@
+\@afterindentfalse
+\secdef\@chapter\@schapter}
+\makeatother 
+
+\Urlmuskip = 0mu plus 1mu
+
+\DeclareCaptionLabelFormat{figure}{Рисунок #2}
+\DeclareCaptionLabelFormat{table}{Таблица #2}
+\DeclareCaptionLabelSeparator{sep}{~---~}
+\captionsetup{labelsep=sep, justification=centering, font=small}
+\captionsetup[figure]{labelformat=figure}
+\captionsetup[table]{labelformat=table}
+
+\setcounter{tocdepth}{2}
+\renewcommand{\cfttoctitlefont}{\normalfont\hspace{0.38\textwidth}}
+\renewcommand{\cftbeforetoctitleskip}{-1em}
+\renewcommand{\cftparskip}{1mm}
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\labelenumi}{\arabic{enumi})}
+\renewcommand{\theenumii}{.\arabic{enumii}}
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii})}
+\renewcommand{\theenumiii}{.\arabic{enumiii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii})}
+\addto{\captionsrussian}{\renewcommand*{\contentsname}{СОДЕРЖАНИЕ}}
+
+\lstset{
+    basicstyle=\footnotesize,
+    inputencoding=utf8,
+    extendedchars=\true,
+    language=bash,
+    breakatwhitespace=\false,
+    breaklines=True,
+    tabsize=2,
+    keepspaces=true,
+}
+
+\begin{document}
+    \onehalfspacing
+    \input{title}
+    \input{journal}
+    \newpage
+    \tableofcontents
+    \newpage
+    \input{text}
+\end{document}
