@@ -283,7 +283,7 @@ $ hadoop fs -cat /user/hduser/output/*
 $ sudo yum install <program>
 \end{lstlisting}
 
-\textbf{Maven}
+\subsection{Maven}
 \begin{lstlisting}
 $ sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/\
     epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
@@ -295,12 +295,12 @@ $ sudo yum install apache-maven
 $ export M2_HOME=""
 \end{lstlisting} 
 
-\textbf{Lucene}
+\subsection{Lucene}
 \begin{lstlisting}
 $ sudo yum install lucene
 \end{lstlisting}
 
-\textbf{Tomcat}
+\subsection{Tomcat}
 \begin{lstlisting}
 $ sudo yum install tomcat6
 \end{lstlisting}
@@ -308,6 +308,12 @@ $ sudo yum install tomcat6
 \begin{lstlisting}
 $ sudo service tomcat6 start
 $ sudo /etc/init.d/tomcat6 start
+\end{lstlisting}
+
+\subsection{Mr.LDA}
+\begin{lstlisting}
+$ git clone https://github.com/lintool/Mr.LDA.git
+$ mvn clean package
 \end{lstlisting}
 
 \section{Сборка Python 3 и установка дополнительных модулей}
@@ -411,7 +417,8 @@ $ ftp localhost
 
 Добавляем репозиторий пакетов в систему и устанавливаем boost
 \begin{lstlisting}
-$ sudo wget http://repo.enetres.net/enetres.repo -O /etc/yum.repos.d/enetres.repo
+$ sudo wget http://repo.enetres.net/enetres.repo -O \
+  /etc/yum.repos.d/enetres.repo
 $ sudo yum install boost-devel
 \end{lstlisting}
 
@@ -536,9 +543,7 @@ $ ./mosesdecoder/bin/moses -f ./working/train/model/moses.ini
 \end{lstlisting}
 Нужно подождать пока он загрузит данные в память, а потом можно вводить текст для перевода в терминале.
 
-Для запуска Moses в режиме сервера необходимо произвести сборку поддержкой \emph{xmlrpc-c}.
-
-\subsection{Сборка Moses c поддержкой xmlrpc-c и irstlm}
+\subsection{Сборка c поддержкой xmlrpc-c и irstlm}
 Устанавливаем xmlrpc-c из репозитория
 \begin{lstlisting}
 $ sudo yum install xmlrpc-c-devel
@@ -554,6 +559,12 @@ $ make install -j64
 
 Теперь переходим в каталог \emph{/hadoop/tmp/mosesdecoder} и запускаем сборку следующей командой
 \begin{lstlisting}
-./bjam --with-irstlm=/hadoop/tmp/irstlm/ --with-xmlrpc-c=<path to xmlrpc> -j64
+./bjam --with-irstlm=/hadoop/tmp/irstlm/ --with-xmlrpc-c=/hadoop/tmp/xmlrpc -j64
 \end{lstlisting}
-Если сборка успешна выполнена, то теперь можно запускать moses в режиме сервера.
+В случае установки \emph{xmlrpc-c} из репозитория, то можно опустить флаг \emph{with-xmlrpc-c} -- 
+\emph{bjam} сам определит, что в системе стоит этот пакет и использует его.
+
+Если сборка успешна выполнена, то теперь можно запускать moses в режиме сервера следующей командой
+\begin{lstlisting}
+$ ./mosesdecoder/bin/moses-server -f ./working/train/model/moses.ini
+\end{lstlisting}
