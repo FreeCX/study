@@ -1,23 +1,22 @@
+\chapter{Введение}
+
 \chapter{Развёртывание кластера}
 \section{Предварительная настройка}
-Для установки Cloudera Manager необходимо произвести несколько предварительных действий
+Перед установкой Cloudera Manager необходимо произвести следующие действия
 \begin{itemize}
     \item Открыть доступ в интернет для всех нод
     \item Открыть внешний порт для главной ноды (7180)
-    \item Убедиться что файл \emph{/etc/hosts} настроен правильно на всех нодах
-        (все ноды должны быть в одной сети)
-    \item Организовать пользователя с безпарольным \emph{sudo} доступом в \emph{/etc/sudoers}\\
+    \item Произвести настройку \emph{/etc/hosts}
+    \item Создать пользователя с безпарольным \emph{sudo} доступом в \emph{/etc/sudoers}\\
         <username> ALL=(ALL) NOPASSWD: ALL
-    \item Синхронизовать время на всех нодах. Выполнить следующие команды на каждой ноде
+    \item Синхронизация время на всех нодах. Выполнить следующие команды на каждой ноде
 \begin{lstlisting}
 $ sudo ntpd -qg
 $ sudo hwclock -w
 \end{lstlisting}
-    \item Если каталог \emph{/opt} для всех нод один, то необходимо создать на каждой ноде отдельный 
-        каталог для размещения файлов Cloudera Manager
+    \item В случае использования каталога \emph{/opt} как общий для всех нод один необходимо
+    создать на каждой ноде отдельный каталог для размещения файлов Cloudera Manager
 \end{itemize}
-Подробнее последний пункт рассмотрим в процессе установки, так как на текущем кластере это была одна из 
-главных проблем.
 
 \newpage
 
@@ -26,22 +25,23 @@ $ sudo hwclock -w
 \url{http://www.cloudera.com/content/cloudera/en/downloads/cloudera_manager/cm-5-4-3.html} и 
 загружаем на головную ноду кластера.
 
-Далее подключаемся к головной ноде по ssh и запускаем установщик
+Подключаемся к головной ноде по ssh и запускаем установщик
 \begin{lstlisting}
 $ sudo ./cloudera-manager-installer.bin
 \end{lstlisting}
 
-Если возникают проблемы с терминалом, то выполните команду
+При возникновении проблем с терминалом, то выполните команду
 \begin{lstlisting}
 $ export TERM=xterm
 \end{lstlisting}
 
-Произведите установку данного сервиса. По окончанию установку на порту 7180 будет доступен web-интерфейс 
-Cloudera Manager. Продолжаем установку по следующим скриншотам.
+Произведите установку данного сервиса. По окончанию установки на порту 7180 будет доступен web-интерфейс 
+Cloudera Manager. Подробности установки показаны на следующих скриншотах
 
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-000}
+    \caption{Начальный экран установки}
 \end{figure}
 
 \newpage
@@ -49,7 +49,9 @@ Cloudera Manager. Продолжаем установку по следующи�
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-001}
+    \caption{Выбор хост-машин}
     \includegraphics[width=1.0\textwidth]{image-002}
+    \caption{Выбор репозитория}
 \end{figure}
 
 \newpage
@@ -57,7 +59,9 @@ Cloudera Manager. Продолжаем установку по следующи�
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-003}
+    \caption{Выбор репозитория}
     \includegraphics[width=1.0\textwidth]{image-004}
+    \caption{Лицензионное соглашение}
 \end{figure}
 
 \newpage
@@ -65,7 +69,9 @@ Cloudera Manager. Продолжаем установку по следующи�
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-005}
+    \caption{Настройка режима установки}
     \includegraphics[width=1.0\textwidth]{image-006}
+    \caption{Настройка ssh-доступа}
 \end{figure}
 
 \newpage
@@ -73,70 +79,73 @@ Cloudera Manager. Продолжаем установку по следующи�
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-007}
+    \caption{Процесс установки}
     \includegraphics[width=1.0\textwidth]{image-008}
+    \caption{Успешное завершение установки}
 \end{figure}
 
-В случае если каталог \emph{/opt} для всех нод является одним, то нужно произвести следующие действия.
+В случае использования каталога \emph{/opt} как общий для всех нод один необходимо произвести 
+следующие действия.
 
-Создадим несколько каталогов в \emph{/hadoop/}
+Создать несколько каталогов в директории \emph{/hadoop/}
 \begin{lstlisting}
 $ sudo mkdir /hadoop/cloudera/csd
 $ sudo /hadoop/cloudera/parcel-cache
 $ sudo mkdir /hadop/cloudera/parcel-repo
 $ sudo /hadoop/cloudera/parcels
 \end{lstlisting}
-И редактируем файл \emph{/etc/cloudera-scm-agent/config.ini} на каждой ноде, а потом перезапускаем сервис
+Отредактировать файл \emph{/etc/cloudera-scm-agent/config.ini}\cite{parcels} на каждой ноде и 
+перезапустить сервис
 \begin{lstlisting}
 $ sudo vim /etc/cloudera-scm-agent/config.ini
 parcel_dir=/hadoop/cloudera/parcels
 $ sudo service cloudera-scm-agent restart
 \end{lstlisting}
-Подробнее можно почитать по следующей ссылке \url{http://www.cloudera.com/content/cloudera/en/documentation/cloudera-manager/v4-7-3/Cloudera-Manager-Release-Notes/cmrn_fixed_in_4_7_2.html}
 
-Далее в браузере щёлкаем по значку Cloudera Manager и переходим во вкладку Hosts->Configuration, где 
+Далее переходим на главную страницу Cloudera Manager во вкладку Hosts->Configuration, где 
 устанавливаем следующие параметры
 \begin{itemize}
     \item Parcel Directory
     \item Local Parcel Repository Path
 \end{itemize}
-как на скриншотах
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[width=1.0\textwidth]{image-009}
+    \includegraphics[width=0.\textwidth]{image-009}
+    \caption{Конфигурация параметров}
+    \includegraphics[width=0.8\textwidth]{image-010}
+    \caption{Конфигурация параметров}
 \end{figure}
+Переходим на главную страницу, выбираем \emph{Add Service} и продолжаем установку.
 
 \newpage
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[width=1.0\textwidth]{image-010}
     \includegraphics[width=1.0\textwidth]{image-011}
-\end{figure}
-А далее переходим на главную и нажимает кнопку \emph{Add Service} и продолжаем установку.
-
-\newpage
-
-\begin{figure}[ht!]
-    \center
+    \caption{Установка Cloudera Manager Service}
     \includegraphics[width=1.0\textwidth]{image-012}
-    \includegraphics[width=1.0\textwidth]{image-013}
+    \caption{Подключение к БД}
 \end{figure}
 
 \newpage
 
 \begin{figure}[ht!]
     \center
+    \includegraphics[width=1.0\textwidth]{image-013}
+    \caption{Конфигурация сервиса}
     \includegraphics[width=1.0\textwidth]{image-014}
+    \caption{Процесс установки}
 \end{figure}
 
-Если вы дошли до этого шага изменяя параметры \emph{Parcel Directory}, то выйдете на главную страницу и 
-нажмите на кнопку \emph{Add cluster} и выберите параметры, которые были уже раньше. Далее идёт установка 
-основных пакетов (она может длиться значительное время).
+Если вы изменили параметры \emph{Parcel Directory}, то выйдете на главную страницу страницу и создайте 
+кластер с параметрами из шагов ранее. Установка основных пакетов Cloudera Manager может может длиться 
+значительное время.
 
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-020}
+    \caption{Установка CDH}
 \end{figure}
 
 \newpage
@@ -144,16 +153,19 @@ $ sudo service cloudera-scm-agent restart
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-021}
+    \caption{Успешное завершение установки}
     \includegraphics[width=1.0\textwidth]{image-022}
+    \caption{Проверка хост-машин}
 \end{figure}
-
 
 \newpage
 
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-023}
+    \caption{Результат проверки хост-машин}
     \includegraphics[width=1.0\textwidth]{image-024}
+    \caption{Результат проверки хост-машин}
 \end{figure}
 
 \newpage
@@ -161,7 +173,9 @@ $ sudo service cloudera-scm-agent restart
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-025}
+    \caption{Результат проверки хост-машин}
     \includegraphics[width=1.0\textwidth]{image-026}
+    \caption{Результат проверки хост-машин}
 \end{figure}
 
 \newpage
@@ -169,7 +183,9 @@ $ sudo service cloudera-scm-agent restart
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-027}
+    \caption{Выбор устанавливаемых компонентов}
     \includegraphics[width=1.0\textwidth]{image-028}
+    \caption{Конфигурация ролей хост-машин}
 \end{figure}
 
 \newpage
@@ -177,8 +193,11 @@ $ sudo service cloudera-scm-agent restart
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-029}
+    \caption{Конфигурация ролей хост-машин}
     \includegraphics[width=1.0\textwidth]{image-030}
+    \caption{Распределение ролей хост-машин}
     \includegraphics[width=1.0\textwidth]{image-031}
+    \caption{Подключение БД}
 \end{figure}
 
 \newpage
@@ -186,7 +205,9 @@ $ sudo service cloudera-scm-agent restart
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-032}
+    \caption{Конфигурация параметров}
     \includegraphics[width=1.0\textwidth]{image-033}
+    \caption{Конфигурация параметров}
 \end{figure}
 
 \newpage
@@ -194,7 +215,9 @@ $ sudo service cloudera-scm-agent restart
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-034}
+    \caption{Конфигурация параметров}
     \includegraphics[width=1.0\textwidth]{image-035}
+    \caption{Процесс установки}
 \end{figure}
 
 \newpage
@@ -202,7 +225,9 @@ $ sudo service cloudera-scm-agent restart
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-036}
+    \caption{Успешная установка компонентов}
     \includegraphics[width=1.0\textwidth]{image-037}
+    \caption{Успешная установка компонентов}
 \end{figure}
 
 \newpage
@@ -210,15 +235,16 @@ $ sudo service cloudera-scm-agent restart
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-038}
+    \caption{Успешная установка компонентов}
     \includegraphics[width=1.0\textwidth]{image-039}
+    \caption{Окончание установки компонентов}
 \end{figure}
 
 \newpage
 
 \section{Проверка работоспособности}
-Для проверки работоспособности сконфигурированного кластера произведём тестовый запуск Hadoop, но для 
-начала нужно произвести подготовку. Для этого создадим пользователя, через которого будем производить 
-работу с HDFS и Hadoop, и установим ему пароль.
+Для проверки работоспособности сконфигурированного кластера произведём тестовый запуск Hadoop. 
+Создадим пользователя, через которого будем производить работу с HDFS и Hadoop, и установим ему пароль.
 \begin{lstlisting}
 $ sudo useradd -g hduser hduser
 $ sudo passwd hduser
@@ -239,16 +265,16 @@ $ su hduser
 \begin{lstlisting}
 $ hadoop fs -mkdir /user/hduser/input
 \end{lstlisting}
-И разместим данные в нём
+Разместим данные в нём
 \begin{lstlisting}
 $ hadoop fs -put /etc/hadoop/conf/*.xml /user/hduser/input 
 \end{lstlisting}
-Далее можно запускать Hadoop
+Теперь можно запускать Hadoop на обработку
 \begin{lstlisting}
 $ hadoop jar /hadoop/cloudera/parcels/CDH/jars/\
    hadoop-mapreduce-examples-2.6.0-cdh5.4.4.jar grep /user/hduser/input /user/hduser/output 'dfs[a-z.]+'
 \end{lstlisting}
-Если обработка закончилась успешно, то в каталоге \emph{/user/hduser/output} будут следующие файлы
+При успешном завершении в в каталоге \emph{/user/hduser/output} появиться следующие файлы
 \begin{lstlisting}
 Found 2 items
 -rw-r--r--   3 hduser supergroup          0 2015-07-26 13:59 /user/hduser/output/_SUCCESS
@@ -274,7 +300,7 @@ $ hadoop fs -cat /user/hduser/output/*
 1   dfs.https.port
 1   dfs.groups
 \end{lstlisting}
-Если вы видите что-то похожее на это, то я вас поздравляю -- тестовый запуск произведён успешно!
+На данном этапе подготовка завершена.
 
 \chapter{Установка дополнительного ПО}
 \section{Установка программ из репозитория}
@@ -289,8 +315,7 @@ $ sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/\
     epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
 $ sudo yum install apache-maven
 \end{lstlisting}
-Если появляются проблемы с работой Maven, то возможно поможет изменение следующего параметра 
-в пустое значение
+При появлении проблем с Maven изменените следующий параметр на пустое значение
 \begin{lstlisting}
 $ export M2_HOME=""
 \end{lstlisting} 
@@ -304,7 +329,7 @@ $ sudo yum install lucene
 \begin{lstlisting}
 $ sudo yum install tomcat6
 \end{lstlisting}
-Запуск сервиса можно произвести любой из представленных команд
+Запуск сервиса производиться любой из представленных команд
 \begin{lstlisting}
 $ sudo service tomcat6 start
 $ sudo /etc/init.d/tomcat6 start
@@ -317,14 +342,14 @@ $ mvn clean package
 \end{lstlisting}
 
 \section{Сборка Python 3 и установка дополнительных модулей}
-Для сборки и установки Python 3 и pip необходимо установить некоторые дополнительная программы
+Для сборки и установки Python 3 и pip необходимо установить дополнительная программы
 \begin{lstlisting}
 $ sudo yum groupinstall "Development tools"
 $ sudo yum install zlib-devel bzip2-devel openssl-devel ncurses-devel \
     sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel \
     xz-devel
 \end{lstlisting}
-Далее непосредственно сборка и установка
+Переходим непосредственно к сборке и установке\cite{python}
 \begin{lstlisting}
 $ wget http://www.python.org/ftp/python/3.3.2/Python-3.3.2.tar.bz2 -O /var/tmp/Python-3.3.2.tar.bz2
 $ bzip2 -cd /var/tmp/Python-3.3.2.tar.bz2 | tar xvf -
@@ -334,17 +359,15 @@ $ make -j64
 $ sudo make install
 $ sudo ln -s /usr/local/bin/python3 /usr/bin/python3
 \end{lstlisting}
-Подробности доступны по ссылке \url{http://www.shayanderson.com/linux/install-python-3-on-centos-6-server.htm}
 
-Далее нужно установить менеджер пакетов pip
+Установим менеджер пакетов pip\cite{pip}
 \begin{lstlisting}
 $ wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
 $ sudo /usr/local/bin/python3.2 ez_setup.py
 $ sudo /usr/local/bin/easy_install-3.2 pip
 \end{lstlisting}
-Подробности доступны по ссылке \url{http://superuser.com/questions/773949/how-to-install-python-3-2-2-on-centos-6-5-amd64-preserving-its-original-python-i}
 
-Для того чтобы python скрипты могли работать с PostgreSQL нужно установить пакет \emph{py-postgresql}
+Для использования python с PostgreSQL необходимо установить пакет \emph{py-postgresql}
 \begin{lstlisting}
 $ sudo /usr/local/bin/pip py-postgresql
 \end{lstlisting}
@@ -354,7 +377,7 @@ $ sudo /usr/local/bin/pip py-postgresql
 \begin{lstlisting}
 $ sudo yum install vsftpd
 \end{lstlisting}
-Далее редактируем следующие файлы
+Редактируем конфигурационные файлы и создаём виртуальных пользователей
 \begin{lstlisting}
 $ sudo vim /etc/vsftpd/vsftpd.conf
 anonymous_enable=NO
@@ -391,31 +414,30 @@ $ sudo vim /etc/vsftpd/logins.txt
 ...
 \end{lstlisting}
 
-Генерируем БД для виртуальных логинов и паролей 
+Генерируем БД для виртуальных пользователей
 \begin{lstlisting}
 $ sudo db_load -T -t hash -f /etc/vsftpd/logins.txt /etc/vsftpd/vsftpd_login.db
 $ sudo rm /etc/vsftpd/logins.txt
 $ sudo chmod 600 /etc/vsftpd/vsftpd_login.db
 \end{lstlisting}
 
-Добавляем в автозапуск и запускаем
+Добавляем в демон в автозапуск и запускаем
 \begin{lstlisting}
 $ sudo chkconfig vsftpd on
 $ sudo service vsftpd start
 \end{lstlisting}
 
-Для проверки работоспособности можно использовать ftp
+Проверку работоспособности демона можно произвести встроенной утилитой ftp
 \begin{lstlisting}
 $ ftp localhost
 \end{lstlisting}
 
 \section{Сборка Moses}
 \subsection{Сборка необходимых инструментов}
-Все действия в основном происходят в каталоге \emph{/hadoop/tmp/}. Дальнейшие действия являются 
-адаптацией этих \url{http://www.statmt.org/moses/?n=Moses.Baseline} и 
-\url{http://www.statmt.org/moses/?n=Development.GetStarted} мануалов.
+Все действия в основном производятся в каталоге \emph{/hadoop/tmp/}. 
+Дальнейшие действия являются адаптацией следующих источников \cite{moses:baseline, moses:dev}.
 
-Добавляем репозиторий пакетов в систему и устанавливаем boost
+Добавляем репозиторий в систему и устанавливаем пакет boost
 \begin{lstlisting}
 $ sudo wget http://repo.enetres.net/enetres.repo -O \
   /etc/yum.repos.d/enetres.repo
@@ -440,7 +462,7 @@ $ chmod +x bjam
 $ ./bjam -j64
 \end{lstlisting}
 
-Создаём папку для Giza++ в каталоге moses и копируем их туда
+Создаём папку для Giza++ в каталоге moses и производим копирование
 \begin{lstlisting}
 $ mkdir tools
 $ cp ../giza-pp/GIZA++-v2/GIZA++ ../giza-pp/GIZA++-v2/snt2cooc.out \
@@ -448,7 +470,7 @@ $ cp ../giza-pp/GIZA++-v2/GIZA++ ../giza-pp/GIZA++-v2/snt2cooc.out \
 $ cd /hadoop/tmp
 \end{lstlisting}
 
-Скачиваем IRSTLM, распаковываем и производим сборку
+Загружаем IRSTLM, распаковываем и производим сборку
 \begin{lstlisting}
 $ wget http://downloads.sourceforge.net/project/irstlm/irstlm/irstlm-5.80/irstlm-5.80.08.tgz
 $ tar zxvf irstlm-5.80.08.tgz
@@ -459,7 +481,7 @@ $ make install
 \end{lstlisting}
 
 \subsection{Подготовка Corpus для обучения}
-Создаём папку для corpus и скачиваем тренировочные данные
+Создаём папку для corpus и загружаем тренировочные данные
 \begin{lstlisting}
 $ mkdir corpus
 $ cd corpus
@@ -467,13 +489,13 @@ $ wget http://www.statmt.org/wmt13/training-parallel-nc-v8.tgz
 $ tar zxvf training-parallel-nc-v8.tgz
 \end{lstlisting}
 
-Прежде чем запускать тренировку необходимо убедиться, что в Perl установлен модуль \emph{Time/HiRes.pm}
-В случае отсутствия устанавливаем следующей командой
+Перед запуском необходимо убедиться, что для Perl установлен модуль \emph{Time/HiRes.pm}
+При его отсутствии устанавливаем следующей командой
 \begin{lstlisting}
 $ sudo yum install perl-Time-HiRes
 \end{lstlisting}
 
-Производим разбивка данных на токены
+Производим разбивку данных
 \begin{lstlisting}
 $ ../mosesdecoder/scripts/tokenizer/tokenizer.perl -l en \
   < ./training/news-commentary-v8.fr-en.en \
@@ -483,7 +505,7 @@ $ ../mosesdecoder/scripts/tokenizer/tokenizer.perl -l fr \
   > ./news-commentary-v8.fr-en.tok.fr
 \end{lstlisting}
 
-Используем truecaser
+Используем обучение с помощью скрипта train-truecaser
 \begin{lstlisting}
 $ ../mosesdecoder/scripts/recaser/train-truecaser.perl \
   --model ./truecase-model.en \
@@ -493,7 +515,7 @@ $ ../mosesdecoder/scripts/recaser/train-truecaser.perl \
   --corpus ./news-commentary-v8.fr-en.tok.fr
 \end{lstlisting}
 
-Использование другого скрипта truecase
+Используем скрипт truecase
 \begin{lstlisting}
 $ ../mosesdecoder/scripts/recaser/truecase.perl \
   --model ./truecase-model.en \
@@ -505,7 +527,7 @@ $ ../mosesdecoder/scripts/recaser/truecase.perl \
   > ./news-commentary-v8.fr-en.true.fr
 \end{lstlisting}
 
-Далее производим чистку ограничивая длину предложения 80 символами
+Производим чистку ограничивая длину предложения 80 символами
 \begin{lstlisting}
 $ ../mosesdecoder/scripts/training/clean-corpus-n.perl \
   ./news-commentary-v8.fr-en.true fr en \
@@ -534,14 +556,14 @@ $ nohup nice ../mosesdecoder/scripts/training/train-model.perl -root-dir train \
   -lm 0:3:/hadoop/tmp/lm/news-commentary-v8.fr-en.blm.en:8 \
   -external-bin-dir ../mosesdecoder/tools/ >& training.out &
 \end{lstlisting}
-Теперь остаётся только ждать когда завершится тренировка (может длится очень долго).
+Ожидаем завершения обучения модели (может длится очень долго).
 
 \subsection{Запуск moses}
 Запускаем moses для проверки работоспособности перевода
 \begin{lstlisting}
 $ ./mosesdecoder/bin/moses -f ./working/train/model/moses.ini
 \end{lstlisting}
-Нужно подождать пока он загрузит данные в память, а потом можно вводить текст для перевода в терминале.
+Необходимо подождать загрузки данных в память, а потом можно вводить текст для перевода в терминале.
 
 \subsection{Сборка c поддержкой xmlrpc-c и irstlm}
 Устанавливаем xmlrpc-c из репозитория
@@ -557,14 +579,27 @@ $ ./configure --prefix=/hadoop/tmp/xmlrpc
 $ make install -j64
 \end{lstlisting}
 
-Теперь переходим в каталог \emph{/hadoop/tmp/mosesdecoder} и запускаем сборку следующей командой
+Переходим в каталог \emph{/hadoop/tmp/mosesdecoder} и запускаем сборку следующей командой
 \begin{lstlisting}
 ./bjam --with-irstlm=/hadoop/tmp/irstlm/ --with-xmlrpc-c=/hadoop/tmp/xmlrpc -j64
 \end{lstlisting}
 В случае установки \emph{xmlrpc-c} из репозитория, то можно опустить флаг \emph{with-xmlrpc-c} -- 
 \emph{bjam} сам определит, что в системе стоит этот пакет и использует его.
 
-Если сборка успешна выполнена, то теперь можно запускать moses в режиме сервера следующей командой
+При успешном завершении сборки можно можно запускать moses в режиме сервера следующей командой
 \begin{lstlisting}
 $ ./mosesdecoder/bin/moses-server -f ./working/train/model/moses.ini
 \end{lstlisting}
+
+\chapter{Выводы}
+\chapter{Результаты}
+
+\renewcommand{\bibname}{Список используемой литературы}
+\addcontentsline{toc}{chapter}{Список используемой литературы}
+\begin{thebibliography}{10}
+    \bibitem{parcels} \url{http://www.cloudera.com/content/cloudera/en/documentation/cloudera-manager/v4-7-3/Cloudera-Manager-Release-Notes/cmrn_fixed_in_4_7_2.html}
+    \bibitem{python} \url{http://www.shayanderson.com/linux/install-python-3-on-centos-6-server.htm}
+    \bibitem{pip} \url{http://superuser.com/questions/773949/how-to-install-python-3-2-2-on-centos-6-5-amd64-preserving-its-original-python-i}
+    \bibitem{moses:baseline} \url{http://www.statmt.org/moses/?n=Moses.Baseline}
+    \bibitem{moses:dev} \url{http://www.statmt.org/moses/?n=Development.GetStarted}
+\end{thebibliography}
