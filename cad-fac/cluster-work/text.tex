@@ -1,4 +1,28 @@
 \chapter{Введение}
+Цель данной работы заключается в подготовке, настройке и развёртыванию Hadoop кластера, 
+а также установке дополнительного программного обеспечения для обработки патентной информации.
+В данной работе для обработки патентной информации используется программная платформа 
+Mr.LDA использующая метод Латентного размещения Дирихле. 
+
+Латентное размещение Дирихле (LDA) -- это порождающая модель, позволяющая объяснять 
+результаты наблюдений с помощью неявных групп, что позволяет получить объяснение, почему 
+некоторые части данных схожи. 
+
+Свободно распространяемый фреймворк Mr.LDA является гибким и легко масштабируемым пакетом 
+для многоязычного моделирования с использованием технологии MapReduce. Латентное размещение 
+Дирихле и связанная с ней техника моделирования по темам полезны для изучения коллекции 
+документов. Из-за роста распространенности больших объемов данных, существует необходимость 
+улучшить масштабируемость вывода для LDA. В отличие от других методов, которые используют 
+выборку Гиббса, Mr.LDA использует вариационный метод, что легко подходит для использования 
+в распределенной среде.
+
+Hadoop -- проект фонда Apache Software Foundation, свободно распространяемый набор утилит, 
+библиотек и программную платформу для разработки и выполнения распределённых программ, работающих 
+на кластерах из сотен и тысяч узлов. Разработан на Java в рамках вычислительной парадигмы 
+MapReduce, согласно которой приложение разделяется на большое количество одинаковых элементарных 
+заданий, выполнимых на узлах кластера и естественным образом сводимых в конечный результат.
+
+\newpage
 
 \chapter{Развёртывание кластера}
 \section{Предварительная настройка}
@@ -102,8 +126,8 @@ parcel_dir=/hadoop/cloudera/parcels
 $ sudo service cloudera-scm-agent restart
 \end{lstlisting}
 
-Далее переходим на главную страницу Cloudera Manager во вкладку Hosts->Configuration, где 
-устанавливаем следующие параметры
+Далее переходим на главную страницу Cloudera Manager во вкладку \\
+Hosts->Configuration, где устанавливаем следующие параметры
 \begin{itemize}
     \item Parcel Directory
     \item Local Parcel Repository Path
@@ -111,7 +135,7 @@ $ sudo service cloudera-scm-agent restart
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[width=0.\textwidth]{image-009}
+    \includegraphics[width=0.8\textwidth]{image-009}
     \caption{Конфигурация параметров}
     \includegraphics[width=0.8\textwidth]{image-010}
     \caption{Конфигурация параметров}
@@ -138,53 +162,57 @@ $ sudo service cloudera-scm-agent restart
     \caption{Процесс установки}
 \end{figure}
 
-Если вы изменили параметры \emph{Parcel Directory}, то выйдете на главную страницу страницу и создайте 
-кластер с параметрами из шагов ранее. Установка основных пакетов Cloudera Manager может может длиться 
-значительное время.
+Если вы изменили параметры \emph{Parcel Directory}, то выйдете на главную страницу страницу и 
+создайте кластер с параметрами из шагов ранее. Установка основных пакетов Cloudera Manager 
+может длиться значительное время.
+
+\newpage
 
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-020}
     \caption{Установка CDH}
-\end{figure}
-
-\newpage
-
-\begin{figure}[ht!]
-    \center
     \includegraphics[width=1.0\textwidth]{image-021}
     \caption{Успешное завершение установки}
+\end{figure}
+
+\newpage
+
+\begin{figure}[ht!]
+    \center
     \includegraphics[width=1.0\textwidth]{image-022}
     \caption{Проверка хост-машин}
-\end{figure}
-
-\newpage
-
-\begin{figure}[ht!]
-    \center
     \includegraphics[width=1.0\textwidth]{image-023}
     \caption{Результат проверки хост-машин}
+\end{figure}
+
+\newpage
+
+\begin{figure}[ht!]
+    \center
     \includegraphics[width=1.0\textwidth]{image-024}
     \caption{Результат проверки хост-машин}
-\end{figure}
-
-\newpage
-
-\begin{figure}[ht!]
-    \center
     \includegraphics[width=1.0\textwidth]{image-025}
     \caption{Результат проверки хост-машин}
+\end{figure}
+
+\newpage
+
+\begin{figure}[ht!]
+    \center
     \includegraphics[width=1.0\textwidth]{image-026}
     \caption{Результат проверки хост-машин}
-\end{figure}
-
-\newpage
-
-\begin{figure}[ht!]
-    \center
     \includegraphics[width=1.0\textwidth]{image-027}
     \caption{Выбор устанавливаемых компонентов}
+\end{figure}
+
+\newpage
+
+\begin{figure}[ht!]
+    \center
     \includegraphics[width=1.0\textwidth]{image-028}
+    \caption{Конфигурация ролей хост-машин}
+    \includegraphics[width=1.0\textwidth]{image-029}
     \caption{Конфигурация ролей хост-машин}
 \end{figure}
 
@@ -192,41 +220,41 @@ $ sudo service cloudera-scm-agent restart
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[width=1.0\textwidth]{image-029}
-    \caption{Конфигурация ролей хост-машин}
     \includegraphics[width=1.0\textwidth]{image-030}
     \caption{Распределение ролей хост-машин}
     \includegraphics[width=1.0\textwidth]{image-031}
     \caption{Подключение БД}
-\end{figure}
-
-\newpage
-
-\begin{figure}[ht!]
-    \center
     \includegraphics[width=1.0\textwidth]{image-032}
     \caption{Конфигурация параметров}
+\end{figure}
+
+\newpage
+
+\begin{figure}[ht!]
+    \center
     \includegraphics[width=1.0\textwidth]{image-033}
     \caption{Конфигурация параметров}
-\end{figure}
-
-\newpage
-
-\begin{figure}[ht!]
-    \center
     \includegraphics[width=1.0\textwidth]{image-034}
     \caption{Конфигурация параметров}
+\end{figure}
+
+\newpage
+
+\begin{figure}[ht!]
+    \center
     \includegraphics[width=1.0\textwidth]{image-035}
     \caption{Процесс установки}
-\end{figure}
-
-\newpage
-
-\begin{figure}[ht!]
-    \center
     \includegraphics[width=1.0\textwidth]{image-036}
     \caption{Успешная установка компонентов}
+\end{figure}
+
+\newpage
+
+\begin{figure}[ht!]
+    \center
     \includegraphics[width=1.0\textwidth]{image-037}
+    \caption{Успешная установка компонентов}
+    \includegraphics[width=1.0\textwidth]{image-038}
     \caption{Успешная установка компонентов}
 \end{figure}
 
@@ -234,8 +262,6 @@ $ sudo service cloudera-scm-agent restart
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[width=1.0\textwidth]{image-038}
-    \caption{Успешная установка компонентов}
     \includegraphics[width=1.0\textwidth]{image-039}
     \caption{Окончание установки компонентов}
 \end{figure}
@@ -481,7 +507,7 @@ $ make install
 \end{lstlisting}
 
 \subsection{Подготовка Corpus для обучения}
-Создаём папку для corpus и загружаем тренировочные данные
+Создаём папку для \emph{corpus} и загружаем данные для обучения
 \begin{lstlisting}
 $ mkdir corpus
 $ cd corpus
@@ -534,7 +560,7 @@ $ ../mosesdecoder/scripts/training/clean-corpus-n.perl \
   ./news-commentary-v8.fr-en.clean 1 80
 \end{lstlisting}
 
-\subsection{Тренировка модели}
+\subsection{Обучение модели}
 \begin{lstlisting}
 $ mkdir /hadoop/tmp/lm
 $ cd /hadoop/tmp/lm
@@ -591,15 +617,38 @@ $ make install -j64
 $ ./mosesdecoder/bin/moses-server -f ./working/train/model/moses.ini
 \end{lstlisting}
 
-\chapter{Выводы}
-\chapter{Результаты}
+\newpage
 
-\renewcommand{\bibname}{Список используемой литературы}
-\addcontentsline{toc}{chapter}{Список используемой литературы}
+\chapter{Заключение}
+В результате выполнения можно заключить следующее:
+\begin{enumerate}
+    \item Проведён анализ технической документации и других материалов по теме работы.
+    \item Произведена настройка хост-машин.
+    \item Произведена установка программных компонентов Cloudera CDH, Tomcat, 
+    Lucene, Maven, Moses, Python 3, vsftpd.
+    \item Произведена сборка Mr.LDA.
+    \item Произведён перенос патентных данных на жёсткий диск кластера.
+    \item Запущен Mr.LDA на обработку патентных данных и получен результат работы.
+    \item Произведено подробное описание процесса установки и настройки кластера и 
+        дополнительных компонент.
+\end{enumerate}
+
+\newpage
+
+\renewcommand{\bibname}{Список использованных источников}
+\addcontentsline{toc}{chapter}{Список использованных источников}
 \begin{thebibliography}{10}
-    \bibitem{parcels} \url{http://www.cloudera.com/content/cloudera/en/documentation/cloudera-manager/v4-7-3/Cloudera-Manager-Release-Notes/cmrn_fixed_in_4_7_2.html}
-    \bibitem{python} \url{http://www.shayanderson.com/linux/install-python-3-on-centos-6-server.htm}
-    \bibitem{pip} \url{http://superuser.com/questions/773949/how-to-install-python-3-2-2-on-centos-6-5-amd64-preserving-its-original-python-i}
-    \bibitem{moses:baseline} \url{http://www.statmt.org/moses/?n=Moses.Baseline}
-    \bibitem{moses:dev} \url{http://www.statmt.org/moses/?n=Development.GetStarted}
+    \bibitem{parcels} Known Issues Fixed in Cloudera Manager
+        [Electronic resource]~---~Available at:
+        \url{http://www.cloudera.com/content/cloudera/en/documentation/cloudera-manager/v4-7-3/Cloudera-Manager-Release-Notes/cmrn_fixed_in_4_7_2.html}
+    \bibitem{python} Anderson, S. Install Python 3 on CentOS 6.5 Server
+        [Electronic resource]~---~Available at: 
+        \url{http://www.shayanderson.com/linux/install-python-3-on-centos-6-server.htm}
+    \bibitem{pip} How to Install Python 3.2.2 on CentOS 6.5 amd64 Preserving Its Original 
+        Python Installation (2.6.6) [Electronic resource]~---~Available at:
+        \url{http://superuser.com/questions/773949/how-to-install-python-3-2-2-on-centos-6-5-amd64-preserving-its-original-python-i}
+    \bibitem{moses:baseline} Moses Installation: Baseline [Electronic resource]~---~Available at:
+        \url{http://www.statmt.org/moses/?n=Moses.Baseline}
+    \bibitem{moses:dev} Getting Started with Moses [Electronic resource]~---~Available at:
+        \url{http://www.statmt.org/moses/?n=Development.GetStarted}
 \end{thebibliography}
