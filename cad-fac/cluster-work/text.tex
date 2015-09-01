@@ -54,18 +54,19 @@ $ sudo hwclock -w
 $ sudo ./cloudera-manager-installer.bin
 \end{lstlisting}
 
-При возникновении проблем с терминалом, то выполните команду
+При возникновении проблем с терминалом выполните команду
 \begin{lstlisting}
 $ export TERM=xterm
 \end{lstlisting}
 
 Произведите установку данного сервиса. По окончанию установки на порту 7180 будет доступен web-интерфейс 
-Cloudera Manager. Подробности установки показаны на следующих скриншотах
+Cloudera Manager. Подробности установки показаны на рисунках \ref{img:first}--\ref{img:last}
 
 \begin{figure}[ht!]
     \center
     \includegraphics[width=1.0\textwidth]{image-000}
     \caption{Начальный экран установки}
+    \label{img:first}
 \end{figure}
 
 \newpage
@@ -108,7 +109,7 @@ Cloudera Manager. Подробности установки показаны н�
     \caption{Успешное завершение установки}
 \end{figure}
 
-В случае использования каталога \emph{/opt} как общий для всех нод один необходимо произвести 
+В случае использования каталога \emph{/opt} как общий для всех нод необходимо произвести 
 следующие действия.
 
 Создать несколько каталогов в директории \emph{/hadoop/}
@@ -264,6 +265,7 @@ Hosts->Configuration, где устанавливаем следующие па�
     \center
     \includegraphics[width=1.0\textwidth]{image-039}
     \caption{Окончание установки компонентов}
+    \label{img:last}
 \end{figure}
 
 \newpage
@@ -300,7 +302,7 @@ $ hadoop fs -put /etc/hadoop/conf/*.xml /user/hduser/input
 $ hadoop jar /hadoop/cloudera/parcels/CDH/jars/\
    hadoop-mapreduce-examples-2.6.0-cdh5.4.4.jar grep /user/hduser/input /user/hduser/output 'dfs[a-z.]+'
 \end{lstlisting}
-При успешном завершении в в каталоге \emph{/user/hduser/output} появиться следующие файлы
+При успешном завершении в каталоге \emph{/user/hduser/output} появиться следующие файлы
 \begin{lstlisting}
 Found 2 items
 -rw-r--r--   3 hduser supergroup          0 2015-07-26 13:59 /user/hduser/output/_SUCCESS
@@ -341,7 +343,7 @@ $ sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/\
     epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
 $ sudo yum install apache-maven
 \end{lstlisting}
-При появлении проблем с Maven изменените следующий параметр на пустое значение
+При появлении проблем с \emph{Maven} измененить следующий параметр на пустое значение
 \begin{lstlisting}
 $ export M2_HOME=""
 \end{lstlisting} 
@@ -368,13 +370,14 @@ $ mvn clean package
 \end{lstlisting}
 
 \section{Сборка Python 3 и установка дополнительных модулей}
-Для сборки и установки Python 3 и pip необходимо установить дополнительная программы
+Для сборки и установки \emph{Python 3} и \emph{pip} необходимо установить дополнительные программы
 \begin{lstlisting}
 $ sudo yum groupinstall "Development tools"
 $ sudo yum install zlib-devel bzip2-devel openssl-devel ncurses-devel \
     sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel \
     xz-devel
 \end{lstlisting}
+
 Переходим непосредственно к сборке и установке\cite{python}
 \begin{lstlisting}
 $ wget http://www.python.org/ftp/python/3.3.2/Python-3.3.2.tar.bz2 -O /var/tmp/Python-3.3.2.tar.bz2
@@ -386,24 +389,24 @@ $ sudo make install
 $ sudo ln -s /usr/local/bin/python3 /usr/bin/python3
 \end{lstlisting}
 
-Установим менеджер пакетов pip\cite{pip}
+Установим менеджер пакетов \emph{pip}\cite{pip}
 \begin{lstlisting}
 $ wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
 $ sudo /usr/local/bin/python3.2 ez_setup.py
 $ sudo /usr/local/bin/easy_install-3.2 pip
 \end{lstlisting}
 
-Для использования python с PostgreSQL необходимо установить пакет \emph{py-postgresql}
+Для использования python с \emph{PostgreSQL} необходимо установить пакет \emph{py-postgresql}
 \begin{lstlisting}
 $ sudo /usr/local/bin/pip py-postgresql
 \end{lstlisting}
 
 \section{Настройка vsftpd}
-Установка vsftpd (Very Secure FTPD) производится из репозитория
+Установка \emph{vsftpd} (Very Secure FTPD) производится из репозитория
 \begin{lstlisting}
 $ sudo yum install vsftpd
 \end{lstlisting}
-Редактируем конфигурационные файлы и создаём виртуальных пользователей
+Редактируем конфигурационные файлы 
 \begin{lstlisting}
 $ sudo vim /etc/vsftpd/vsftpd.conf
 anonymous_enable=NO
@@ -429,6 +432,10 @@ userlist_file=/etc/vsftpd/ftpusers
 user_config_dir=/etc/vsftpd/users/
 tcp_wrappers=YES
 guest_enable=YES
+\end{lstlisting}
+
+Cоздаём виртуальных пользователей
+\begin{lstlisting}
 $ sudo vim /etc/pam.d/vsftpd
 auth    required        pam_userdb.so   db=/etc/vsftpd/vsftpd_login
 account required        pam_userdb.so   db=/etc/vsftpd/vsftpd_login
@@ -453,7 +460,7 @@ $ sudo chkconfig vsftpd on
 $ sudo service vsftpd start
 \end{lstlisting}
 
-Проверку работоспособности демона можно произвести встроенной утилитой ftp
+Проверку работоспособности демона можно произвести встроенной утилитой \emph{ftp}
 \begin{lstlisting}
 $ ftp localhost
 \end{lstlisting}
@@ -463,14 +470,14 @@ $ ftp localhost
 Все действия в основном производятся в каталоге \emph{/hadoop/tmp/}. 
 Дальнейшие действия являются адаптацией следующих источников \cite{moses:baseline, moses:dev}.
 
-Добавляем репозиторий в систему и устанавливаем пакет boost
+Добавляем репозиторий в систему и устанавливаем пакет \emph{boost}
 \begin{lstlisting}
 $ sudo wget http://repo.enetres.net/enetres.repo -O \
   /etc/yum.repos.d/enetres.repo
 $ sudo yum install boost-devel
 \end{lstlisting}
 
-Клонируем репозиторий Giza++ и собираем его
+Клонируем репозиторий \emph{Giza++} и собираем его
 \begin{lstlisting}
 $ git clone https://github.com/moses-smt/giza-pp.git
 $ cd giza-pp
@@ -478,17 +485,18 @@ $ make -j64
 $ cd /hadoop/tmp
 \end{lstlisting}
 
-Клонируем репозиторий moses
+Клонируем репозиторий \emph{moses}
 \begin{lstlisting}
 $ git clone https://github.com/moses-smt/mosesdecoder.git
 \end{lstlisting}
-Делаем файл bjam исполняемым и производим сборку
+
+Делаем файл \emph{bjam} исполняемым и производим сборку
 \begin{lstlisting}
 $ chmod +x bjam
 $ ./bjam -j64
 \end{lstlisting}
 
-Создаём папку для Giza++ в каталоге moses и производим копирование
+Создаём папку для \emph{Giza++} в каталоге moses и производим копирование
 \begin{lstlisting}
 $ mkdir tools
 $ cp ../giza-pp/GIZA++-v2/GIZA++ ../giza-pp/GIZA++-v2/snt2cooc.out \
@@ -496,7 +504,7 @@ $ cp ../giza-pp/GIZA++-v2/GIZA++ ../giza-pp/GIZA++-v2/snt2cooc.out \
 $ cd /hadoop/tmp
 \end{lstlisting}
 
-Загружаем IRSTLM, распаковываем и производим сборку
+Загружаем \emph{IRSTLM}, распаковываем и производим сборку
 \begin{lstlisting}
 $ wget http://downloads.sourceforge.net/project/irstlm/irstlm/irstlm-5.80/irstlm-5.80.08.tgz
 $ tar zxvf irstlm-5.80.08.tgz
@@ -515,7 +523,7 @@ $ wget http://www.statmt.org/wmt13/training-parallel-nc-v8.tgz
 $ tar zxvf training-parallel-nc-v8.tgz
 \end{lstlisting}
 
-Перед запуском необходимо убедиться, что для Perl установлен модуль \emph{Time/HiRes.pm}
+Перед запуском необходимо убедиться, что для Perl установлен модуль \emph{Time/HiRes.pm}.
 При его отсутствии устанавливаем следующей командой
 \begin{lstlisting}
 $ sudo yum install perl-Time-HiRes
@@ -531,7 +539,7 @@ $ ../mosesdecoder/scripts/tokenizer/tokenizer.perl -l fr \
   > ./news-commentary-v8.fr-en.tok.fr
 \end{lstlisting}
 
-Используем обучение с помощью скрипта train-truecaser
+Используем обучение с помощью скрипта \emph{train-truecaser}
 \begin{lstlisting}
 $ ../mosesdecoder/scripts/recaser/train-truecaser.perl \
   --model ./truecase-model.en \
@@ -541,7 +549,7 @@ $ ../mosesdecoder/scripts/recaser/train-truecaser.perl \
   --corpus ./news-commentary-v8.fr-en.tok.fr
 \end{lstlisting}
 
-Используем скрипт truecase
+Используем скрипт \emph{truecase}
 \begin{lstlisting}
 $ ../mosesdecoder/scripts/recaser/truecase.perl \
   --model ./truecase-model.en \
@@ -585,14 +593,14 @@ $ nohup nice ../mosesdecoder/scripts/training/train-model.perl -root-dir train \
 Ожидаем завершения обучения модели (может длится очень долго).
 
 \subsection{Запуск moses}
-Запускаем moses для проверки работоспособности перевода
+Запускаем \emph{moses} для проверки работоспособности перевода
 \begin{lstlisting}
 $ ./mosesdecoder/bin/moses -f ./working/train/model/moses.ini
 \end{lstlisting}
 Необходимо подождать загрузки данных в память, а потом можно вводить текст для перевода в терминале.
 
-\subsection{Сборка c поддержкой xmlrpc-c и irstlm}
-Устанавливаем xmlrpc-c из репозитория
+\subsection{Сборка с поддержкой xmlrpc-c и irstlm}
+Устанавливаем \emph{xmlrpc-c} из репозитория
 \begin{lstlisting}
 $ sudo yum install xmlrpc-c-devel
 \end{lstlisting}
@@ -612,7 +620,7 @@ $ make install -j64
 В случае установки \emph{xmlrpc-c} из репозитория, то можно опустить флаг \emph{with-xmlrpc-c} -- 
 \emph{bjam} сам определит, что в системе стоит этот пакет и использует его.
 
-При успешном завершении сборки можно можно запускать moses в режиме сервера следующей командой
+При успешном завершении сборки можно можно запускать \emph{moses} в режиме сервера следующей командой
 \begin{lstlisting}
 $ ./mosesdecoder/bin/moses-server -f ./working/train/model/moses.ini
 \end{lstlisting}
@@ -623,10 +631,10 @@ $ ./mosesdecoder/bin/moses-server -f ./working/train/model/moses.ini
 В результате выполнения можно заключить следующее:
 \begin{enumerate}
     \item Проведён анализ технической документации и других материалов по теме работы.
-    \item Произведена настройка хост-машин.
-    \item Произведена установка программных компонентов Cloudera CDH, Tomcat, 
-    Lucene, Maven, Moses, Python 3, vsftpd.
-    \item Произведена сборка Mr.LDA.
+    \item Произведена настройка хост-машин используемых в кластере.
+    \item Произведена установка программных компонентов: Cloudera CDH, Tomcat, 
+    Lucene, Maven, vsftpd.
+    \item Произведена сборка и установка программных компонентов: Python 3, pip, Moses, Mr.LDA.
     \item Произведён перенос патентных данных на жёсткий диск кластера.
     \item Запущен Mr.LDA на обработку патентных данных и получен результат работы.
     \item Произведено подробное описание процесса установки и настройки кластера и 
@@ -638,8 +646,8 @@ $ ./mosesdecoder/bin/moses-server -f ./working/train/model/moses.ini
 \renewcommand{\bibname}{Список использованных источников}
 \addcontentsline{toc}{chapter}{Список использованных источников}
 \begin{thebibliography}{10}
-    \bibitem{parcels} Known Issues Fixed in Cloudera Manager
-        [Electronic resource]~---~Available at:
+    \bibitem{parcels} Known Issues Fixed in Cloudera Manager 4.7.2
+        [Electronic resource]~--- Available at: 
         \url{http://www.cloudera.com/content/cloudera/en/documentation/cloudera-manager/v4-7-3/Cloudera-Manager-Release-Notes/cmrn_fixed_in_4_7_2.html}
     \bibitem{python} Anderson, S. Install Python 3 on CentOS 6.5 Server
         [Electronic resource]~---~Available at: 

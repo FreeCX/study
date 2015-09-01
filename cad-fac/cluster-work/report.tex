@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english, russian]{babel}
 \usepackage{indentfirst}
+\usepackage[square, numbers, sort&compress]{natbib}
 \usepackage{setspace}
 \usepackage{titlesec}
 \usepackage{titletoc}
@@ -22,7 +23,7 @@
 \titleformat{\chapter}
     {\normalsize}
     {\thechapter}
-    {1em}{\MakeUppercase}
+    {1ex}{\MakeUppercase}
 \titlecontents{chapter}[0pt]
     {}%
     {\contentsmargin{0pt}
@@ -47,23 +48,44 @@
 \titleformat{\section}
     {\normalsize}
     {\thesection}
-    {1em}{}
+    {1ex}{}
 \titleformat{\subsection}
     {\normalsize}
     {\thesubsection}
-    {1em}{}
-\titlespacing*{\chapter}{0pt}{10pt}{10pt}
-\titlespacing*{\section}{\parindent}{*2}{*2}
-\titlespacing*{\subsection}{\parindent}{*2}{*2}
+    {1ex}{}
+\titlespacing*{\chapter}{0em}{10pt}{10pt}
+\titlespacing*{\section}{0em}{5pt}{5pt}
+\titlespacing*{\subsection}{0em}{5pt}{5pt}
+
+\makeatletter
+\renewcommand{\@biblabel}[1]{#1}
+\renewenvironment{thebibliography}[1]
+    {\chapter*{\bibname}%
+    \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+    \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#1}}%
+        \leftmargin=0pt
+        \itemindent=50pt
+        \@openbib@code
+        \usecounter{enumiv}%
+        \let\p@enumiv\@empty
+        \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+    \sloppy
+    \clubpenalty4000
+    \@clubpenalty \clubpenalty
+    \widowpenalty4000%
+    \sfcode`\.\@m}
+        {\def\@noitemerr
+        {\@latex@warning{Empty `thebibliography' environment}}%
+    \endlist}
+\makeatother
 
 \makeatletter
 \renewcommand\chapter{\thispagestyle{plain}%
 \global\@topnum\z@
 \@afterindentfalse
 \secdef\@chapter\@schapter}
-\makeatother 
-
-\Urlmuskip = 0mu plus 1mu
+\makeatother
 
 \DeclareCaptionLabelFormat{figure}{Рисунок #2}
 \DeclareCaptionLabelFormat{table}{Таблица #2}
