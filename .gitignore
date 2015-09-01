@@ -1,4 +1,9 @@
 *.aux
 *.log
-atom_phys/info
-.preambles
+*.o
+*.exe
+*.gz
+*.*latexmk
+*.fls
+*.out
+*.toc
