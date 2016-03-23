@@ -1,0 +1,46 @@
+\documentclass[a4paper, 14pt]{extreport}
+\usepackage[left=3cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{amsmath}
+
+% Times New Roman
+\renewcommand{\rmdefault}{ftm}
+% поле с подписью
+\newcommand\UNDER[2]{$\underset{\text{#2}}{\text{#1}}$}
+% стиль подписи
+\newcommand\TINY[1]{\footnotesize#1\normalsize}
+% поле для заполнения определенной длины
+\newcommand\LINE[1]{\underline{\hspace{#1}}}
+
+\begin{document}
+    \onehalfspacing
+    \begin{titlepage}
+        \begin{flushright}
+            \textbf{\MakeUppercase{Утверждаю}}\hspace{8em}~\\
+            И.о.зав. кафедрой \underline{\smash{Щербаков~М.~В.}}\\
+            \UNDER{\LINE{3cm}}{\TINY{(подпись)}}\quad\UNDER{\LINE{4cm}}{\TINY{(расшифровка подписи)}}\medskip\\
+            <<\underline{\hspace{2.5em}}>> \underline{\hspace{8em}} \the\year\ г.
+        \end{flushright}
+        \vspace{1cm}
+        \begin{center}
+            \textbf{\MakeUppercase{З\,а\,д\,а\,н\,и\,е}}\bigskip\\
+            на научно-исследовательскую практику
+        \end{center}
+        \vspace{1cm}
+        Студенту \underline{\smash{Голубеву~А.~В.}} группы \underline{\smash{САПР-2п1}}\\
+        \begin{enumerate}
+            \item \textbf{Разработать} эволюционный алгоритм формирования маршрутов общественного 
+                транспорта на основании обработки данных.
+            \item \textbf{Произвести} испытания разработанного алгоритма и обосновать его эффективность.
+        \end{enumerate}
+        \vspace{\fill}
+        \begin{flushright}
+            Научный руководитель \underline{\hspace{10em}} / \underline{\smash{Щербаков~М.~В.}}\\
+            Руководитель практики \underline{\hspace{10em}} / \underline{\smash{Кравец~А.~Г.}}
+        \end{flushright}
+    \end{titlepage}
+\end{document}
