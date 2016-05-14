@@ -1,0 +1,79 @@
+\documentclass[a4paper, 14pt]{extreport}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage[left=2.5cm, right=1.5cm, top=2.0cm, bottom=2.0cm]{geometry}
+\usepackage[column]{hedfeatures}
+\usepackage{paralist, enumerate, enumitem}
+\usepackage{multirow}
+\renewcommand{\rmdefault}{ftm}
+
+\newcolumntype{L}[1]{>{\arraybackslash}m{#1\textwidth}}
+
+\begin{document}
+    \begin{titlepage}
+        \begin{center}
+            Министерство образования и науки РФ \\
+            Государственное образовательное учреждение\\
+            Высшего профессионального образования\\
+            <<Волгоградский государственный технический университет>>\\
+            Кафедра <<САПР~и~ПК>>
+        \end{center}
+        \vspace{2cm}
+        \begin{center}
+            \large \textbf{ДНЕВНИК} \\
+            по преддипломной практике \the\year\ г.
+        \end{center}
+        \begin{flushleft}
+            Студента\\
+            Фамилия \underline{Голубева\hspace{3.1cm}} 
+            Имя \underline{Алексея\hspace{2.1cm}}\\
+            Отчество \underline{Владимировича\hspace{1.6cm}}\\
+            Факультет \underline{ФЭВТ\hspace{3.45cm}} курс \underline{2\hspace{1.5cm}} 
+            группа \underline{САПР-2.1п\hspace{2.6cm}}\\
+            \vspace{1cm}
+            Направление подготовки \underline{Информатика и вычислительная техника\hspace{2.6cm}}\\
+            \underline{\hspace{\textwidth}}
+            База проведения практики \underline{ВолгГТУ\hspace{9.1cm}}\\
+            \underline{\hspace{\textwidth}}\vspace{1cm}
+            КАЛЕНДАРНЫЕ СРОКИ ПРАКТИКИ:\\
+            По учебному плану: \hspace{0.2cm} начало \underline{\hspace{4.5cm}} 
+            конец \underline{\hspace{4.5cm}}\\
+            Дата прибытия на практику: <<\underline{\hspace{1cm}}>> \underline{\hspace{3cm}} 
+            \the\year\ г.\\
+            Дата выбытия: \hspace{3cm}<<\underline{\hspace{1cm}}>> \underline{\hspace{3cm}} 
+            \the\year\ г.
+        \end{flushleft}
+        \vspace{2cm}
+        \begin{flushleft}
+            РУКОВОДИТЕЛЬ ПРАКТИКИ\\
+            Кафедра \underline{САПР~и~ПК\hspace{2.4cm}} Должность \underline{профессор\hspace{2.8cm}} \\
+            Фамилия \underline{Кравец\hspace{3.3cm}} Имя \underline{Алла\hspace{5.5cm}}\\
+            Отчество \underline{Григорьевна\hspace{2.2cm}}
+        \end{flushleft}
+        \vspace{\fill}
+        \begin{center}
+            Волгоград \the\year
+        \end{center}
+    \end{titlepage}
+    \begin{center}
+        \begin{tabular}{|C{.13}|L{.6}|L{.2}|L{.1}|}
+            \hline
+            Сроки (недели/ даты) & Работа, выполненная студентом & Отметка руководителя, подпись\\ \hline
+            1-2 & Выбор основных направлений и оформление задания на преддипломную практику & \\ \hline
+            \multicolumn{1}{|C{.13}|}{\multirow{3}{*}{3-8}} & Разработана методика тестирования системы 
+                построения маршрутной сети общественного транспорта на основании обработки данных. & \\ \cline{2-3}
+            & Произведены испытания разработанной системы построения маршрутной сети 
+                общественного транспорта на тестовом наборе входных данных. & \\ \cline{2-3}
+            & Произведена оценка построенных маршрутных сетей по критериям эффективности 
+                (суммарная длина маршрутной сети, пассажиропоток и д.р.) и обоснована эффективность 
+                используемых алгоритмов. & \\ \hline
+            9 & Подготовка материалов отчёта. & \\ \hline
+        \end{tabular}
+    \end{center}
+    \pagestyle{empty}
+    \vspace{\fill}
+    \noindent<<\underline{\hspace{1cm}}>> \underline{\hspace{5cm}} \the\year\ г.\\
+    Студент \hspace{1cm} \underline{Голубев~А.~В.\hspace{3.2cm}} \hspace{2cm} (\underline{\hspace{5cm}})\\
+    Руководитель \underline{Кравец~А.~Г.\hspace{3.42cm}} \hspace{2cm} (\underline{\hspace{5cm}})\\
+\end{document}
